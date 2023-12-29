@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>sal sabil - products</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name="description" content="Explore a diverse range of products at Sal Sabil or sal sabil mart a islamic shop in bangladesh from unique attar-infused punjabi, 
+    islamic books and cutting-edge gadgets to delicious food items. Experience quality, style, and innovation in one place.
+     Shop confidently for the latest trends and unbeatable prices. Elevate your lifestyle with Sal Sabil.">
+    <meta name="robots" content="follow, index"/>
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SalSabil" />
+    <meta property="og:description" content="Salsabil - Explore a diverse range of products at Sal Sabil a islamic shop in bangladesh from unique attar-infused punjabi, 
+    islamic books and cutting-edge gadgets to delicious food items. Experience quality, style, and innovation in one place.
+    Shop confidently for the latest trends and unbeatable prices. Elevate your lifestyle with Sal Sabil." />
+    <meta property="og:url" content="http://www.salsabilmart.com/product" />
+    <meta property="og:site_name" content="SalSabil" />
+    <meta property="og:updated_time" content="2023-12-27T17:53:11+06:00" />
+    
+    <!----tittle favicon icon -->
+
+    <link rel="shortcut icon" type="image/x-icon" href="image/sample tittle logo.jpg">
+    
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+</head>
+<body>
+    
+     <!-------------------------preloder-------------->
+     <div class="preloader-wrapper" id="preloader">
+        <div class="preloader">
+            <div class="spinner"></div>
+        </div>
+    </div>
+   
+    
+    
+    <div class="container" id="container">
+        <div class="navbar" id="navbar">
+            <div class="logo" style="text-align: left;">
+          <img src="image/logo 2.png" width="125px" alt="Sal Sabil">
+         
+       </div>
+       <nav>   
+            <ul id="menuItem"> 
+               <li id="list"> <img src="image/hidemenu2.png" alt="close" class="close-icon" onclick="hidemenu()"></li>
+                <li id="list"><a href="main.html">Home</a><br><br></li>
+                <li id="list"><a href="product.html" class="active">products</a><br><br></li>
+                <li id="list"><a href="blog.html" >Blog</a><br><br></li>
+                <li id="list"><a href="about us.html">About us </a><br><br></li>
+                <li ids="list"><a href="contact.html">Contact</a><br><br></li>
+            </ul>
+            <div class="second-nav">
+            <div><img src="image/cartlogo2.png" id="cart-icon" onclick="showcart()" title="cart"><span id="count" class="count">0</span></div>
+            <!--hamburger icon -->
+            <img src="image/hamburger2.png" class="menu-icon" alt="menu" onclick="showmenu()">
+            </div> 
+          </div>
+        </nav></div>
+       </div>
+
+
+
+
+       
+<!--------------------------------------------------------------to top window scroller------------->
+<div class="scroller-btn" id="scroller-top">
+    <i class="fa-solid fa-arrow-up"></i>
+</div>
+
+<!----------------------------caller button------------------------------------>
+<a href="tel:+8801618635225">
+<div class="caller-btn ">
+    <i class="fa-solid fa-phone"></i>
+</div>
+</a>
+
+
+
+
+       <!---cart-->
+<div class="cart" id="cart">
+    <div class="carttittle"><h3>Your cart</h3></div>
+    <button id="clear-cart">clear cart</button>
+
+    <div id="noItemmsg"><i class="fa-solid fa-cart-shopping"></i><h3>cart is empty</h3></div>
+    
+    <div class="cartcontent" id="cartcontent">
+        
+    </div>
+    
+    <div class="total" id="totalDiv">
+        <div class="total-tittle">Total:</div>
+        <div class="total-price" id="total-price">tk0.00</div>
+        
+
+    </div>
+    <div><button type="button" class="checkoutbtn" id="checkoutbtn">checkout</button></div>
+    <img src="image/closecart.png" alt="closecart" class="closecart" onclick="closecart()">
+
+</div>
+
+
+
+
+
+<!----------------------products--------------------------------->
+
+
+
+<!-----add cart msg------------>
+<div class="succesful-message-container" id="succesful-message-container">
+    <div class="succesfulmessage" id="succesfulmessage">
+        <img src="image/tick.png" alt="succesful!" id="succesfulmessage">
+        <h2 id="succesfulmessage">Item added to cart!</h2>
+        <p id="succesfulmessage">click <span onclick="showcart()" class="viewCart"><img src="image/cartlogo-black.png" alt="cart"></span> icon to view item in cart</p>
+        <a href="javascript:void(0);"><button type="button" class="succesfulokbtn" onclick="closesuccesfulmsg()">OK</button></a>
+    </div>
+</div>
+
+
+
+
+<button onclick="closeProductInfo()" class="back-btn" id="back-btn"><span>&larr;</span>  back</button>
+
+
+
+
+
+<!------------home redirection ------------------->
+<h1 class="category-redirection-text" id="category-redirection-text">#<span id="selected-category"></span></h1>
+
+
+
+
+<!----------------------------------------------product details content------------------>
+<div class="product-details-container">
+    <div class="product-details-gallery">
+        <div class="main-img-container" id="main-img-container">
+            <div id="mainImage"></div>
+        </div>
+    <div id="productSmallImages"></div>
+    </div>
+<div class="product-details-info-container">
+    <div id="product-category-name"></div>
+    <div id="productTitle" class="product-details-tittle"></div>
+<div id="productPrice" class="product-details-price"></div>
+<div id="productRating" class="product-details-rating"></div>
+<div id="selectSizeDropdown"></div>
+<div id="productColorContent"></div>
+<div id="productDescription"></div>
+<div id="addToCartButton" class="product-details-add-cart"></div>
+</div>
+</div>
+<div class="product-details-information-container" style="display: none;" id="product-details-information-container">
+    <h1 class="details-header" id="details-header"></h1>
+    <div class="product-details-information" id="product-details-information">
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+      <section class="shop shop-container">
+
+
+
+
+
+        <h2 class="section-tittle underlined-text" id="section-tittle"><span id="shopTittle">Shop</span> products</h2>
+
+<div class="searchbar-category-container" id="searchbar-category-container">
+
+<!-- Category Filter Dropdown -->
+<div class="filter-container" id="filter-container">
+    <label for="categoryFilter">Category:</label>
+    <select id="categoryFilter" name="product">
+        <option value="all" id="all">All Categories</option>
+        <option value="Perfume" id="Perfume">Perfume Oil</option>
+        <option value="Books" id="Books">Books</option>
+        <option value="Men" id="Men">Men's Empire</option>
+        <option value="Foods" id="Foods">Foods</option>
+        <option value="Cap" id="Cap">Cap</option>
+        <option value="Offer" id="Offer">Offer</option>
+        <option value="Combo Package" id="Combo Package">Combo Package</option>
+        <option value="Jaynamaz" id="Jaynamaz">Jaynamaz</option>
+        <!-- Add more categories as needed -->
+    </select>
+</div>
+
+
+
+
+ <!--------------------------------------------------------------search bar---------------------------------------------------->
+ <div class="searchbar">
+
+<!-----------------------------------------------oniput is used for the handiling the clear serch button display----------->
+
+    <input type="text" placeholder="search" id="searchInput" oninput="handleSearchInput();">
+    <button id="clearButton" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+    <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+</div>
+
+</div>
+
+
+<!------------------------------showing reuslt for 100 rsult text---------->
+<div>
+    <p style="color: #212020; font-weight: 400; margin-bottom: 30px;" class="showing-result-text">Showing <span id="productBoxNumber"></span> result of 100 products</p>
+    <style>
+      @media(max-width: 460px){
+        .showing-result-text{
+            font-size: 15px;
+            margin-left: 10px;
+        }
+      }
+      @media (max-width: 875px) and (min-width: 520px) {
+    .showing-result-text {
+        margin-left: 40px;
+    }
+}
+
+    </style>
+</div>
+
+
+<!---nomatchmeassge-->
+<div id="noMatchMessage" style="display: none;">
+    <h4>No match for"<span></span>"</h4>
+</div>
+
+<!------no product msg -->
+<div id="noProductMsg" style="display: none;">
+     <h2>No Product</h2>
+</div>
+
+
+
+        <div class="shop-content" id="shop-content">
+
+           
+
+
+            <!--box 1-->
+            
+            
+            <div class="product-box" id="bakhur-taiba" data-category="Perfume" >
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEio9JE9xqniJhHnYG6i-TedQRIVoAg7ZBQI0jPkzLr5sGsZBdxWSqdt0bQwDr-4m_YoEkA5Nwae5PaLOmoaTW54uFERgLAPDTB-F8S1f4o4Vp2uYZ0GCdJbd0Z65hxaiveBYI5-dCUsMFqhFCJFfV2qI8bdVovq6bylbksUoN0o3Fkr-ryOQRGnzgmjB3Q/s320/product1%20(1).png"
+                 class="product-img" id="main-img">
+                 <div class="product-img-text">
+                    <h5>Sale</h5>
+                 </div>
+                 <div class="small-img-row" id="small-img-row">
+                    <div class="small-img-col">
+                        <img src="image/product3.png" id="small-img-black" class="small-img-1" onclick="changeMainImage('image/product3.png')" >
+                    </div>
+                    <div class="small-img-col">
+                        <img src="image/product3.png" id="small-img-red" onclick="changeMainImage('image/product4.png')">
+                    </div>
+                    <div class="small-img-col">
+                        <img src="image/product3.png" id="small-img-blue" onclick="changeMainImage('image/product5.png')">
+                    </div>
+                    <div class="small-img-col">
+                        <img src="image/product3.png"  id="small-img-yellow" onclick="changeMainImage('image/product6.png')">
+                    </div>
+                    
+                    
+                 </div>
+                 <div class="product-info-container">
+                    <div class="product-description" id="productdetailscategoryname">
+                        <p>Shop/Aatar</p>
+                     </div>
+                    <h2 class="product-tittle" id="product-tittle">bakhur taiba</h2>
+
+
+                     <p id="tittleElement" style="display: none;">bakhur-taiba</p>
+
+                    <div class="product-box-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i></div>
+                    <span class="cut-text">350.tk</span><span class="price">350.tk</span>
+                    
+                    <div class="product-description">
+                        <select class="size-dropdown" onchange="sizeselectMl()">
+                            <option value="" data-price="350.tk">Select size</option>
+                            <!-- the selct option will have value of the frist option -->
+                            <option value="200ml" data-price="350.tk">200 ml</option>
+                            <option value="500ml" data-price="750.tk">500 ml</option>
+                            <!-- Add more size options as needed -->
+                            <!-----here data-price indicates the price for each option that means 200 ml costs default price and 500 ml cost how much price -->
+                          </select>
+                    </div>
+                    <!-- <div class="product-description">
+                        <select class="size-dropdown" onchange="sizeselectxl()">
+                            <option value="" data-price="350.tk" selected>Select size</option>
+                            <option value="small" data-price="350.tk">small</option>
+                            <option value="medium" data-price="350.tk">medium</option>
+                            <option value="large" data-price="350.tk">Large</option>
+                            <option value="xl" data-price="350.tk">XL</option>
+                            <option value="xxl" data-price="390.tk">XXL</option>
+                            
+                            
+                          </select>
+                    </div> -->
+
+                    <div class="product-description">
+                        <div class="color-content">
+                            <h1>Select colour</h1>
+                            <div class="color-groups">
+                                <div class="color color-black active-color" onclick="selectvariationprimary('black')"></div>
+                                <div class="color color-red" onclick="selectvariationprimary('red')"></div>
+                                <div class="color color-blue" onclick="selectvariationprimary('blue')"></div>
+                                <div class="color color-yellow" onclick="selectvariationprimary('yellow')"></div>
+                            </div>
+                        </div>
+                    </div>
+                         <h1 class="product-description">Product Details</h1>
+                         <p class="product-details-description product-description">Lorem ipsum dolor sit amet consectetur adipisici<br>
+                            ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab<br>
+                             repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                             ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+                         
+                </div>
+                <div class="product-description">
+                    <div class="product-information">
+                        <!-- use ul if we want dottet information use ol if we want numbered inofmrtaion -->
+                        <ol>
+                           
+                            <li><p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel mi vel felis volutpat aliquet eu et mi. Integer euismod nunc ut libero blandit, ac bibendum lectus euismod.</p></li>
+                            <li><p><strong>Price:</strong> $99.99</p></li>
+                            <li><p><strong>Size:</strong> Medium</p></li>
+                            <li><p><strong>Weight:</strong> 1.5 lbs</p></li>
+                            <li><p><strong>Color:</strong> Blue</p></li>
+                            <li><p><strong>Material:</strong> Cotton</p></li>
+                            <li><p><strong>Brand:</strong> ABC Brand</p></li>
+                            <li><p><strong>Model:</strong> XYZ123</p></li>
+                            <li><p><strong>Availability:</strong> In Stock</p></li>
+
+                            <!-- Add more details as needed -->
+                        </ol>
+                        <!-- <img src="image/product1.png" alt="bakhur-taiba"> -->
+                    </div>
+                </div>
+                <img src="image/product-details-cart.png" alt="add" id="bakhur-taiba-add-cart"class="add-cart" >
+                
+              
+
+            </div>
+
+          
+
+            <div class="product-box" onclick="showProduct(this)" data-category="Cap">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi-cDJWliBfrS-bEsLBbE_i-i6inWFj-KbzdHRii-pYeV-vr1A7CgGa2vQNDRnz9JByRZNezZWcCv36hKK_WfOVOUJu3-w6h9dgZ0mnMR-IPfiSiYiMRZWaDqPYrA-PFQkKFD9g3LLZJF6T5oAtWY8vEgjhvpzfgMeLeq81DB4yq_uJL0P-8Z3nXOtKNGM/s320/product3.png"
+                 class="product-img">
+                 <div class="product-img-text-rounded">
+                    <h5>40%</h5>
+                 </div>
+                <h2 class="product-tittle">Single cloor prayer mat(blue)
+                </h2>
+                <span class="price">690.tk</span>
+                <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisici
+                    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab
+                     repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                     ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+                <img src="image/shopping-bag-regular-24 (1).png" alt="add" class="add-cart" onclick="showitemadded()">
+
+            </div>
+
+
+            <div class="product-box" onclick="showProduct(this)">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjsfKIeaW4ItDfCgjXGZzgD1bMz8MpzyXz1pK-Z6g04zxY1gfEJri5bZ8SLlNC8RPEjXiZVslIu2n08ap6XJvJP6XxGSXxG8KvuX0zbtqRurp49EOE90LARDgrZxvYCvQ-9POkYpwfsHuOopKvE_s6WBLeQs0939NOXWF6ik-REJt83nX9LTiNgbuBcsUg/s320/product2.jpg"
+                 class="product-img">
+                <h2 class="product-tittle">Islam the light black t-shirt
+                </h2>
+                <span class="price">233.tk</span>
+
+                <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisici
+                    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab
+                     repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                     ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+
+                
+                <img src="image/shopping-bag-regular-24 (1).png" alt="add" class="add-cart" onclick="showLoading()">
+                
+               
+
+            </div>
+
+
+            <div class="product-box" onclick="showProduct(this)">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnzN0d6kVFXcJ3n5AyiJ6XSlMullLyR73b8HVjMcRtaA23JnKXkLEbwoIrrzPtapZJsruLPlNm9KgN8QRrTanB6rtHgN9S5O09ZVmCd-wHZo_nHZyF3MNHJzlrXR7EgRZrW7iVxjRmSTXcOkxBqd-5TiD5d41PzPc7pADXsZYKkzPnsnutFKchQ3hVGvw/s320/product4.jpg"
+                 class="product-img">
+                <h2 class="product-tittle">assalamualaikum t-shirt(black)
+                </h2>
+                <span class="price">233.tk</span>
+
+                <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisici
+                    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab
+                     repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                     ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+                <img src="image/shopping-bag-regular-24 (1).png" alt="add" class="add-cart" onclick="showitemadded()">
+
+            </div>
+            
+
+            <div class="product-box" onclick="showProduct(this)" >
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjHQS2QbWMVdeV1xqjrDVhC2nQZZm7Cwi1LAMCUOcrJg4kyuqzs08OaPC4T3J-yRR7lZmNC5feVs_-QZJ4H2fa8sOt5I4JEkEU7hEDYJQdK_6hpIAu0uQ2jn_eQ1nz7WWDrIWKOOheaJoETGxSS0BijPSuc4ktGcW2QcrjEWvy9bj_EHnx3vhUxJJ1PHtE/s320/product6.jpg"
+                 class="product-img">
+                <h2 class="product-tittle">argentina Full Sleep Jarcy T-shirt(blue)
+                </h2>
+                <span class="price">450.tk</span>
+
+                <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisici
+                    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab
+                     repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                     ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+
+                <img src="image/shopping-bag-regular-24 (1).png" alt="add" class="add-cart" onclick="showitemadded()">
+
+            </div>
+            
+
+            <div class="product-box" onclick="showProduct(this)">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDl1aLctKFQ8oysWpovtpR0GoDWu5S9WlWcgv4F_7Vqgg7qP9qJuolVnIVH7MUD-cTYHCXyxOOxQYEAIsS-RP6vZx1YNhiOcwRdcftVdkWb-ReYgVqad_a5voTAKrxCprIhGQ6Xvf_obBf0kZhQSFRuBPIi3lcXpcZ4-uXWpER5XF441y1ZTNr1cbxE9k/s320/product8.jpg"
+                 class="product-img">
+                <h2 class="product-tittle">ride or die t-shirt(white)
+                </h2>
+                <span class="price">233.tk</span>
+                <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisici
+                    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab
+                     repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                     ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+                <img src="image/shopping-bag-regular-24 (1).png" alt="add" class="add-cart" onclick="showitemadded()">
+
+            </div>
+            
+
+
+            <div class="product-box" onclick="showProduct(this)">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjsfKIeaW4ItDfCgjXGZzgD1bMz8MpzyXz1pK-Z6g04zxY1gfEJri5bZ8SLlNC8RPEjXiZVslIu2n08ap6XJvJP6XxGSXxG8KvuX0zbtqRurp49EOE90LARDgrZxvYCvQ-9POkYpwfsHuOopKvE_s6WBLeQs0939NOXWF6ik-REJt83nX9LTiNgbuBcsUg/s320/product2.jpg"
+                 class="product-img">
+                <h2 class="product-tittle">Islam the light black t-shirt
+                </h2>
+                <span class="price">233.tk</span>
+                <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisici
+                    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab
+                     repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                     ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+                <img src="image/shopping-bag-regular-24 (1).png" alt="add" class="add-cart" onclick="showitemadded()">
+
+            </div>
+            
+
+
+            <div class="product-box" onclick="showProduct(this)">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjsfKIeaW4ItDfCgjXGZzgD1bMz8MpzyXz1pK-Z6g04zxY1gfEJri5bZ8SLlNC8RPEjXiZVslIu2n08ap6XJvJP6XxGSXxG8KvuX0zbtqRurp49EOE90LARDgrZxvYCvQ-9POkYpwfsHuOopKvE_s6WBLeQs0939NOXWF6ik-REJt83nX9LTiNgbuBcsUg/s320/product2.jpg"
+                 class="product-img">
+                <h2 class="product-tittle">Islam the light black t-shirt
+                </h2>
+                <span class="price">233.tk</span>
+                <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisici
+                    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab
+                     repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                     ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+                <img src="image/shopping-bag-regular-24 (1).png" alt="add" class="add-cart" onclick="showitemadded()">
+
+            </div>
+            
+
+
+            <div class="product-box" onclick="showProduct(this)">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjsfKIeaW4ItDfCgjXGZzgD1bMz8MpzyXz1pK-Z6g04zxY1gfEJri5bZ8SLlNC8RPEjXiZVslIu2n08ap6XJvJP6XxGSXxG8KvuX0zbtqRurp49EOE90LARDgrZxvYCvQ-9POkYpwfsHuOopKvE_s6WBLeQs0939NOXWF6ik-REJt83nX9LTiNgbuBcsUg/s320/product2.jpg"
+                 class="product-img">
+                <h2 class="product-tittle">Islam the light black t-shirt
+                </h2>
+                <span class="price">233.tk</span>
+                <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisici
+                    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab
+                     repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+                     ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+                <img src="image/shopping-bag-regular-24 (1).png" alt="add" class="add-cart" onclick="showitemadded()">
+
+            </div>
+            
+            
+
+            
+
+            
+            <!--add more productsss-->
+
+
+
+
+
+
+
+        
+
+
+
+        </div>
+        
+        
+
+<!----pagination------------->
+        <div class="page-btn" id="page-btn">
+            <span id="page1" class="page" onclick="showPage(1)">1</span>
+            <span id="page2" class="page" onclick="showPage(2)">2</span>
+            <span id="page3" class="page" onclick="showPage(3)">3</span>
+            <span id="nextPage" class="page" onclick="nextPage()">&#8594;</span>
+        </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-------------------------------------footer------------------>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-row">
+            <div class="footer-col footer-details">
+                <img src="image/logo 2.png" alt="">
+                <p></p>
+                <div class="footer-app-install">
+                    <h3 class="app-header">Install App</h3>
+                    <p>From app store or google play</p>
+                    <div class="footer-app-row">
+                    <a href="#" target="_self"><img src="image/appstore.jpg" alt=""></a>
+                    <a href="#" target="_self"><img src="image/googleplay.jpg" alt=""></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Useful link</h4>
+                <ul>
+                    <li><a href="product.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="Refund-Return.html">Refund & Return</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="help.html">Help & FAQ</a></li>
+                    <li><a href="#">Orders and shipping</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="tel:+01618635225"><i class="fa-solid fa-phone fa-sm" style="margin-right: 5px;"></i> +88-01618-635225</a></li>
+                    <li><a href="mailto:salsabilcloth10@gmail.com"><i class="fa-regular fa-envelope fa-sm" style="margin-right: 5px;"></i>salsabilcloth10@gmail.com</a></li>
+                    <li><a href="http://facebook.com/salsabil110" target="_blank"><i class="fab fa-facebook-f fa-sm" style="margin-right: 5px;"></i>salsabil110</a></li>
+                    <li><a><i class="fa-solid fa-location-dot fa-sm" style="margin-right: 5px;"></i>Mirpur, Dhaka, Bangladesh, 1218</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>follow us</h4>
+                <div class="social-links">
+                    <a href="http://facebook.com/salsabil110" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+
+        <div class="copyright">
+            <div class="copyright-text">
+                <p>copyright<span>&copy</span>.all rights reserved</p>
+            </div>
+            <div class="developed-by">
+                <p>developed by | <span>sinan saifee</span></p>
+            </div>
+        </div>  
+</footer>
+
+
+
+
+
+
+
+       
+ 
+   
+<!--js for hamburger menu --> 
+<script>
+    var menuItem = document.getElementById("menuItem");
+    
+    function showmenu(){
+    menuItem.style.right = '0'}
+    function hidemenu(){
+        menuItem.style.right = '-300px'
+    }
+       
+    </script>     
+   
+<!--cart page script-->
+<script>
+    var cart = document.getElementById('cart')
+    function showcart(){
+     cart.style.right = '0'
+    };
+ 
+    function closecart(){
+     cart.style.right = '-450px'
+    };
+     
+ </script>  
+
+
+
+<!---cart script -->
+<script>
+   // making  add to cart 
+//cart working js
+if  (document.readyState =="loading"){
+    document.addEventListener(
+        'DOMContentLoaded', ready);
+}
+else {
+    ready();
+}
+//removing item from cart 
+function ready(){
+    var removeItems = document.querySelectorAll('.remove-item');
+
+    for (var i = 0; i < removeItems.length; i++) {
+        removeItems[i].addEventListener('click', removeItem);
+    }
+//quantity change 
+var quantityInputs = document.querySelectorAll('.cart-quantity'); // Corrected function name
+for (var i = 0; i < quantityInputs.length; i++) {
+    var input = quantityInputs[i];
+    input.addEventListener('change', quantityChanged);
+}
+//add item to cart 
+var addCart = document.getElementsByClassName('add-cart');
+for (var i = 0; i < addCart.length; i++) {
+    var button = addCart[i];
+    button.addEventListener("click", addCartClicked);
+}
+saveCartItems()
+}
+
+
+
+
+
+
+    function removeItem(event) {
+        var buttonClicked = event.target;
+        buttonClicked.parentElement.remove();
+        updateCartboxCount()
+        updatetotal()
+        saveCartItems();
+    }
+    function quantityChanged(event) {
+    var input = event.target;
+    if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1;
+       
+    }
+    updatetotal();
+    saveCartItems();
+    }
+
+
+//add cart function
+function addCartClicked(event){
+    var button = event.target;
+    var shopProducts = button.parentElement;
+    var tittle = shopProducts.getElementsByClassName('product-tittle')[0].innerText;
+    var price = shopProducts.getElementsByClassName('price')[0].innerText;
+    var productImg = shopProducts.getElementsByClassName('product-img')[0].src
+    addProductToCart(tittle, price, productImg);
+    updateCartboxCount()
+     showitemadded()
+    updatetotal();
+    saveCartItems();
+    
+}
+function addProductToCart(tittle, price, productImg){
+    var cartShopBox = document.createElement('div');
+    cartShopBox.classList.add('cartbox');
+    var cartItems = document.getElementsByClassName('cartcontent')[0];
+    var cartItemsNames = cartItems.getElementsByClassName('cart-product-tittle');
+    for ( var i =0; i< cartItemsNames.length; i++){
+        if (cartItemsNames[i].innerText == tittle){
+            alert('item is already added to cart');
+            return;
+        }
+    }
+var cartBoxContent = `<img src="${productImg}" alt="no photo" class="cart-img">
+            <div class="detail-box">
+                <div class="cart-product-tittle">${tittle}</div>
+                <div class="cart-price">${price}</div>
+                <input 
+                type="number"
+                 name="" 
+                 id="" 
+                 value="1" 
+                 class="cart-quantity"
+                 />
+            </div>
+            <!--remove item-->
+            <img src="image/removeitem.png" alt="remove" class="remove-item">`
+            cartShopBox.innerHTML = cartBoxContent;
+            cartItems.append(cartShopBox);
+            cartShopBox.getElementsByClassName('remove-item')[0].addEventListener('click', removeItem)
+            cartShopBox.getElementsByClassName('cart-quantity')[0].addEventListener('change', quantityChanged)
+saveCartItems()
+}
+
+
+
+
+
+
+
+    
+    //update total
+    function updatetotal() {
+    var cartcontent = document.querySelector('.cartcontent');
+    var cartBoxes = cartcontent.querySelectorAll('.cartbox');
+    var total = 0;
+
+    for (var i = 0; i < cartBoxes.length; i++) {
+        var cartBox = cartBoxes[i];
+        var priceElement = cartBox.querySelector('.cart-price');
+        var quantityElement = cartBox.querySelector('.cart-quantity');
+        var price = parseFloat(priceElement.innerText.replace('tk', '')); // Remove 'tk' and parse as a float
+        var quantity = quantityElement.value;
+        total += price * quantity; // Calculate the subtotal for each item and add it to the total
+    }
+    total = Math.round(total *100) / 100;
+    document.querySelector('.total-price').innerText = 'tk' + total.toFixed(2); // Display the total with two decimal places
+    //save item to local storage
+    localStorage.setItem('cartTotal', total);
+}
+
+
+
+
+
+//keep item in cart even after refreshing 
+// Save cart items to local storage
+function saveCartItems() {
+    var cartContent = document.getElementsByClassName('cartcontent')[0];
+    var cartBoxes = cartContent.getElementsByClassName('cartbox');
+    var cartItems = [];
+
+    for (var i = 0; i < cartBoxes.length; i++) {
+        var cartBox = cartBoxes[i];
+        var tittleElement = cartBox.getElementsByClassName('cart-product-tittle')[0];
+        var priceElement = cartBox.getElementsByClassName('cart-price')[0];
+        var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
+        var productImg = cartBox.getElementsByClassName('cart-img')[0].src;
+
+        var item = {
+            tittle: tittleElement.innerText,
+            price: priceElement.innerText,
+            quantity: quantityElement.value,
+            productImg: productImg,
+        };
+        cartItems.push(item);
+    }
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+}
+
+// Load cart items from local storage
+function loadCartItems() {
+    var cartItems = localStorage.getItem('cartItems');
+    if (cartItems) {
+        cartItems = JSON.parse(cartItems);
+
+        for (var i = 0; i < cartItems.length; i++) {
+            var item = cartItems[i];
+            addProductToCart(item.tittle, item.price, item.productImg);
+
+            // Get the last cart box element (the one that was just added)
+            var cartBoxes = document.getElementsByClassName('cartbox');
+            var cartBox = cartBoxes[cartBoxes.length - 1];
+
+            // Access the quantity element within the cartBox
+            var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
+            quantityElement.value = item.quantity;
+        }
+    }
+
+    var cartTotal = localStorage.getItem('cartTotal');
+    if (cartTotal) {
+        document.getElementsByClassName('total-price')[0].innerText = 'tk' + cartTotal;
+    }
+}
+
+// Call the loadCartItems function when the page loads to populate the cart
+loadCartItems(); 
+
+
+
+
+
+
+
+///////////////////////////js for checkout
+
+document.getElementById('checkoutbtn').addEventListener('click', function () {
+    // Navigate to checkout_2.html
+    window.location.href = 'checkout_2.html';
+
+    // Save cart items to session storage (temporary storage that persists across page loads within the same session)
+    sessionStorage.setItem('cartItems', JSON.stringify(getCartItems()));
+});
+
+// Function to get cart items
+function getCartItems() {
+    var cartContent = document.getElementsByClassName('cartcontent')[0];
+    var cartBoxes = cartContent.getElementsByClassName('cartbox');
+    var cartItems = [];
+
+    for (var i = 0; i < cartBoxes.length; i++) {
+        var cartBox = cartBoxes[i];
+        var tittleElement = cartBox.getElementsByClassName('cart-product-tittle')[0];
+        var priceElement = cartBox.getElementsByClassName('cart-price')[0];
+        var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
+        var productImg = cartBox.getElementsByClassName('cart-img')[0].src;
+
+        var item = {
+            tittle: tittleElement.innerText,
+            price: priceElement.innerText,
+            quantity: quantityElement.value,
+            productImg: productImg,
+        };
+        cartItems.push(item);
+    }
+
+    return cartItems;
+}
+
+
+
+
+var activebtn1 = document.getElementsByClassName('activebtn1');
+var activebtn2 = document.getElementsByClassName('activebtn2');
+var activebtn3 = document.getElementsByClassName('activebtn3');
+
+function activebtn2(){
+    activebtn2[0].style.background = '#ff523b';
+    activebtn1[0].style.background = '#fff';
+}
+
+
+
+
+</script>
+
+<!----catagory filter-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the category filter dropdown and product boxes
+        const categoryFilter = document.getElementById("categoryFilter");
+        const productBoxes = document.querySelectorAll(".product-box");
+
+        // Add an event listener to filter products when the dropdown selection changes
+        categoryFilter.addEventListener("change", function () {
+            const selectedCategory = categoryFilter.value;
+
+            // Loop through each product box
+            productBoxes.forEach(function (productBox) {
+                const productCategory = productBox.getAttribute("data-category");
+
+                if (selectedCategory === "all" || selectedCategory === productCategory) {
+                    productBox.style.display = "block";
+                } else {
+                    productBox.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+<!---serch bar script-->
+<script>
+    let selectedCategory = "all";
+
+    function filterProducts() {
+        var input = document.getElementById("searchInput");
+        var filter = input.value.toLowerCase();
+        var productBoxes = document.querySelectorAll(".product-box");
+        var noMatchMessage = document.getElementById("noMatchMessage");
+
+        var matchFound = false;
+
+        productBoxes.forEach(function (productBox) {
+            var productNameElement = productBox.querySelector(".product-tittle");
+            var productName = productNameElement.textContent.toLowerCase();
+
+            if (productName.includes(filter) && (selectedCategory === "all" || productBox.getAttribute("data-category") === selectedCategory)) {
+                productBox.style.display = "block";
+                var markedProductName = markMatchingLetters(productName, filter);
+                productNameElement.innerHTML = markedProductName;
+                matchFound = true;
+            } else {
+                productBox.style.display = "none";
+            }
+        });
+
+        if (!matchFound) {
+            noMatchMessage.style.display = "block";
+            var inputValueSpan = noMatchMessage.querySelector("span");
+            inputValueSpan.textContent = input.value;
+        } else {
+            noMatchMessage.style.display = "none";
+        }
+        updateProductBoxCount();
+     
+    }
+    
+    
+
+    function markMatchingLetters(text, filter) {
+        var regex = new RegExp(filter, "gi");
+        return text.replace(regex, function (match) {
+            return "<mark>" + match + "</mark>";
+        });
+    }
+
+    function updateCategory() {
+        selectedCategory = document.getElementById("categoryFilter").value;
+        filterProducts();
+        updateProductBoxCount();
+        removeScript();
+    }
+
+    document.getElementById("searchButton").addEventListener("click", filterProducts);
+    document.getElementById("searchInput").addEventListener("input", filterProducts);
+    document.getElementById("categoryFilter").addEventListener("change", updateCategory);
+
+
+
+    function clearSearch() {
+        document.getElementById("searchInput").value = "";
+        var clearButton = document.getElementById('clearButton');
+        clearButton.style.display = 'none';
+        filterProducts();
+   
+       
+    }
+
+    document.getElementById("clearButton").addEventListener("click", clearSearch);
+    document.getElementById("categoryFilter").value = selectedCategory;
+
+
+    function removeScript() {
+      // Find the script element by ID
+      var scriptToRemove = document.getElementById('categoryFilterScript');
+      scriptToRemove.remove();
+
+
+    }
+    
+</script>
+<script>
+    function handleSearchInput() {
+            var searchbar = document.getElementById('searchInput').value;
+            var clearButton = document.getElementById('clearButton');
+
+            if (searchbar === '') {
+                clearButton.style.display = 'none';
+            } else {
+                clearButton.style.display = 'inline-block';
+            }
+            
+        }
+    
+    
+</script>
+
+
+
+
+
+<!------page galler page btn gallery shifter -->
+<script>
+    // Variables to keep track of the current page
+    let currentPage = 1;
+    const totalPages = 3; // Total number of pages
+
+    // Function to show a specific page
+    function showPage(page) {
+        // Hide all product boxes
+        const productBoxes = document.querySelectorAll(".product-box");
+        productBoxes.forEach((productBox) => {
+            productBox.style.display = "none";
+        });
+
+        // Remove the active class from all page buttons
+        const pageButtons = document.querySelectorAll(".page");
+        pageButtons.forEach((button) => {
+            button.classList.remove("active");
+        });
+
+        // Show product boxes for the selected page
+        const productsPerPage = 16; // Change this according to the number of products per page
+        const startIndex = (page - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+
+        for (let i = startIndex; i < endIndex; i++) {
+            if (productBoxes[i]) {
+                productBoxes[i].style.display = "block";
+            }
+        }
+        document.getElementById(`page${page}`).classList.add("active");
+        // Update the current page variable
+        currentPage = page;
+        window.scrollTo(0, 0);
+        updatePageNumbers(); // Save the current page number
+        updateProductBoxCount();
+        showNoProducts();
+       
+    }
+
+    // Function to go to the next page
+    function nextPage() {
+        if (currentPage < totalPages) {
+            showPage(currentPage + 1);
+        }
+    }
+
+    // Initially, show the first page and load the saved page
+    let savedPage = localStorage.getItem("currentPage");
+    if (savedPage) {
+        savedPage = parseInt(savedPage);
+        if (savedPage >= 1 && savedPage <= totalPages) {
+            showPage(savedPage);
+        } else {
+            showPage(1); // Default to the first page
+        }
+    } else {
+        showPage(1); // Default to the first page
+    }
+
+    function saveCurrentPage() {
+        localStorage.setItem("currentPage", currentPage.toString());
+    }
+
+    function updatePageNumbers() {
+        // ... (Your existing code to update page numbers)
+        saveCurrentPage(); // Save the current page number
+    }
+
+
+
+
+
+
+
+    
+</script>
+
+
+
+<!-- product detials script -->
+
+
+
+<script>
+
+    //closing details
+    function closeProductInfo(){
+        location.reload()
+        // Get the current URL
+        var currentUrl = window.location.href;
+        
+        // Get the base URL without any query parameters or hash
+        var baseUrl = currentUrl.split(/[?#]/)[0];
+
+        // Navigate to the base URL without any query parameters or hash
+        window.location.href = baseUrl;
+    }
+ function showProductDetails(productBox) {
+    
+    var mainImageSrc = productBox.querySelector('.product-img').src;
+    var title = productBox.querySelector('.product-tittle').textContent;
+    var price = productBox.querySelector('.price').textContent;
+    var rating = productBox.querySelector('.product-box-rating').innerHTML;
+    var smallImagesElement = productBox.querySelector('.small-img-row');
+    var colorContentElement = productBox.querySelector('.color-content');
+    var sizeDropdownElement = productBox.querySelector('.size-dropdown');
+    var description = productBox.querySelector('.product-details-description').textContent;
+    var productCategoryName = document.querySelector('#productdetailscategoryname').textContent;
+    var tittleElement = document.querySelector('#tittleElement').textContent;
+    var productInformation = document.querySelector('.product-information').innerHTML;
+
+    document.getElementById('mainImage').innerHTML = '<img src="' + mainImageSrc + '" alt="product image" class="mainImage" id="main-Image">';
+    document.getElementById('product-category-name').innerHTML = productCategoryName + '<p id="productDataName">' + tittleElement + '</p>';
+    document.getElementById('productTitle').innerHTML = '<h2 id="product-details-tittle">' + title + '</h2>';
+    document.getElementById('productPrice').innerHTML = '<h2 id="product-details-price">' + price + '</h2>';
+    document.getElementById('productRating').innerHTML = rating;
+
+    if (smallImagesElement) {
+        document.getElementById('productSmallImages').innerHTML = smallImagesElement.innerHTML;
+    } else {
+        document.getElementById('productSmallImages').innerHTML = "";
+    }
+
+    if (colorContentElement) {
+        document.getElementById('productColorContent').innerHTML = colorContentElement.innerHTML;
+    } else {
+        document.getElementById('productColorContent').innerHTML = "";
+    }
+
+    if (sizeDropdownElement) {
+        document.getElementById('selectSizeDropdown').innerHTML = sizeDropdownElement.outerHTML;
+    } else {
+        document.getElementById('selectSizeDropdown').innerHTML = "";
+    }
+
+    document.getElementById('productDescription').innerHTML = '<h2>Product details</h2>' + description;
+    document.getElementById('addToCartButton').innerHTML = '<img src="image/product-details-cart.png" alt="add" id="add-cart-details" class="add-cart" onclick="addCartDetails()">';
+    document.getElementById('product-details-information').innerHTML = productInformation;
+    document.getElementById('product-details-information-container').style.display = 'block';
+    document.getElementById('details-header').textContent = 'Product Information';
+
+    productBox.style.display = 'none';
+    addCartOpactity();
+    
+}
+
+function addCartOpactity(){
+    var selectSizeDropdown = document.getElementById('selectSizeDropdown');
+    var sizeOption = selectSizeDropdown.querySelector('.size-dropdown option:checked');
+    var addCartElement = document.getElementById('add-cart-details');
+
+    if (sizeOption) {
+        if (!sizeOption || sizeOption.value === "") {
+            addCartElement.style.opacity = '0.5';
+            addCartElement.style.cursor = 'not-allowed';
+        }
+        else{
+            addCartElement.style.opacity = '1';
+            addCartElement.style.cursor = 'pointer';
+        }
+    }
+  
+}
+
+
+
+    function addCartDetails() {
+    var selectSizeDropdown = document.getElementById('selectSizeDropdown');
+    var sizeOption = selectSizeDropdown.querySelector('.size-dropdown option:checked');
+
+    if (sizeOption) {
+        if (!sizeOption || sizeOption.value === "") {
+            alert("Select size before adding item.");
+            return;
+        }
+    }
+  
+    
+
+    var productDataName = document.getElementById('productDataName').textContent;
+    var addCartButton = document.getElementById(productDataName + '-add-cart');
+    document.querySelector('.product-tittle').textContent = document.getElementById('product-details-tittle').textContent;
+    document.querySelector('.price').textContent = document.getElementById('product-details-price').textContent;
+
+    if (addCartButton) {
+        addCartButton.click();
+    }
+}
+
+
+
+    //get id of the elemt that iwll hide like serach bar or to show elment like back button
+
+    var searchbar = document.getElementById('searchbar-category-container');
+var pagination = document.getElementById('page-btn');
+var backBtn = document.getElementById('back-btn');
+var shopTitle = document.getElementById('shopTittle');
+var shopContainer = document.getElementById('shop-content');
+var redirectionText = document.getElementById('category-redirection-text');
+
+// Attach click event to each product box
+var productBoxes = document.querySelectorAll('.product-box');
+var color = document.getElementById('color');
+
+productBoxes.forEach(function(productBox) {
+    productBox.addEventListener('click', function() {
+        if (event.target.closest('.add-cart')) {
+            return;
+        }
+        showProductDetails(productBox);
+        window.scrollTo(0, 0);
+        searchbar.style.display = 'none';
+        pagination.style.display = 'none';
+        backBtn.style.display = 'block';
+        shopTitle.textContent = 'Related';
+        document.getElementById('section-tittle').style.marginTop = '2rem';
+        redirectionText.classList.remove('category-redirection-text');
+        redirectionText.classList.add('info-category-redirection-text');
+       
+        
+        var selectedCategory = productBox.getAttribute("data-category");
+
+        var visibleCount = 0;  
+        productBoxes.forEach(function(otherProductBox) {
+            const productCategory = otherProductBox.getAttribute("data-category");
+
+            if (selectedCategory === "all" || selectedCategory === productCategory) {
+                if (productBox === otherProductBox) {
+                    otherProductBox.style.display = "none";
+                } else if (visibleCount < 4) {
+                    otherProductBox.style.display = "block";
+                    visibleCount++;
+                } else {
+                    otherProductBox.style.display = "none";
+                }
+            } else {
+                otherProductBox.style.display = "none";
+            }
+        });
+        updateProductBoxCount();
+        showNoProducts();
+    });
+});
+
+</script>
+<!----------------------script for product details slection---------------------->
+<script>
+    // js for milliliter select
+
+    function sizeselectMl() {
+    var sizeDropdown = document.getElementById('selectSizeDropdown');
+    var dropdown = sizeDropdown.querySelector(".size-dropdown");
+    var selectedOption = dropdown.options[dropdown.selectedIndex];
+
+    if (selectedOption && selectedOption.value.trim() !== "") {
+        var productTitle = document.getElementById("product-details-tittle");
+        var productPrice = document.getElementById("product-details-price");
+        var productTitleText = productTitle.innerText;
+
+        productTitleText = productTitleText.replace(/\(200ml\)|\(500ml\)/i, '');
+
+        productTitleText = productTitleText + ' (' + selectedOption.value + ')';
+        productTitle.textContent = productTitleText;
+        productPrice.textContent = selectedOption.getAttribute("data-price");
+    } else {
+        var productTitle = document.getElementById("product-details-tittle");
+        var productPrice = document.getElementById("product-details-price");
+        var productTitleText = productTitle.innerText;
+
+        productTitleText = productTitleText.replace(/\(200ml\)|\(500ml\)/i, '');
+
+        productPrice.textContent = selectedOption.getAttribute("data-price");
+        productTitle.textContent = productTitleText;
+        
+    }
+    addCartOpactity()
+}
+
+
+// js for t-shirt size select sm-xxl
+
+function sizeselectxl() {
+    var sizeDropdown = document.getElementById('selectSizeDropdown');
+    var dropdown = sizeDropdown.querySelector(".size-dropdown");
+    var selectedOption = dropdown.options[dropdown.selectedIndex];
+
+    if (selectedOption && selectedOption.value.trim() !== "") {
+        var productTitle = document.getElementById("product-details-tittle");
+        var productPrice = document.getElementById("product-details-price");
+        var productTitleText = productTitle.innerText;
+
+        productTitleText = productTitleText.replace(/\(small\)|\(medium\)|\(large\)|\(xl\)|\(xxl\)/i, '');
+
+        productTitleText = productTitleText + ' (' + selectedOption.value + ')';
+        productTitle.textContent = productTitleText;
+        productPrice.textContent = selectedOption.getAttribute("data-price");
+    } else {
+        var productTitle = document.getElementById("product-details-tittle");
+        var productPrice = document.getElementById("product-details-price");
+        var productTitleText = productTitle.innerText;
+
+        productTitleText = productTitleText.replace(/\(small\)|\(medium\)|\(large\)|\(xl\)|\(xxl\)/i, '');
+
+        productPrice.textContent = selectedOption.getAttribute("data-price");
+        productTitle.textContent = productTitleText;
+        
+    }
+    addCartOpactity()
+}
+
+
+
+
+// color selection 
+
+function selectvariationprimary(variation) {
+  var smallImgsection = document.getElementById('productSmallImages');
+  var smallImgCol = smallImgsection.querySelectorAll('.small-img-col');
+
+  smallImgCol.forEach(function (col) {
+    var smallImg = col.querySelector('#small-img-' + variation);
+    if (smallImg) {
+      smallImg.click();
+    }
+  });
+
+  var productTitle = document.getElementById('product-details-tittle');
+  var existingVariation = productTitle.dataset.variation;
+  if (existingVariation) {
+    productTitle.innerText = productTitle.innerText.replace('(' + existingVariation + ')', '');
+  }
+
+  productTitle.innerText += ' (' + variation + ')';
+  productTitle.dataset.variation = variation;
+
+  var colorContent = document.getElementById('productColorContent');
+  var colorElements = colorContent.querySelectorAll('.color');
+  colorElements.forEach(function (colorElement) {
+    colorElement.classList.remove('active-color');
+  });
+
+  var selectedColor = colorContent.querySelector('.color-' + variation);
+  if (selectedColor) {
+    selectedColor.classList.add('active-color');
+  }
+  addCartOpactity()
+}
+
+
+
+
+
+    </script>
+
+
+ 
+
+
+
+
+
+<!-- home category redrection -->
+ <script id="categoryFilterScript">
+      // Fetch and display the selected category from the query parameter
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category');
+
+    if (category) {
+      // Display the selected category
+      document.getElementById('selected-category').innerText = category;
+     const redirectionText = document.getElementById('category-redirection-text');
+     const filterOption = document.getElementById('filter-container')
+
+      // Filter and display products based on the selected category
+      const products = document.querySelectorAll('.product-box');
+      products.forEach(product => {
+        const productCategory = product.getAttribute('data-category');
+        if (productCategory === category) {
+          product.style.display = 'block';
+          redirectionText.style.display = 'block';
+          filterOption.style.display = 'none';
+
+        } else {
+          product.style.display = 'none';
+          redirectionText.style.display = 'block';
+          filterOption.style.display = 'none';
+        }
+      });
+    }
+  });
+ </script>
+
+
+
+
+
+<!----------------------------------------------------------------featured product script-------------->
+<script>
+    // Get the URL parameter value for 'name'
+    var urlSearchParams = new URLSearchParams(window.location.search);
+    var productName = urlSearchParams.get('product_name');
+
+    // Wait for the document to fully load
+    document.addEventListener('DOMContentLoaded', function () {
+        var product = document.getElementById(productName);
+        product.click();
+    });
+</script>
+
+
+
+
+
+
+<!----------------------------------------cart count script and no item message display --------------------->
+<script>
+    
+    function updateCartboxCount() {
+  var parentDiv = document.getElementById('cartcontent');
+  var cartboxElements = parentDiv.querySelectorAll('.cartbox');
+  var countSpan = document.getElementById('count');
+  var countNumber = countSpan.value;
+
+  countSpan.textContent = cartboxElements.length;
+  localStorage.setItem('CartitemValue', cartboxElements.length);
+
+ 
+  var mySpan = document.getElementById('count');
+var checkoutbtn = document.getElementById('checkoutbtn');
+var totalDiv = document.getElementById('totalDiv');
+var noItemmsg = document.getElementById('noItemmsg');
+var clearCart = document.getElementById('clear-cart');
+
+if (mySpan.textContent.trim() === '0') {
+    checkoutbtn.style.display = 'none';
+    totalDiv.style.display = 'none';
+    noItemmsg.style.display = 'block';
+    clearCart.style.display = 'none';
+} else {
+    checkoutbtn.style.display = 'flex'; 
+    totalDiv.style.display = 'flex';
+    noItemmsg.style.display = 'none';
+    clearCart.style.display = 'block';
+}
+}
+
+
+      document.addEventListener('DOMContentLoaded', function () {
+      updateCartboxCount();
+      });
+
+
+      
+      
+  </script>
+
+
+<script>
+   document.getElementById('clear-cart').addEventListener('click', function() {
+  // Ask for confirmation
+  var confirmed = confirm('Are you sure you want to clear the cart?');
+
+  if (confirmed) {
+    var elements = document.querySelectorAll('.remove-item');
+    elements.forEach(function(element) {
+      element.click();
+    });
+  } 
+});
+
+</script>
+
+
+<!----------------------------update product box count-->
+<script>
+   function updateProductBoxCount() {
+    var shopContentElement = document.getElementById('shop-content');
+    var productBoxElements = shopContentElement.querySelectorAll('.product-box');
+    var productBoxNumberElement = document.getElementById('productBoxNumber');
+    var displayedProductBoxCount = 0;
+
+    // Loop through each ".product-box" element and check if it's displayed
+    productBoxElements.forEach(function (element) {
+        if (window.getComputedStyle(element).display !== 'none') {
+            displayedProductBoxCount++;
+        }
+    });
+    productBoxNumberElement.textContent = displayedProductBoxCount;
+}
+updateProductBoxCount();
+   
+</script>
+
+<!----------------------------------show no related products------------->
+
+<script>
+    function showNoProducts(){
+        var spanItem = document.getElementById('productBoxNumber').textContent;
+        var noProductMsg = document.getElementById('noProductMsg');
+
+        if(spanItem === '0'){
+            noProductMsg.style.display = 'block'
+        }
+        else{
+            noProductMsg.style.display = 'none'
+        }
+    }
+</script>
+
+
+<!-------------------------image zoom effect----------->
+<script>
+    const mainImageContainer = document.getElementById('main-img-container');
+    const mainImage = document.getElementById('mainImage');
+    mainImageContainer.addEventListener('mousemove' , (e) =>{
+        const x = e.clientX - e.target.offsetLeft;
+        const y = e.clientY - e.target.offsetTop;
+        
+        mainImage.style.transformOrigin = `${x}px ${y}px`
+        mainImage.style.transform = 'scale(2)'
+
+    })
+    mainImageContainer.addEventListener('mouseleave' , () =>{
+        mainImage.style.transformOrigin = 'center'
+        mainImage.style.transform = 'scale(1)'
+    })
+    
+    
+</script>
+
+
+
+
+ 
+<script src="main.js"></script>
+
+    
+</body>
+</html>

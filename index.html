@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-oqzEGR5HQIh1pfAeRd9A5iH1rZcv0lgd3vUr+/kjTYQJBCtQp7MAtLc+DWH7N/ADom+NRf7Jv0XVEemWlm2BvA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ff523b; /* Updated background color */
+    }
+
+    .icon-container {
+      position: fixed;
+      right: 13px;
+      bottom: 13px;
+      background: var(--red);
+      border-radius: 50%;
+      transition: 0.5s;
+      color: #fff;
+      padding: 10px 13px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    .icon {
+      width: 15px;
+      height: 3px;
+      background-color: #fff;
+      margin: 3px 0;
+      border-radius: 2px;
+    }
+
+    .caller-btn, .call-icon {
+      position: fixed;
+      right: -50px;
+      bottom: 13px;
+      background: var(--red);
+      border-radius: 50%;
+      transition: 0.5s;
+      color: #fff;
+      padding: 10px 13px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .caller-btn {
+      text-decoration: none;
+    }
+
+    .chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 300px;
+      background-color: #fff;
+    }
+
+    .chat-content {
+      padding: 10px;
+    }
+
+    .chat-messages {
+      height: 150px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 70%;
+      padding: 8px;
+      margin-right: 5px;
+    }
+
+    button {
+      padding: 10px; /* Updated padding for better styling */
+      background-color: var(--red);
+      color: #000; /* Updated text color to black for better visibility */
+      border: none;
+      cursor: pointer;
+      display: none;
+    }
+
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 20px;
+      color: #aaa;
+      cursor: pointer;
+    }
+  </style>
+  <title>Icon with Chat</title>
+</head>
+<body>
+
+  <!-- Icon with three dots -->
+  <div class="icon-container" onclick="toggleIcons()">
+    <div class="icon"></div>
+    <div class="icon"></div>
+    <div class="icon"></div>
+  </div>
+
+  <!-- Call icon -->
+  <a href="tel:+8801618635225" class="caller-btn">
+    <div class="call-icon">
+      <i class="fas fa-phone"></i>
+    </div>
+  </a>
+
+  <!-- Message icon -->
+  <div id="chat-popup" class="chat-popup">
+    <div class="chat-content">
+      <!-- AI Chat goes here -->
+      <div id="chat-messages" class="chat-messages"></div>
+      <input type="text" id="user-input" placeholder="Ask a question..." oninput="toggleAskButton()">
+      <button id="ask-button" onclick="askQuestion()">Ask</button>
+      <span class="close" onclick="closeChat()">&times;</span>
+    </div>
+  </div>
+
+  <script>
+    function toggleIcons() {
+      document.querySelector('.caller-btn').style.right = '13px';
+      document.querySelector('.call-icon').style.right = '-50px';
+      document.querySelector('.chat-popup').style.display = 'block';
+    }
+
+    function closeChat() {
+      document.querySelector('.chat-popup').style.display = 'none';
+    }
+
+    function toggleAskButton() {
+      const askButton = document.getElementById('ask-button');
+      const userInput = document.getElementById('user-input').value;
+      askButton.style.display = userInput.trim() === '' ? 'none' : 'inline-block';
+    }
+
+    function askQuestion() {
+      const userInput = document.getElementById('user-input').value;
+      const chatMessages = document.getElementById('chat-messages');
+      
+      // Simulate AI response (you can replace this with actual AI logic)
+      const aiResponse = getAIResponse(userInput);
+
+      // Display user's question and AI response in the chat
+      chatMessages.innerHTML += `<div><strong>User:</strong> ${userInput}</div>`;
+      chatMessages.innerHTML += `<div>${aiResponse}</div>`;
+
+      // Clear the user input
+      document.getElementById('user-input').value = '';
+
+      // Hide the "Ask" button after asking a question
+      document.getElementById('ask-button').style.display = 'none';
+    }
+
+    function getAIResponse(userInput) {
+      // Basic rule-based responses (you can expand this)
+      if (userInput.toLowerCase().includes('hello')) {
+        return "Hello! How can I assist you?";
+      } else if (userInput.toLowerCase().includes('how are you')) {
+        return "I'm just a computer program, but thanks for asking!";
+      } else if (userInput.toLowerCase().includes('your name') || userInput.toLowerCase().includes('who are you')) {
+        return "I'm a chatbot designed to assist you.";
+      } else {
+        return "I'm sorry, I didn't understand that. Can you please ask another question?";
+      }
+    }
+  </script>
+</body>
+</html>
