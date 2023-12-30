@@ -298,6 +298,28 @@
         document.getElementById('count').textContent = sharedValue;
     
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function (event) {
+            // Perform your custom validation here
+
+            // Example: Check if the email is valid
+            const emailInput = document.querySelector('input[name="email"]');
+            if (!isValidEmail(emailInput.value)) {
+                alert("Please enter a valid email address.");
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+
+        function isValidEmail(email) {
+            // Add your email validation logic here
+            // You may use a regular expression or any other method
+            return true; // For simplicity, return true in this example
+        }
+    });
+</script>
 
 <script src="main.js"></script>
 </body>
