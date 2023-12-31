@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Dashboard</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name="robots" content="noindex">
+    
+    <!----tittle favicon icon -->
+
+     <!-- Add this inside the <head> tag -->
+<audio id="notificationSound">
+    <source src="audio/notification.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
+  </audio>
+  
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel='stylesheet' type='text/css' media='screen' href='css/adminStyle.css'>
+    <link rel="shortcut icon" type="image/x-icon" href="image/sample tittle logo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+</head>
+<style>
+    /* =============== Navigation ================ */
+
+    * {
+font-family: "Ubuntu", sans-serif;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+    :root {
+--blue: #2a2185;
+--white: #fff;
+--gray: #f5f5f5;
+--black1: #222;
+--black2: #999;
+}
+.navigation {
+position: fixed;
+width: 300px;
+height: 100%;
+background: var(--blue);
+border-left: 10px solid var(--blue);
+transition: 0.5s;
+overflow: hidden;
+}
+.navigation.active {
+width: 80px;
+}
+
+.navigation ul {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+}
+
+.navigation ul li {
+position: relative;
+width: 100%;
+list-style: none;
+border-top-left-radius: 30px;
+border-bottom-left-radius: 30px;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered {
+background-color: var(--white);
+}
+
+.navigation ul li:nth-child(1) {
+margin-bottom: 40px;
+pointer-events: none;
+}
+
+.navigation ul li a {
+position: relative;
+display: block;
+width: 100%;
+display: flex;
+text-decoration: none;
+color: var(--white);
+}
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+color: var(--blue);
+}
+
+.navigation ul li a .icon {
+position: relative;
+display: block;
+min-width: 60px;
+height: 60px;
+line-height: 75px;
+text-align: center;
+}
+.navigation ul li a .icon i {
+font-size: 1.75rem;
+}
+
+.navigation ul li a .title {
+position: relative;
+display: block;
+padding: 0 10px;
+height: 60px;
+line-height: 60px;
+text-align: start;
+white-space: nowrap;
+}
+
+/* --------- curve outside ---------- */
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before {
+content: "";
+position: absolute;
+right: 0;
+top: -50px;
+width: 50px;
+height: 50px;
+background-color: transparent;
+border-radius: 50%;
+box-shadow: 35px 35px 0 10px var(--white);
+pointer-events: none;
+}
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
+content: "";
+position: absolute;
+right: 0;
+bottom: -50px;
+width: 50px;
+height: 50px;
+background-color: transparent;
+border-radius: 50%;
+box-shadow: 35px -35px 0 10px var(--white);
+pointer-events: none;
+}
+
+</style>
+<body id="body">
+
+    <!-- Loading gif -->
+    <div id="loading">
+        <img src="loading copy.gif" alt="Loading" width="50" height="50">
+        <p>Signing out</p>
+    </div>
+     <!-- =============== Navigation ================ -->
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </span>
+                        <span class="title">ADMIN</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </span>
+                        <span class="title">Orders</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-shirt"></i>
+                        </span>
+                        <span class="title">Products</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </span>
+                        <span class="title">Analytics</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-gear"></i>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <li onclick="logout()">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        
+   
+<!-- Add this button inside the body tag -->
+<div class="order-container">
+    <button id="toggleButton" class="btn btn-link text-dark">
+        <i class="fas fa-bars fa-2x"></i>
+    </button>
+    <div class="statictics-container">
+<div class="container mt-3">
+    <div class="card shadow rounded card-hover">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Total Sales</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text mb-0" id="totalNotificationCount">0</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+    </div>
+
+   <div class="button-container">
+    <!-- Search Bar -->
+<div class="container mt-3">
+    <input type="text" class="form-control" id="searchInput" placeholder="Search by day or time">
+  </div>
+  
+  
+    <button onclick="clearNotifications()" class="btn btn-primary">Clear Notifications</button>
+    <button onclick="clearRealtimeDatabase()" class="btn btn-primary">Clear Real-time Database</button>
+   </div>
+
+    <div id="orderDetailsContainer" style="display: none;"></div>
+    <div id="notificationsContainer"></div>
+</div>
+
+<script>
+    // Check login state from local storage
+    var loggedIn = localStorage.getItem('Aknviauth172vGGh');
+    var idn = 'NCPcolomi1v56b';
+    
+    if (loggedIn !== idn ){
+        document.getElementById('body').style.display = 'none';
+        window.location.href = 'auth.html';
+    }
+</script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+                // Initialize Firebase with your configuration
+                var firebaseConfig = {
+            apiKey: "AIzaSyDkzYyAPXcGoNE1efAuAp5t6YVT3SYhOvg",
+            authDomain: "salsabil-order.firebaseapp.com",
+            databaseURL: "https://salsabil-order-default-rtdb.firebaseio.com",
+            projectId: "salsabil-order",
+            storageBucket: "salsabil-order.appspot.com",
+            messagingSenderId: "336133726144",
+            appId: "1:336133726144:web:be467b085f67ca97657225",
+            measurementId: "G-P0561X9RTQ"
+};
+   
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+const notificationsContainer = document.getElementById('notificationsContainer');
+const orderDetailsContainer = document.getElementById('orderDetailsContainer');
+
+// Listen for new orders
+database.ref('orders').on('child_added', (snapshot) => {
+    const orderData = snapshot.val();
+    const orderId = snapshot.key;
+
+    // Display a notification
+    displayNotification(orderData, orderId);
+});
+
+// Update the displayNotification function
+// Update the displayNotification function
+function displayNotification(orderData, orderId) {
+    const notificationDiv = document.createElement('div');
+    notificationDiv.className = 'notification';
+    notificationDiv.setAttribute('data-order-id', orderId);
+
+    // Check if the creation time is already stored in local storage
+    let creationTime = localStorage.getItem(`notification_${orderId}_creation_time`);
+
+    // If not stored, set the creation time and store it in local storage
+    if (!creationTime) {
+        creationTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka' });
+        localStorage.setItem(`notification_${orderId}_creation_time`, creationTime);
+    }
+
+    notificationDiv.innerHTML = `
+        <i class="fa-solid fa-circle-check" style="color: #7da01c;"></i>
+        <p id="notify-text">${orderData.name} placed an order on ${creationTime}</p>
+        <button class="btn btn-link text-danger" onclick="removeNotification('${orderId}')" id="removeOrder">
+            <i class="fas fa-trash"></i>
+        </button>
+    `;
+    
+    notificationDiv.addEventListener('click', (event) => {
+        // Show order details when the notification is clicked
+        if (event.target.closest('.fa-trash')) {
+            return;
+        }
+        displayOrderDetails(orderData, orderId);
+    });
+
+    // Play the notification sound
+    document.getElementById('notificationSound').play();
+
+    // Insert the new notification at the beginning of the notificationsContainer
+    notificationsContainer.insertBefore(notificationDiv, notificationsContainer.firstChild);
+    updateTotalNotificationCount();
+}
+
+
+function removeNotification(orderId) {
+    // Get a reference to the specific order node in the database
+    const orderRef = database.ref('orders').child(orderId);
+
+    // Find the corresponding notification element in the HTML
+    const notificationElement = document.querySelector(`.notification[data-order-id="${orderId}"]`);
+
+    // Remove the order from the database
+    orderRef.remove()
+        .then(function () {
+            // Hide the corresponding notification element in the HTML
+            if (notificationElement) {
+                location.reload()
+                updateTotalNotificationCount();
+                alert('Notification removed successfully!');
+            }
+        })
+        .catch(function (error) {
+            console.error('Error removing notification:', error.message);
+        });
+}
+
+function clearNotifications() {
+    notificationsContainer.innerHTML = '';
+    updateTotalNotificationCount();
+}
+
+
+// Function to display order details
+// Function to display order details
+function displayOrderDetails(orderData, orderId) {
+    // Clear previous order details
+    orderDetailsContainer.innerHTML = '';
+
+    const orderDetailsDiv = document.createElement('div');
+    orderDetailsDiv.className = 'orderDetails';
+    orderDetailsDiv.innerHTML = `
+        <button id="closeButton" onclick="closeOrderDetails()" class="btn btn-danger">Close</button>
+        <table class="user-info">
+            <tbody>
+                <tr>
+                    <td><strong>Username:</strong></td>
+                    <td>${orderData.name}</td>
+                </tr>
+                <tr>
+                    <td><strong>Address:</strong></td>
+                    <td>${orderData.address}</td>
+                </tr>
+                <tr>
+                    <td><strong>Shipping Address:</strong></td>
+                    <td>${orderData.shippingAddress}</td>
+                </tr>
+                <tr>
+                    <td><strong>Email:</strong></td>
+                    <td>
+                        <a href="mailto:${orderData.email}?subject=Sal%20sabil%20order%20invoice&amp;body=Your%20order%20was%20successfully%20placed.%20You%20will%20receive%20your%20order%20at%20your%20shipping%20address.%20Your%20order%20details:%0A${encodeURIComponent(getProductListHTML(orderData.products))}">
+                            ${orderData.email}
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Phone Number:</strong></td>
+                    <td>${orderData.number}</td>
+                </tr>
+                <tr>
+                    <td><strong>City:</strong></td>
+                    <td>${orderData.citySelect}</td>
+                </tr>
+                <tr>
+                    <td><strong>Total:</strong></td>
+                    <td>${orderData.total}</td>
+                </tr>
+                <tr>
+                    <td><strong>Shipping:</strong></td>
+                    <td>${orderData.shipping}</td>
+                </tr>
+                <tr>
+                    <td><strong>Grand Total:</strong></td>
+                    <td>${orderData.grandTotal}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>Orders</strong></p>
+        <ul style="list-style: none;">${getProductListHTML(orderData.products)}</ul>
+    `;
+
+    orderDetailsContainer.appendChild(orderDetailsDiv);
+
+    // Show the order details container
+    orderDetailsContainer.style.display = 'block';
+    window.scrollTo(0, 0);
+}
+
+
+function getProductListHTML(products) {
+    return products.map(product => `<li><img src="${product.productImage}" alt="${product.productName}" class="notificationDetailsImage">  ${product.productName} - ${product.productPrice}</li>`).join('');
+}
+
+
+// Function to get the current date in a readable format
+function getCurrentDate() {
+    const now = new Date();
+    return now.toISOString().slice(0, 19).replace('T', ' ');
+}
+// Function to get the current date and time in Bangladesh Standard Time (BST)
+function getCurrentDateInBangladesh() {
+    const now = new Date();
+    
+    // Set the time zone to Bangladesh Standard Time (BST)
+    const options = { timeZone: 'Asia/Dhaka', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
+
+    // Format the date and time
+    const formattedDate = now.toLocaleString('en-US', options);
+
+    return formattedDate;
+}
+function closeOrderDetails() {
+    orderDetailsContainer.style.display = 'none';
+}
+
+// Function to clear the real-time database
+function clearRealtimeDatabase() {
+        if (confirm('Are you sure you want to clear the real-time database?')) {
+            // Get a reference to the "orders" node in the database
+            var ordersRef = firebase.database().ref('orders');
+
+            // Remove all data from the "orders" node
+            ordersRef.remove()
+                .then(function () {
+                    alert('Real-time database cleared successfully!');
+                    updateTotalNotificationCount()
+                })
+                .catch(function (error) {
+                    console.error('Error clearing the real-time database:', error.message);
+                });
+        }
+    }
+
+    // Function to update the total notification count
+function updateTotalNotificationCount() {
+    const totalNotificationCount = document.querySelectorAll('.notification').length;
+    document.getElementById('totalNotificationCount').innerText = totalNotificationCount;
+}
+
+    </script>
+    <script>
+       function logout() {
+            // Ask for confirmation
+            var confirmLogout = confirm("Are you sure you want to sign out?");
+            
+            if (confirmLogout) {
+                // Show loading spinner
+                document.getElementById('loading').style.display = 'block';
+                
+                // Delay for 5 seconds (5000 milliseconds)
+                setTimeout(function() {
+                    // Remove the "loggedIn" item from local storage
+                    localStorage.removeItem('Aknviauth172vGGh');
+                    // Redirect to the login page
+                    window.location.href = 'auth.html';
+                }, 5000);
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Add an input event listener to the search bar
+          document.getElementById('searchInput').addEventListener('input', function() {
+            // Get the search querya
+            const searchQuery = this.value.toLowerCase();
+      
+            // Iterate through each notification
+            document.querySelectorAll('.notification').forEach(function(notification) {
+              // Get the text content of the notification
+              const notificationText = notification.textContent.toLowerCase();
+      
+              // Show or hide the notification based on the search query
+              if (notificationText.includes(searchQuery)) {
+                notification.style.display = 'flex';
+              } else {
+                notification.style.display = 'none';
+              }
+            });
+          });
+        });
+      </script>
+
+      <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const navigation = document.querySelector('.navigation');
+        const toggleButton = document.getElementById('toggleButton');
+
+        // Add click event listener to the toggle button
+        toggleButton.addEventListener('click', function () {
+            // Toggle the 'active' class on the navigation element
+            navigation.classList.toggle('active');
+        });
+    });
+
+    
+      </script>
+      
+      
+    
+</body>
+</html>

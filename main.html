@@ -96,6 +96,14 @@
    
     
 
+       <!--------------------------------------------search bar--------------------------------->
+<form id="searchForm">
+    <div class="searchHomeContainer">
+        <input type="text" id="searchBarHome" name="searchInput" placeholder="Search for products">
+    <button onclick="search()" type="submit" id="searchBtnHome"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+</form>
+
 <!--------------------------------------------------------------hero section-------------------->
 
        <div class="hero-section" id="hero-section">
@@ -126,6 +134,15 @@
         <img src="https://via.placeholder.com/800x400/FFBD27/FFFFFF?text=Slide+4" alt="Slide 4">
     </div>
 </div>
+
+
+
+
+
+
+
+
+
     
 <!-------------categories----------------->
 <h1 style="text-align: center; font-family: 'Quicksand', sans-serif;">Our Categories</h1>
@@ -681,6 +698,12 @@ form.addEventListener('submit', (e) => {
             });
         }
     });
+</script>
+<script>
+   function search(){
+    var search =  document.getElementById('searchBarHome').value;
+    window.location.href = `product.html?search=${search}`
+   }
 </script>
 
 

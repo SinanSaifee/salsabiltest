@@ -1552,6 +1552,38 @@ updateProductBoxCount();
 
 
 
+<!-------------------------------------home searcg script-------------------------->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Get the current URL
+    var currentUrl = window.location.href;
+
+    // Function to extract the value of the 'search' query parameter
+    function getSearchQueryValue(url) {
+        var searchParams = new URLSearchParams(url.search);
+        return searchParams.get('search');
+    }
+
+    // Get the search query value
+    var searchQuery = getSearchQueryValue(new URL(currentUrl));
+
+    // Check if the search query exists
+    if (searchQuery) {
+        // Get the search input element
+        var searchBar = document.getElementById('searchInput');
+
+        // Set the value of the search input to the search query
+        searchBar.value = searchQuery;
+        filterProducts();
+    }
+});
+
+</script>
+
+
+
+
+
  
 <script src="main.js"></script>
 

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Dashboard</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+    <!----tittle favicon icon -->
+
+     <!-- Add this inside the <head> tag -->
+<audio id="notificationSound">
+    <source src="audio/notification.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
+  </audio>
+  
+
+    <link rel="shortcut icon" type="image/x-icon" href="image/sample tittle logo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+       /* Add your styles here */
+.notification {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+}
+
+.notification img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.orderDetails {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+    </style>
+
+    <style>
+        /* =============== Navigation ================ */
+
+        * {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+        :root {
+  --blue: #2a2185;
+  --white: #fff;
+  --gray: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+}
+.navigation {
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  background: var(--blue);
+  border-left: 10px solid var(--blue);
+  transition: 0.5s;
+  overflow: hidden;
+}
+.navigation.active {
+  width: 80px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered {
+  background-color: var(--white);
+}
+
+.navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+}
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: var(--blue);
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+}
+.navigation ul li a .icon i {
+  font-size: 1.75rem;
+}
+
+.navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+
+/* --------- curve outside ---------- */
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none;
+}
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+}
+
+    </style>
+
+    <style>
+        .order-container{
+           margin-left: 400px;
+            justify-content: center;
+            
+            max-width: 1068px;
+           
+        }
+        .button-container{
+            justify-content: space-between;
+            display: flex;
+            margin-bottom: 20px;
+        }
+    </style>
+    <!-- <link rel="stylesheet" href="admin_dashboard.css"> -->
+</head>
+<body>
+
+     <!-- =============== Navigation ================ -->
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </span>
+                        <span class="title">ADMIN</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </span>
+                        <span class="title">Orders</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-shirt"></i>
+                        </span>
+                        <span class="title">Products</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </span>
+                        <span class="title">Analytics</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-gear"></i>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+   
+<!-- Add this button inside the body tag -->
+<div class="order-container">
+   <div class="button-container">
+    <button onclick="clearNotifications()" class="red-btn">Clear Notifications</button>
+    <button onclick="clearRealtimeDatabase()" class="red-btn">Clear Real-time Database</button>
+   </div>
+
+    <div id="orderDetailsContainer" style="display: none;"></div>
+    <div id="notificationsContainer"></div>
+</div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+                // Initialize Firebase with your configuration
+                var firebaseConfig = {
+            apiKey: "AIzaSyDkzYyAPXcGoNE1efAuAp5t6YVT3SYhOvg",
+            authDomain: "salsabil-order.firebaseapp.com",
+            databaseURL: "https://salsabil-order-default-rtdb.firebaseio.com",
+            projectId: "salsabil-order",
+            storageBucket: "salsabil-order.appspot.com",
+            messagingSenderId: "336133726144",
+            appId: "1:336133726144:web:be467b085f67ca97657225",
+            measurementId: "G-P0561X9RTQ"
+};
+   
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+const notificationsContainer = document.getElementById('notificationsContainer');
+const orderDetailsContainer = document.getElementById('orderDetailsContainer');
+
+// Listen for new orders
+database.ref('orders').on('child_added', (snapshot) => {
+    const orderData = snapshot.val();
+    const orderId = snapshot.key;
+
+    // Display a notification
+    displayNotification(orderData, orderId);
+});
+
+// Update the displayNotification function
+// Update the displayNotification function
+function displayNotification(orderData, orderId) {
+    const notificationDiv = document.createElement('div');
+    notificationDiv.className = 'notification';
+
+    // Get the current date and time
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' });
+
+    notificationDiv.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #7da01c;"></i> ${orderData.name} placed an order on ${formattedDate}`;
+    notificationDiv.addEventListener('click', () => {
+        // Show order details when the notification is clicked
+        displayOrderDetails(orderData, orderId);
+    });
+
+    // Play the notification sound
+    document.getElementById('notificationSound').play();
+
+    // Insert the new notification at the beginning of the notificationsContainer
+    notificationsContainer.insertBefore(notificationDiv, notificationsContainer.firstChild);
+}
+
+
+// Add the clearNotifications function
+function clearNotifications() {
+    notificationsContainer.innerHTML = '';
+}
+
+
+
+// Function to display order details
+// Function to display order details
+function displayOrderDetails(orderData, orderId) {
+    // Clear previous order details
+    orderDetailsContainer.innerHTML = '';
+
+    const orderDetailsDiv = document.createElement('div');
+    orderDetailsDiv.className = 'orderDetails';
+    orderDetailsDiv.innerHTML = `
+        <button id="closeButton" onclick="closeOrderDetails()">Close</button>
+        <p><strong>Username:</strong> ${orderData.name}</p>
+        <p><strong>Address:</strong> ${orderData.address}</p>
+        <p><strong>Shipping Address:</strong> ${orderData.shippingAddress}</p>
+        <p><strong>Email:</strong> ${orderData.email}</p>
+        <p><strong>Phone Number:</strong> ${orderData.number}</p> <!-- Check the key here -->
+        <p><strong>City:</strong> ${orderData.citySelect}</p>
+        <p><strong>Total:</strong> ${orderData.total}</p>
+        <p><strong>Shipping:</strong> ${orderData.shipping}</p>
+        <p><strong>Grand Total:</strong> ${orderData.grandTotal}</p>
+        <p><strong>Products:</strong></p>
+        <ul>${getProductListHTML(orderData.products)}</ul>
+    `;
+
+    orderDetailsContainer.appendChild(orderDetailsDiv);
+
+    // Show the order details container
+    orderDetailsContainer.style.display = 'block';
+}
+
+
+// Function to get HTML for the product list
+function getProductListHTML(products) {
+    return products.map(product => `<li>${product.productName} - ${product.productPrice}</li>`).join('');
+}
+
+// Function to get the current date in a readable format
+function getCurrentDate() {
+    const now = new Date();
+    return now.toISOString().slice(0, 19).replace('T', ' ');
+}
+// Function to get the current date and time in Bangladesh Standard Time (BST)
+function getCurrentDateInBangladesh() {
+    const now = new Date();
+    
+    // Set the time zone to Bangladesh Standard Time (BST)
+    const options = { timeZone: 'Asia/Dhaka', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
+
+    // Format the date and time
+    const formattedDate = now.toLocaleString('en-US', options);
+
+    return formattedDate;
+}
+function closeOrderDetails() {
+    orderDetailsContainer.style.display = 'none';
+}
+
+// Function to clear the real-time database
+function clearRealtimeDatabase() {
+        if (confirm('Are you sure you want to clear the real-time database?')) {
+            // Get a reference to the "orders" node in the database
+            var ordersRef = firebase.database().ref('orders');
+
+            // Remove all data from the "orders" node
+            ordersRef.remove()
+                .then(function () {
+                    alert('Real-time database cleared successfully!');
+                })
+                .catch(function (error) {
+                    console.error('Error clearing the real-time database:', error.message);
+                });
+        }
+    }
+
+    </script>
+</body>
+</html>
