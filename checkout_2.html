@@ -392,64 +392,63 @@
     }
 
     document.getElementById('placeOrderBtn').addEventListener('click', function (event) {
-    event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); // Prevent the default form submission
 
-    // Check if all required input fields are completed
-    if (validateForm()) {
-        // Get form data
-        var formData = new FormData(document.getElementById('checkoutForm'));
+        // Check if all required input fields are completed
+        if (validateForm()) {
+            // Get form data
+            var formData = new FormData(document.getElementById('checkoutForm'));
+            const currentDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka' });
 
-        // Create an object with the form data
-        var orderData = {
-            name: formData.get('name'),
-            address: formData.get('address'),
-            shippingAddress: formData.get('shipping-address'),
-            email: formData.get('email'),
-            number: formData.get('number'),
-            citySelect: formData.get('citySelect'),
-            total: document.getElementById('totalPrice').textContent,
-            shipping: document.getElementById('shippingPrice').textContent,
-            grandTotal: document.getElementById('grandTotal').textContent,
-            products: [],
-        };
-
-        // Add product information from the order summary table
-        var productRows = document.querySelectorAll('#cartItemsContainer tr');
-
-        productRows.forEach(function (row) {
-            var product = {
-                productImage: row.querySelector('img').src,
-                productName: row.querySelector('#productName').textContent,
-                productPrice: row.querySelector('td:last-child').textContent,
+            // Create an object with the form data
+            var orderData = {
+                name: formData.get('name'),
+                address: formData.get('address'),
+                shippingAddress: formData.get('shipping-address'),
+                email: formData.get('email'),
+                number: formData.get('number'),
+                citySelect: formData.get('citySelect'),
+                total: document.getElementById('totalPrice').textContent,
+                shipping: document.getElementById('shippingPrice').textContent,
+                grandTotal: document.getElementById('grandTotal').textContent,
+                products: [],
+                timestamp: currentDate, // Add the timestamp property
             };
-            orderData.products.push(product);
-        });
 
-        // Get a reference to the "orders" node in the database
-        var ordersRef = firebase.database().ref('orders');
+            // Add product information from the order summary table
+            var productRows = document.querySelectorAll('#cartItemsContainer tr');
 
-        // Push the order data to the database
-        ordersRef.push(orderData)
-            .then(function () {
-                 // List of items to clear
-            const itemsToClear = ['cartTotal', 'cartItems', 'CartitemValue'];
-
-            // Loop through the items and remove them from local storage
-            itemsToClear.forEach(item => {
-                localStorage.removeItem(item);
-
-             showSuccessMessage()
-
+            productRows.forEach(function (row) {
+                var product = {
+                    productImage: row.querySelector('img').src,
+                    productName: row.querySelector('#productName').textContent,
+                    productPrice: row.querySelector('td:last-child').textContent,
+                };
+                orderData.products.push(product);
             });
 
-            })
-            .catch(function (error) {
-                console.error('Error placing the order:', error.message);
-            });
-    } else {
-        alert('Please fill in all required fields.');
-    }
-});
+            // Get a reference to the "orders" node in the database
+            var ordersRef = firebase.database().ref('orders');
+
+            // Push the order data to the database
+            ordersRef.push(orderData)
+                .then(function () {
+                    // List of items to clear
+                    const itemsToClear = ['cartTotal', 'cartItems', 'CartitemValue'];
+
+                    // Loop through the items and remove them from local storage
+                    itemsToClear.forEach(item => {
+                        localStorage.removeItem(item);
+                        showSuccessMessage();
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Error placing the order:', error.message);
+                });
+        } else {
+            alert('Please fill in all required fields.');
+        }
+    });
 
 // Function to validate the form
 function validateForm() {

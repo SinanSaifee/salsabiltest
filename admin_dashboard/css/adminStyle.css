@@ -62,6 +62,13 @@
     justify-content: center;
     max-width: 1068px;
 }
+@media(max-width: 1300px){
+      .order-container{
+        position: relative;
+        margin-left: 200px;
+      }  
+}
+
 
 .orderDetails p {
     margin-top: 20px;
@@ -115,8 +122,4 @@
     text-align: center;
     z-index: 9999999;
 
-}
-#toggleButton{
-    z-index: 999999;
-    color: #fff;      
 }
