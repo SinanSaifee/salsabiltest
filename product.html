@@ -57,7 +57,7 @@
                 <li ids="list"><a href="contact.html">Contact</a><br><br></li>
             </ul>
             <div class="second-nav">
-            <div><img src="image/cartlogo2.png" id="cart-icon" onclick="showcart()" title="cart"><span id="count" class="count">0</span></div>
+            <div><img src="image/cartlogo2.png" id="cart-icon" onclick="showcart()" title="cart"><span id="count" class="count">0</span><span style="color: #fff;" id="totalCount">tk0.00</span></div>
             <!--hamburger icon -->
             <img src="image/hamburger2.png" class="menu-icon" alt="menu" onclick="showmenu()">
             </div> 
@@ -689,6 +689,7 @@ saveCartItems()
         buttonClicked.parentElement.remove();
         updateCartboxCount()
         updatetotal()
+        updatetotalCount();
         saveCartItems();
     }
     function quantityChanged(event) {
@@ -711,8 +712,9 @@ function addCartClicked(event){
     var productImg = shopProducts.getElementsByClassName('product-img')[0].src
     addProductToCart(tittle, price, productImg);
     updateCartboxCount()
-     showitemadded()
+    showitemadded()
     updatetotal();
+    updatetotalCount();
     saveCartItems();
     
 }
@@ -1463,14 +1465,28 @@ if (mySpan.textContent.trim() === '0') {
     noItemmsg.style.display = 'none';
     clearCart.style.display = 'block';
 }
+
 }
 
 
       document.addEventListener('DOMContentLoaded', function () {
       updateCartboxCount();
+      updatetotalCount();
       });
 
-
+function updatetotalCount(){
+    var totalprice = document.getElementById('total-price');
+    var totalCount = document.getElementById('totalCount');
+    totalCount.textContent = totalprice.textContent;
+    localStorage.setItem('totalCount', totalCount.textContent);
+    if (totalprice.textContent === 'tk0') {
+        totalCount.textContent = 'tk0.00';
+    }
+    // If it's not 'tk0', keep the existing text content
+    else {
+        totalCount.textContent = totalCount.textContent;
+    }
+}
       
       
   </script>

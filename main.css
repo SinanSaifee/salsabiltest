@@ -63,6 +63,7 @@ nav{
     flex: 1;
     text-align: right;
     margin-top: 15px;
+    margin-right: 50px;
 }
 nav ul{
     display: inline-block;
@@ -73,7 +74,10 @@ nav ul{
 nav .second-nav{
     display: inline-block;
 }
-@media(max-width: 825px){
+@media(max-width: 930px){
+    nav{
+        margin-right: 0;
+    }
      nav .second-nav{
         display: flex;
         justify-content: flex-end;
@@ -82,6 +86,9 @@ nav .second-nav{
     }
     nav .second-nav div img{
         margin-bottom: 10px;
+    }
+    #totalCount{
+        display: none;
     }
 }
 
@@ -332,7 +339,7 @@ border-width: 5px;
     padding: 10px;
 }
 /*----media query fro hamburger------*/
-@media only screen and (max-width: 825px){
+@media only screen and (max-width: 930px){
     nav ul{
         display: block;
         position: fixed; /*give absolute if nedded*/
@@ -660,7 +667,7 @@ border-width: 5px;
     position: absolute;
   }
 
-  @media(max-width: 825px){
+  @media(max-width: 930px){
     .count{
         margin-top: 20px;
         position: absolute;
@@ -2446,7 +2453,7 @@ figure.slider figure .banner-text {
     cursor: pointer;
     z-index: 9999;
   }
-  @media(max-width: 500px){
+  @media(max-width: 930px){
     .caller-btn{
         display: block;
         padding: 11px 12px;
@@ -2490,7 +2497,7 @@ figure.slider figure .banner-text {
 .dot-active {
     background-color: #717171;
 }
-@media(max-width: 820px){
+@media(max-width: 930px){
     .hero-section{
         display: none;
     }
@@ -2501,16 +2508,36 @@ figure.slider figure .banner-text {
 
 #searchForm {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
     background: var(--violet);
 }
 
 .searchHomeContainer {
     display: flex;
-    justify-content: flex-end;
     margin: 20px;
     width: 50%;
+}
+.phoneContainer{
+    margin-right: 50px;
+    display: flex;
+    gap: 10px;
+    
+}
+
+.phoneContainer a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+}
+.phoneContainer i{
+    color: #fff;
+    font-size: 20px;
+}
+@media(max-width: 930px){
+    .phoneContainer{
+        display: none;
+    }
 }
 
 #searchBarHome {
@@ -2541,7 +2568,7 @@ figure.slider figure .banner-text {
     margin: 0;
 }
 
-@media(max-width: 820px){
+@media(max-width: 930px){
     /* #searchForm {
         background: #fff;
     } */
@@ -2553,5 +2580,10 @@ figure.slider figure .banner-text {
     #searchBarHome{
         width: 100%;
     }
+}
+#totalCount{
+    position: relative;
+    right: -20px;
+    bottom: 20px;
 }
 

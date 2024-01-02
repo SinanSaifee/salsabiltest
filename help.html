@@ -44,7 +44,7 @@
                 <li ids="list"><a href="contact.html">Contact</a><br><br></li>
             </ul>
             <div class="second-nav">
-            <div><img src="image/cartlogo2.png" id="cart-icon" onclick="showcart()" title="cart"><span id="count" class="count">0</span></div>
+            <div><img src="image/cartlogo2.png" id="cart-icon" onclick="showcart()" title="cart"><span id="count" class="count">0</span><span style="color: #fff;" id="totalCount">tk0.00</span></div>
             <!--hamburger icon -->
             <img src="image/hamburger2.png" class="menu-icon" alt="menu" onclick="showmenu()">
             </div> 
@@ -303,15 +303,34 @@
 <!-------------------------script for etting number of cart items ---------------------->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-            // This code runs when the DOM is fully loaded
+     // This code runs when the DOM is fully loaded
+ 
+     // Retrieve the value from localStorage
+     var sharedValue = localStorage.getItem('CartitemValue');
+ 
+     // Check if sharedValue is null or undefined, and set it to '0'
+     var displayValue = sharedValue ? sharedValue : '0';
+ 
+     // Update the text content of the element with id 'count'
+     document.getElementById('count').textContent = displayValue;
+ });
+ 
+ </script>
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // This code runs when the DOM is fully loaded
 
-            // Retrieve the value from localStorage
-            var sharedValue = localStorage.getItem('CartitemValue');
+    // Retrieve the value from localStorage
+    var sharedTotal = localStorage.getItem('totalCount');
 
-            // Update the text content of the element with id 'count'
-            document.getElementById('count').textContent = sharedValue;
-        });
-</script>
+    // Check if sharedTotal is null, undefined, an empty string, or 'tk0', and set it to 'tk.00'
+    var displayTotal = (sharedTotal !== null && sharedTotal !== undefined && sharedTotal !== '' && sharedTotal !== 'tk0') ? sharedTotal : 'tk0.00';
+
+    // Update the text content of the element with id 'totalCount'
+    document.getElementById('totalCount').textContent = displayTotal;
+});
+
+ </script>
 
 
 
