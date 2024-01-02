@@ -39,8 +39,9 @@
         </div>
     </div>
    
-     
-
+ 
+    <div class="top-header">call us for help |  +88-01618-635225</div>    
+  
     <div class="container" id="container">
         <div class="navbar" id="navbar">
             <div class="logo" style="text-align: left;">
@@ -81,6 +82,8 @@
 
 
 
+
+
     <!---cart-->
 <div class="cart" id="cart">
     <div class="carttittle"><h3>Your cart</h3></div>
@@ -94,7 +97,7 @@
 </div>
        </div>
    
-    
+
 
        <!--------------------------------------------search bar--------------------------------->
 <form id="searchForm">
@@ -102,16 +105,10 @@
         <input type="text" id="searchBarHome" name="searchInput" placeholder="Search for products">
     <button onclick="search()" type="submit" id="searchBtnHome"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
-    <div class="phoneContainer">
-        <i class="fa-solid fa-phone"></i>
-        <a href="#">
-          +88-01618-635225
-        </a>
-    </div>
 </form>
 
 <!--------------------------------------------------------------hero section-------------------->
-
+<!-- 
        <div class="hero-section" id="hero-section">
         <div class="hero-content">
           <h1>Welcome to Salsabil</h1>
@@ -121,7 +118,23 @@
           <h1>Discover quality products that suit your <br>taste and style.</h1>
           <a href="product.html" class="red-btn">Explore Now</a>
         </div>
-      </div>
+      </div> -->
+
+<!----------------------------------------------comp image slider---------------------------------->
+<div class="comp-slider-container">
+    <div class="comp-slide">
+        <img src="https://via.placeholder.com/1920x500/FF5733/FFFFFF?text=Slide+1" alt="Slide 1">
+    </div>
+    <div class="comp-slide">
+        <img src="https://via.placeholder.com/1920x500/3498DB/FFFFFF?text=Slide+2" alt="Slide 2">
+    </div>
+    <div class="comp-slide">
+        <img src="https://via.placeholder.com/1920x500/2ECC71/FFFFFF?text=Slide+3" alt="Slide 3">
+    </div>
+    <div class="comp-slide">
+        <img src="https://via.placeholder.com/1920x500/FFBD27/FFFFFF?text=Slide+4" alt="Slide 4">
+    </div>
+</div>
 
 
 <!--------------------------------------------phone image slider---------------------------------->
@@ -720,6 +733,68 @@ form.addEventListener('submit', (e) => {
             slides.forEach((slide, i) => {
                 slide.style.display = i === index ? 'block' : 'none';
                 dots[i].classList.toggle('dot-active', i === index);
+            });
+        }
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const slides = document.querySelectorAll('.comp-slide');
+        const dotsContainer = document.createElement('div');
+        dotsContainer.classList.add('comp-dot-container');
+        document.querySelector('.comp-slider-container').appendChild(dotsContainer);
+
+        slides.forEach((slide, index) => {
+            const dot = document.createElement('span');
+            dot.classList.add('comp-dot');
+            dot.setAttribute('data-index', index);
+            dotsContainer.appendChild(dot);
+        });
+
+        let currentSlide = 0;
+        const dots = document.querySelectorAll('.comp-dot');
+        showSlide(currentSlide);
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 5000);
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                currentSlide = parseInt(dot.getAttribute('data-index'));
+                showSlide(currentSlide);
+            });
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchStartX - touchEndX > 50) {
+                // Swipe left
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            } else if (touchEndX - touchStartX > 50) {
+                // Swipe right
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            }
+        }
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'block' : 'none';
+                dots[i].classList.toggle('comp-dot-active', i === index);
             });
         }
     });

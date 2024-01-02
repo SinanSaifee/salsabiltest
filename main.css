@@ -173,7 +173,7 @@ border-width: 5px;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 5px 10px;
 }
-.hero-section {
+/* .hero-section {
     background-image: url(image/hero-banner.png);
     background-size: cover;
     background-position: center ;
@@ -256,7 +256,7 @@ border-width: 5px;
         margin-bottom: 10px;
       }
   }
-  
+   */
  
 .ci{
  display: flex;
@@ -2497,8 +2497,43 @@ figure.slider figure .banner-text {
 .dot-active {
     background-color: #717171;
 }
+.comp-slider-container {
+    margin: 20px;
+     overflow: hidden;
+     position: relative;
+     
+ }
+ 
+ .comp-slide {
+     display: none;
+ }
+ 
+ .comp-slide img {
+     width: 100%;
+     height: auto;
+ }
+ 
+ .comp-dot-container {
+     text-align: center;
+     margin-top: 20px;
+ }
+ 
+ .comp-dot {
+     height: 10px;
+     width: 10px;
+     margin: 0 5px;
+     background-color: #bbb;
+     border-radius: 50%;
+     display: inline-block;
+     transition: background-color 0.6s ease;
+     cursor: pointer;
+ }
+ 
+ .comp-dot-active {
+     background-color: #717171;
+ }
 @media(max-width: 930px){
-    .hero-section{
+    .comp-slider-container{
         display: none;
     }
     .slider-container{
@@ -2510,35 +2545,15 @@ figure.slider figure .banner-text {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    background: var(--violet);
+    
 }
 
 .searchHomeContainer {
     display: flex;
     margin: 20px;
-    width: 50%;
-}
-.phoneContainer{
-    margin-right: 50px;
-    display: flex;
-    gap: 10px;
-    
+    width: 100%;
 }
 
-.phoneContainer a{
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-}
-.phoneContainer i{
-    color: #fff;
-    font-size: 20px;
-}
-@media(max-width: 930px){
-    .phoneContainer{
-        display: none;
-    }
-}
 
 #searchBarHome {
     padding: 10px;
@@ -2546,7 +2561,7 @@ figure.slider figure .banner-text {
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
     outline: none;
-    width: 50%;
+    width: 100%;
 }
 
 #searchBarHome::placeholder {
@@ -2585,5 +2600,16 @@ figure.slider figure .banner-text {
     position: relative;
     right: -20px;
     bottom: 20px;
+}
+.top-header{
+    background: #ff623b;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+@media(max-width: 930px){
+    .top-header{
+        display: none;
+    }
 }
 
