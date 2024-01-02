@@ -67,10 +67,10 @@
     border-bottom-left-radius: 30px;
     }
     
-    .navigation ul li:hover,
+    /* .navigation ul li:hover,
     .navigation ul li.hovered {
     background-color: var(--white);
-    }
+    } */
     
     .navigation ul li:nth-child(1) {
     margin-bottom: 40px;
@@ -85,10 +85,10 @@
     text-decoration: none;
     color: var(--white);
     }
-    .navigation ul li:hover a,
+    /* .navigation ul li:hover a,
     .navigation ul li.hovered a {
     color: var(--blue);
-    }
+    } */
     
     .navigation ul li a .icon {
     position: relative;
@@ -112,7 +112,7 @@
     white-space: nowrap;
     }
     
-    /* --------- curve outside ---------- */
+    /* --------- curve outside ----------
     .navigation ul li:hover a::before,
     .navigation ul li.hovered a::before {
     content: "";
@@ -138,7 +138,7 @@
     border-radius: 50%;
     box-shadow: 35px -35px 0 10px var(--white);
     pointer-events: none;
-    }
+    } */
     #toggleButton i{
         color: #fff;   
         cursor: pointer; 
@@ -147,6 +147,39 @@
         left: 25px;
         z-index: 99999;
     }
+    .active-page{
+    background: #fff;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    color: var(--blue);
+    }
+    .active-page a span{
+        color: var(--blue);
+    }
+    .active-page::before{
+        content: "";
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    pointer-events: none; 
+    }
+    .active-page::after{
+        content: "";
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    pointer-events: none;
+    }
    @media(max-width: 540px){
     .order-container{
       position: relative;
@@ -154,7 +187,35 @@
       justify-content: left;
     }  
 }
+.notification-date-container {
+    margin-top: 10px;
+}
+
+.notification-divider {
+    padding: 8px;
+    text-align: center;
+    background-color: #f5f5f5;
+    color: #555;
+    font-weight: bold;
+}
+#topCustomersContainer{
+    max-height: 100px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+#topProductsContainer{
+    max-height: 100px;
+    overflow: scroll;
+    overflow-x: hidden;
     
+}
+.statictics-container{
+    margin-bottom: 20px;
+    display: flex;
+    
+}
+
+ 
     </style>
 </head>
 
@@ -181,7 +242,7 @@
                     </a>
                 </li>
 
-                <li>
+                <li class="active-page" >
                     <a href="#">
                         <span class="icon">
                             <i class="fa-solid fa-cart-shopping"></i>
@@ -232,6 +293,7 @@
    
 <!-- Add this button inside the body tag -->
 <div class="order-container">
+
     <div class="statictics-container">
 <div class="container mt-3">
     <div class="card shadow rounded card-hover">
@@ -244,10 +306,36 @@
     </div>
 </div>
 
-
-
-
+<!-- Top Customers Container -->
+<div class="container mt-3">
+    <div class="card shadow rounded card-hover">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Top Customers</h5>
+        </div>
+        <div class="card-body" id="topCustomersContainer">
+            <!-- Top customers will be dynamically added here -->
+        </div>
     </div>
+</div>
+<!-- Top Products Container -->
+<div class="container mt-3">
+    <div class="card shadow rounded card-hover">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Top Products</h5>
+        </div>
+        <div class="card-body" id="topProductsContainer">
+            <!-- Top products will be dynamically added here -->
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+
+
+
 
    <div class="button-container">
     <!-- Search Bar -->
@@ -303,6 +391,8 @@ database.ref('orders').on('child_added', (snapshot) => {
 
     // Display a notification
     displayNotification(orderData, orderId);
+    updateTopCustomers(orderData)
+    updateTopProducts(orderData)
 });
 
 // Update the displayNotification function
@@ -323,39 +413,87 @@ function displayNotification(orderData, orderId) {
         if (event.target.closest('.fa-trash')) {
             return;
         }
-        displayOrderDetails(orderData, orderId);
+        else{
+        displayOrderDetails(orderData, orderId);}
     });
 
     // Play the notification sound
     document.getElementById('notificationSound').play();
 
-    // Insert the new notification at the beginning of the notificationsContainer
-    notificationsContainer.insertBefore(notificationDiv, notificationsContainer.firstChild);
+    // Get the date of the notification
+    const notificationDate = new Date(orderData.timestamp);
+    
+    // Create or find the divider for the notification date
+    const dividerId = `divider-${notificationDate.toISOString().slice(0, 10)}`;
+    let divider = document.getElementById(dividerId);
+
+    if (!divider) {
+        divider = document.createElement('div');
+        divider.className = 'notification-divider';
+        divider.id = dividerId;
+        divider.innerHTML = `<p>${formatDate(notificationDate)}</p>`;
+        notificationsContainer.insertBefore(divider, notificationsContainer.firstChild);
+    }
+
+    // Insert the new notification under the appropriate divider
+    divider.parentNode.insertBefore(notificationDiv, divider.nextSibling);
+
     updateTotalNotificationCount();
-} 
+}
+
+// Helper function to format the date as 'Today', 'Yesterday', or 'YYYY-MM-DD'
+function formatDate(date) {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) {
+        return 'Today';
+    } else if (date.toDateString() === yesterday.toDateString()) {
+        return 'Yesterday';
+    } else {
+        return date.toISOString().slice(0, 10);
+    }
+}
+
 
 
 function removeNotification(orderId) {
     // Get a reference to the specific order node in the database
     const orderRef = database.ref('orders').child(orderId);
 
-    // Find the corresponding notification element in the HTML
-    const notificationElement = document.querySelector(`.notification[data-order-id="${orderId}"]`);
+    // Ask for confirmation before proceeding
+    const userConfirmed = confirm('Are you sure you want to delete the order?');
 
-    // Remove the order from the database
-    orderRef.remove()
-        .then(function () {
-            // Hide the corresponding notification element in the HTML
-            if (notificationElement) {
-                location.reload()
-                updateTotalNotificationCount();
-                alert('Notification removed successfully!');
-            }
-        })
-        .catch(function (error) {
-            console.error('Error removing notification:', error.message);
-        });
+    // Check if the user confirmed
+    if (userConfirmed) {
+        // Check if the orderRef exists
+        if (orderRef) {
+            // Remove the order from the database
+            orderRef.remove()
+                .then(() => {
+                    // Reload the page after successful removal
+                    location.reload();
+                    // Update the total notification count (assuming this function exists)
+                    updateTotalNotificationCount();
+                    // Show a success alert
+                    alert('Notification removed successfully!');
+                })
+                .catch((error) => {
+                    // Handle any errors that might occur during the removal
+                    console.error('Error removing order:', error);
+                    alert('An error occurred while removing the order. Please try again.');
+                });
+        } else {
+            // Show an alert if the order is not found
+            alert('Order not found');
+        }
+    } else {
+        // If the user didn't confirm, do nothing
+        return;
+    }
 }
+
 
 function clearNotifications() {
     notificationsContainer.innerHTML = '';
@@ -464,6 +602,84 @@ function updateTotalNotificationCount() {
     const totalNotificationCount = document.querySelectorAll('.notification').length;
     document.getElementById('totalNotificationCount').innerText = totalNotificationCount;
 }
+ // Initialize an object to store customer notifications and sales
+ const customerNotifications = {};
+    
+    // Function to update top customers based on notifications
+    function updateTopCustomers(orderData) {
+    const customerName = orderData.name;
+
+    // Update customer notifications count
+    customerNotifications[customerName] = (customerNotifications[customerName] || 0) + 1;
+
+
+    // Get the total sales for each customer (you may need to adjust this based on your data structure)
+    const totalSales = customerNotifications[customerName] * orderData.grandTotal;
+
+    // Sort customers by total sales in descending order
+    const sortedCustomers = Object.entries(customerNotifications)
+        .sort(([, a], [, b]) => b - a)
+        .reduce((acc, [name, count]) => ({ ...acc, [name]: count }), {});
+
+    // Display the top customers
+    displayTopCustomers(sortedCustomers);
+}
+
+
+    // Function to display top customers
+    function displayTopCustomers(customers) {
+        const topCustomersContainer = document.getElementById('topCustomersContainer');
+        topCustomersContainer.innerHTML = '';
+
+        // Display the top 5 customers
+        const numToShow = Math.min(Object.keys(customers).length, 5);
+        for (let i = 0; i < numToShow; i++) {
+            const customerName = Object.keys(customers)[i];
+            const notificationCount = customers[customerName];
+
+            const customerDiv = document.createElement('div');
+            customerDiv.innerHTML = `<p>${customerName} - order count : ${notificationCount}</p>`;
+            topCustomersContainer.appendChild(customerDiv);
+        }
+    }
+    
+    // Initialize an object to store product sales
+const productSales = {};
+
+// Function to update top products based on notifications
+function updateTopProducts(orderData) {
+    orderData.products.forEach(product => {
+        const productName = product.productName;
+
+        // Update product sales count
+        productSales[productName] = (productSales[productName] || 0) + 1;
+    });
+
+    // Sort products by sales count in descending order
+    const sortedProducts = Object.entries(productSales)
+        .sort(([, a], [, b]) => b - a)
+        .reduce((acc, [name, count]) => ({ ...acc, [name]: count }), {});
+
+    // Display the top products
+    displayTopProducts(sortedProducts);
+}
+// Function to display top products
+function displayTopProducts(products) {
+    const topProductsContainer = document.getElementById('topProductsContainer');
+    topProductsContainer.innerHTML = '';
+
+    // Display the top 5 products
+    const numToShow = Math.min(Object.keys(products).length, 5);
+    for (let i = 0; i < numToShow; i++) {
+        const productName = Object.keys(products)[i];
+        const salesCount = products[productName];
+
+        const productDiv = document.createElement('div');
+        productDiv.innerHTML = `<p>${productName} - sales count: ${salesCount}</p>`;
+        topProductsContainer.appendChild(productDiv);
+    }
+}
+
 
     </script>
     <script>
@@ -527,7 +743,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
       </script>
-      
+
       
     
 </body>
