@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Analytics</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <canvas id="salesChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Firebase with your configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyDkzYyAPXcGoNE1efAuAp5t6YVT3SYhOvg",
+                authDomain: "salsabil-order.firebaseapp.com",
+                databaseURL: "https://salsabil-order-default-rtdb.firebaseio.com",
+                projectId: "salsabil-order",
+                storageBucket: "salsabil-order.appspot.com",
+                messagingSenderId: "336133726144",
+                appId: "1:336133726144:web:be467b085f67ca97657225",
+                measurementId: "G-P0561X9RTQ"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+
+            const database = firebase.database();
+
+            // Fetch orders from the database
+            database.ref('orders').once('value')
+                .then(snapshot => {
+                    const orders = snapshot.val();
+                    const totalSalesByDate = calculateTotalSalesByDate(orders);
+
+                    // Save the updated total sales to local storage
+                    localStorage.setItem('totalSalesByDate', JSON.stringify(totalSalesByDate));
+
+                    // Get the canvas element
+                    const ctx = document.getElementById('salesChart').getContext('2d');
+
+                    // Prepare data for Chart.js
+                    const dates = Object.keys(totalSalesByDate);
+                    // Convert values to numbers
+                    const grandTotals = Object.values(totalSalesByDate).map(value => parseFloat(value));
+
+                    // Create a line chart
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: dates,
+                            datasets: [{
+                                label: 'Total Grand Total',
+                                data: grandTotals,
+                                fill: false,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    type: 'time',
+                                    time: {
+                                        unit: 'day'
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Date'
+                                    }
+                                },
+                                y: {
+                                    type: 'linear',
+                                    position: 'left',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Total Grand Total'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching orders:', error);
+                });
+        });
+
+        // Function to calculate total sales by date
+        function calculateTotalSalesByDate(orders) {
+            const totalSalesByDate = {};
+
+            Object.values(orders).forEach(order => {
+                const orderDate = new Date(order.timestamp);
+
+                // Check if orderDate is a valid date
+                if (!isNaN(orderDate.getTime())) {
+                    const formattedDate = orderDate.toISOString().slice(0, 10);
+                    totalSalesByDate[formattedDate] = (totalSalesByDate[formattedDate] || 0) + order.grandTotal;
+                }
+            });
+
+            return totalSalesByDate;
+        }
+    </script>
+</body>
+</html>

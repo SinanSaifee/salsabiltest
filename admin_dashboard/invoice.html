@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .invoice-container {
+            max-width: 800px;
+            margin: auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .invoice-header,
+        .invoice-footer {
+            text-align: center;
+        }
+
+        .invoice-footer {
+            margin-top: 20px;
+        }
+
+        .invoice-details {
+            margin-bottom: 20px;
+        }
+
+        .product-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .product-list th,
+        .product-list td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        #exportedImage {
+            margin-top: 20px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h2>Invoice</h2>
+        </div>
+
+        <div class="invoice-details">
+            <h4>Order Details</h4>
+            <table class="table">
+                <tr>
+                    <th>Name:</th>
+                    <td id="customerName"></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td id="customerEmail"></td>
+                </tr>
+                <tr>
+                    <th>Phone Number:</th>
+                    <td id="customerNumber"></td>
+                </tr>
+                <tr>
+                    <th>Shipping Address:</th>
+                    <td id="shippingAddress"></td>
+                </tr>
+                <tr>
+                    <th>Order Date:</th>
+                    <td id="orderDate"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="product-list">
+            <h4>Products</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody id="productListBody">
+                    <!-- Product details will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="invoice-footer">
+            <p>Thank you for your purchase!</p>
+        </div>
+    </div>
+    <button onclick="exportToImage()">Export to Image</button>
+     <div id="exportedImage"></div>
+
+    <script>
+        // Retrieve invoice details from local storage
+        const invoiceDetailsJSON = localStorage.getItem('invoiceDetails');
+        const invoiceDetails = JSON.parse(invoiceDetailsJSON);
+
+        // Update HTML with invoice details
+        document.getElementById('customerName').innerText = invoiceDetails.name;
+        document.getElementById('customerEmail').innerText = invoiceDetails.email;
+        document.getElementById('customerNumber').innerText = invoiceDetails.number;
+        document.getElementById('shippingAddress').innerText = invoiceDetails.shippingAddress;
+        document.getElementById('orderDate').innerText = invoiceDetails.timestamp;
+
+        // Update product list
+        const productListBody = document.getElementById('productListBody');
+        invoiceDetails.products.forEach(product => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${product.productName}</td>
+                <td>${product.productPrice}</td>
+            `;
+            productListBody.appendChild(row);
+        });
+
+        function exportToImage() {
+            html2canvas(document.querySelector(".invoice-container")).then(canvas => {
+                const image = new Image();
+                image.src = canvas.toDataURL("image/jpeg");
+                document.getElementById("exportedImage").innerHTML = "";
+                document.getElementById("exportedImage").appendChild(image);
+            });
+            localStorage.removeItem('invoiceDetails')
+        }
+    </script>
+
+</body>
+
+</html>

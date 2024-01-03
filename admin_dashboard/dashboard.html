@@ -214,9 +214,26 @@
     display: flex;
     
 }
+#qrCodeContainer{
+    position: absolute;
+    margin-top: -450px;
+    right: 200px;
+}
+#invoice-generator-btn{
+    background: #000;
+    color: #fff;
+    float: right;
+    padding: 10px 15px;
+    border-radius: 50%;
+}
+#invoice-generator-btn i{
+    font-size: 27px;
+}
 
  
     </style>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
 </head>
 
 <body id="body">
@@ -266,6 +283,15 @@
                             <i class="fa-solid fa-chart-simple"></i>
                         </span>
                         <span class="title">Analytics</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="invoice.html">
+                        <span class="icon">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </span>
+                        <span class="title">invoice</span>
                     </a>
                 </li>
 
@@ -348,7 +374,7 @@
     <button onclick="clearRealtimeDatabase()" class="btn btn-primary">Clear Real-time Database</button>
    </div>
 
-    <div id="orderDetailsContainer" style="display: none;"></div>
+    <div><div id="orderDetailsContainer" style="display: none;"></div><div id="qrCodeContainer"></div></div>
     <div id="notificationsContainer"></div>
 </div>
 
@@ -511,8 +537,14 @@ function displayOrderDetails(orderData, orderId) {
     orderDetailsDiv.className = 'orderDetails';
     orderDetailsDiv.innerHTML = `
         <button id="closeButton" onclick="closeOrderDetails()" class="btn btn-danger">Close</button>
+        <button id="generateQRButton" class="btn btn-primary"><i class="fa-solid fa-qrcode" style="margin-right: 10px;"></i>Generate QR Code</button>
+        <button id="invoice-generator-btn"><i class="fa-solid fa-file-invoice"></i></button>
         <table class="user-info">
             <tbody>
+                <tr>
+                    <td><strong>Checkout time:</strong></td>
+                    <td>${orderData.timestamp}</td>
+                </tr>
                 <tr>
                     <td><strong>Username:</strong></td>
                     <td>${orderData.name}</td>
@@ -565,7 +597,67 @@ function displayOrderDetails(orderData, orderId) {
     // Show the order details container
     orderDetailsContainer.style.display = 'block';
     window.scrollTo(0, 0);
+    document.getElementById('generateQRButton').addEventListener('click', function () {
+    generateQRCode(orderData);
+});
+document.getElementById('invoice-generator-btn').addEventListener('click', function () {
+        // Generate and save the invoice details
+        generateAndSaveInvoice(orderData);
+    });
 }
+
+
+
+// Function to generate and save invoice details in local storage
+function generateAndSaveInvoice(orderData) {
+    // Create an object to store invoice details
+    const invoiceDetails = {
+        name: orderData.name,
+        address: orderData.address,
+        shippingAddress: orderData.shippingAddress,
+        shipping: orderData.shipping,
+        total: orderData.total,
+        grandTotal: orderData.grandTotal,
+        email: orderData.email,
+        number: orderData.number,
+        timestamp: orderData.timestamp,
+        products: orderData.products
+    };
+
+    // Convert the object to a JSON string
+    const invoiceDetailsJSON = JSON.stringify(invoiceDetails);
+
+    // Save the invoice details in local storage
+    localStorage.setItem('invoiceDetails', invoiceDetailsJSON);
+
+    // Display a success alert
+    alert('Invoice details saved successfully!');
+}
+function generateQRCode(orderData) {
+    // Create a string containing order details (excluding product images)
+    const orderDetailsString = `
+        checkout time: ${orderData.timestamp}
+        Username: ${orderData.name}
+        Address: ${orderData.address}
+        Shipping Address: ${orderData.shippingAddress}
+        Email: ${orderData.email}
+        Phone Number: ${orderData.number}
+        City: ${orderData.citySelect}
+        Total: ${orderData.total}
+        Shipping: ${orderData.shipping}
+        Grand Total: ${orderData.grandTotal}
+        Orders: ${getProductListText(orderData.products)}
+    `;
+
+    // Create a new QR code instance
+    const qrcode = new QRCode(document.getElementById('qrCodeContainer'), orderDetailsString);
+}
+
+// Function to get product list as a text string
+function getProductListText(products) {
+    return products.map(product => `${product.productName} - ${product.productPrice}`).join('\n');
+}
+
 
 
 function getProductListHTML(products) {
