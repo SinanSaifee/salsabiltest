@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
     <title>Invoice</title>
     <!-- Bootstrap CDN -->
+    <link rel='stylesheet' type='text/css' media='screen' href='css/adminStyle.css'>
+    <link rel="shortcut icon" type="image/x-icon" href="image/sample tittle logo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
-        body {
-            padding: 20px;
-        }
 
         .invoice-container {
             max-width: 800px;
@@ -51,11 +52,265 @@
             margin-top: 20px;
             position: relative;
         }
+        .exported-image{
+            display: flex;
+            justify-content: center;
+            margin: auto;
+            
+        }
+        .export-btn{
+            justify-content: center;
+            margin: auto;
+            display: flex;
+            margin-top: 10px;
+        }
+        
+    </style>
+     <style>
+        /* =============== Navigation ================ */
+    
+        * {
+    font-family: "Ubuntu", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+    
+        :root {
+    --blue: #2a2185;
+    --white: #fff;
+    --gray: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+    }
+    .navigation {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background: var(--blue);
+    border-left: 10px solid var(--blue);
+    transition: 0.5s;
+    overflow: hidden;
+    top: 0;
+    z-index: 9999;
+    }
+    .navigation.active {
+    width: 80px;
+    }
+    
+    .navigation ul {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    }
+    
+    .navigation ul li {
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    }
+    
+    /* .navigation ul li:hover,
+    .navigation ul li.hovered {
+    background-color: var(--white);
+    } */
+    
+    .navigation ul li:nth-child(1) {
+    margin-bottom: 40px;
+    pointer-events: none;
+    }
+    
+    .navigation ul li a {
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: var(--white);
+    }
+    /* .navigation ul li:hover a,
+    .navigation ul li.hovered a {
+    color: var(--blue);
+    } */
+    
+    .navigation ul li a .icon {
+    position: relative;
+    display: block;
+    min-width: 60px;
+    height: 60px;
+    line-height: 75px;
+    text-align: center;
+    }
+    .navigation ul li a .icon i {
+    font-size: 1.75rem;
+    }
+    
+    .navigation ul li a .title {
+    position: relative;
+    display: block;
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
+    }
+    
+    /* --------- curve outside ----------
+    .navigation ul li:hover a::before,
+    .navigation ul li.hovered a::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    pointer-events: none;
+    }
+    .navigation ul li:hover a::after,
+    .navigation ul li.hovered a::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    pointer-events: none;
+    } */
+    #toggleButton i{
+        color: #fff;   
+        cursor: pointer; 
+        position: fixed;  
+        top: 14px;
+        left: 25px;
+        z-index: 99999;
+    }
+    .active-page{
+    background: #fff;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    color: var(--blue);
+    }
+    .active-page a span{
+        color: var(--blue);
+    }
+    .active-page::before{
+        content: "";
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    pointer-events: none; 
+    }
+    .active-page::after{
+        content: "";
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    pointer-events: none;
+    }
+  
+ 
     </style>
 </head>
 
 <body>
+    <button id="toggleButton">
+        <i class="fas fa-bars fa-2x"></i>
+    </button>
 
+    <!-- Loading gif -->
+    <div id="loading">
+        <img src="loading copy.gif" alt="Loading" width="50" height="50">
+        <p>Signing out</p>
+    </div>
+     <!-- =============== Navigation ================ -->
+        <div class="navigation">
+            
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </span>
+                        <span class="title">ADMIN</span>
+                    </a>
+                </li>
+
+                <li  >
+                    <a href="dashboard.html">
+                        <span class="icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </span>
+                        <span class="title">Orders</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-shirt"></i>
+                        </span>
+                        <span class="title">Products</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </span>
+                        <span class="title">Analytics</span>
+                    </a>
+                </li>
+
+                <li class="active-page">
+                    <a href="invoice.html">
+                        <span class="icon">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </span>
+                        <span class="title">invoice</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-gear"></i>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <li onclick="logout()">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        
     <div class="invoice-container">
         <div class="invoice-header">
             <h2>Invoice</h2>
@@ -106,8 +361,10 @@
             <p>Thank you for your purchase!</p>
         </div>
     </div>
-    <button onclick="exportToImage()">Export to Image</button>
+    <button onclick="exportToImage()" class="btn btn-primary export-btn">Export to Image</button>
+    <div class="exported-image">
      <div id="exportedImage"></div>
+    </div>
 
     <script>
         // Retrieve invoice details from local storage
@@ -142,7 +399,44 @@
             localStorage.removeItem('invoiceDetails')
         }
     </script>
+ <script>
 
+    document.addEventListener('DOMContentLoaded', function () {
+        const navigation = document.querySelector('.navigation');
+        const toggleButton = document.getElementById('toggleButton');
+        // Close navigation if window width is greater than 1500px
+        if (window.innerWidth < 1500) {
+            navigation.classList.add('active');
+        }
+    
+        // Add click event listener to the toggle button
+        toggleButton.addEventListener('click', function () {
+            // Toggle the 'active' class on the navigation element
+            navigation.classList.toggle('active');
+        });
+    });
+    
+        
+          </script>
+          <script>
+            function logout() {
+                 // Ask for confirmation
+                 var confirmLogout = confirm("Are you sure you want to sign out?");
+                 
+                 if (confirmLogout) {
+                     // Show loading spinner
+                     document.getElementById('loading').style.display = 'block';
+                     
+                     // Delay for 5 seconds (5000 milliseconds)
+                     setTimeout(function() {
+                         // Remove the "loggedIn" item from local storage
+                         localStorage.removeItem('Aknviauth172vGGh');
+                         // Redirect to the login page
+                         window.location.href = 'auth.html';
+                     }, 5000);
+                 }
+             }
+         </script>
 </body>
 
 </html>
