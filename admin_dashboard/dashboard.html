@@ -139,13 +139,18 @@
     box-shadow: 35px -35px 0 10px var(--white);
     pointer-events: none;
     } */
-    #toggleButton i{
-        color: #fff;   
-        cursor: pointer; 
+
+    #toggleButton{
+        border: none;
         position: fixed;  
         top: 14px;
         left: 25px;
         z-index: 99999;
+        background: none;
+    }
+    #toggleButton i{
+        color: #fff;   
+        cursor: pointer; 
     }
     .active-page{
     background: #fff;
@@ -180,23 +185,16 @@
     box-shadow: 35px -35px 0 10px var(--white);
     pointer-events: none;
     }
-   @media(max-width: 540px){
-    .order-container{
-      position: relative;
-      margin-left: 150px;
-      justify-content: left;
-    }  
-}
+  
+
+
 .notification-date-container {
     margin-top: 10px;
 }
 
 .notification-divider {
-    padding: 8px;
-    text-align: center;
-    background-color: #f5f5f5;
-    color: #555;
-    font-weight: bold;
+    color: #ccc;
+    font-size: 14px;
 }
 #topCustomersContainer{
     max-height: 100px;
@@ -229,6 +227,49 @@
 #invoice-generator-btn i{
     font-size: 27px;
 }
+@media(max-width: 1020px){  
+    .navigation{
+        display: none;
+    }
+    #toggleButton i{
+        color: #222;
+    }
+    #toggleButton{
+        position: relative;
+    }
+    .order-container{
+        margin-left: 20px;
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
+        right: 20px;
+        justify-content: flex-start;
+    }
+    
+    .statictics-container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+    }
+    .statictics-container .container{
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        
+    }
+    .button-container{
+        flex-direction: column;
+    }
+    
+    
+
+}
+.display-navigation{
+    display: block;
+}
+
+
 
  
     </style>
@@ -370,8 +411,9 @@
   </div>
   
   
-    <button onclick="clearNotifications()" class="btn btn-primary">Clear Notifications</button>
-    <button onclick="clearRealtimeDatabase()" class="btn btn-primary">Clear Real-time Database</button>
+   <div class="btn-container">
+     <button onclick="clearNotifications()" class="btn btn-primary">Clear Notifications</button>
+    <button onclick="clearRealtimeDatabase()" class="btn btn-primary">Clear Real-time Database</button></div>
    </div>
 
     <div><div id="orderDetailsContainer" style="display: none;"></div><div id="qrCodeContainer"></div></div>
@@ -830,6 +872,7 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleButton.addEventListener('click', function () {
         // Toggle the 'active' class on the navigation element
         navigation.classList.toggle('active');
+        navigation.classList.toggle('display-navigation')
     });
 });
 
