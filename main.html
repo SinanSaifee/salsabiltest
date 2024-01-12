@@ -135,7 +135,13 @@
         <div class="comp-slide">
             <img src="https://via.placeholder.com/1920x1000/FFBD27/FFFFFF?text=Slide+4" alt="Slide 4">
         </div>
+        <div class="comp-arrow-container">
+            <div class="comp-arrow comp-arrow-prev"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="comp-arrow comp-arrow-next"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
     </div>
+   
+    
 </div>
 
 
@@ -393,39 +399,41 @@
 
     <!-----------------------------testimonial------------------------>
     <h3 style="text-align: center;">Review</h3>
-    <div class="testimonial">
-        <img src="image/quote.png" class="quotesign" alt="testimonial">
-        <p>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis quam a justo tincidunt hendrerit.
-            Sed sit amet ex vel mi eleifend venenatis vitae eu urna. Fusce vestibulum velit ac tincidunt."
-        </p>
-       <div class="user-info">
-        <img src="image/defaultimage.jpg" alt="no photo" class="user">
-        <p><strong>John Doe</strong></p>
-       </div>
-    </div>
-    <div class="testimonial">
-        <img src="image/quote.png" class="quotesign" alt="testimonial">
-        <p>
-            "Suspendisse eget purus at eros sollicitudin ullamcorper. Nullam auctor aliquet est, sed congue nunc
-            ultricies non."
-        </p>
-        <div class="user-info">
+    <div class="testimonial-container">
+        <div class="testimonial">
+            <img src="image/quote.png" class="quotesign" alt="testimonial">
+            <p>
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis quam a justo tincidunt hendrerit.
+                Sed sit amet ex vel mi eleifend venenatis vitae eu urna. Fusce vestibulum velit ac tincidunt."
+            </p>
+           <div class="user-info">
             <img src="image/defaultimage.jpg" alt="no photo" class="user">
             <p><strong>John Doe</strong></p>
            </div>
-    </div>
-    <div class="testimonial">
-        
-        <img src="image/quote.png" class="quotesign" alt="testimonial">
-        <p>
-            "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-            Suspendisse bibendum eros eget dolor gravida, ac sodales purus vestibulum."
-        </p>
-        <div class="user-info">
-            <img src="image/defaultimage.jpg" alt="no photo" class="user">
-            <p><strong>John Doe</strong></p>
-           </div>
+        </div>
+        <div class="testimonial">
+            <img src="image/quote.png" class="quotesign" alt="testimonial">
+            <p>
+                "Suspendisse eget purus at eros sollicitudin ullamcorper. Nullam auctor aliquet est, sed congue nunc
+                ultricies non."
+            </p>
+            <div class="user-info">
+                <img src="image/defaultimage.jpg" alt="no photo" class="user">
+                <p><strong>John Doe</strong></p>
+               </div>
+        </div>
+        <div class="testimonial">
+            
+            <img src="image/quote.png" class="quotesign" alt="testimonial">
+            <p>
+                "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                Suspendisse bibendum eros eget dolor gravida, ac sodales purus vestibulum."
+            </p>
+            <div class="user-info">
+                <img src="image/defaultimage.jpg" alt="no photo" class="user">
+                <p><strong>John Doe</strong></p>
+               </div>
+        </div>
     </div>
 
 
@@ -816,6 +824,19 @@ form.addEventListener('submit', (e) => {
                 showSlide(currentSlide);
             }
         }
+
+        const prevArrow = document.querySelector('.comp-arrow-prev');
+        const nextArrow = document.querySelector('.comp-arrow-next');
+
+        prevArrow.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        });
+
+        nextArrow.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        });
 
         function showSlide(index) {
             slides.forEach((slide, i) => {

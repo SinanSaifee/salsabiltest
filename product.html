@@ -38,6 +38,12 @@
             <div class="spinner"></div>
         </div>
     </div>
+
+    <!-----------------------------------------------------------image zoom------------------------->
+<div class="zoomed-image" id="zoomed-image">
+    <div class="close-icon-image"></div>
+    <div class="zoomed-img" id="zoomed-img"></div>
+</div>
    
     
     
@@ -144,18 +150,18 @@
     <div class="product-details-gallery">
         <div class="main-img-container" id="main-img-container">
             <div id="mainImage"></div>
+            <div class="image-zoom"id="image-zoom" onclick="zoomImage()"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
         </div>
     <div id="productSmallImages"></div>
     </div>
 <div class="product-details-info-container">
-    <div id="product-category-name"></div>
-    <div id="productTitle" class="product-details-tittle"></div>
+ <div id="product-category-name" class="product-category-name"></div>  
+<div id="productTitle" class="product-details-tittle"></div>
 <div id="productPrice" class="product-details-price"></div>
 <div id="productRating" class="product-details-rating"></div>
 <div id="selectSizeDropdown"></div>
 <div id="productColorContent"></div>
 <div id="productDescription"></div>
-<div id="addToCartButton" class="product-details-add-cart"></div>
 </div>
 </div>
 <div class="product-details-information-container" style="display: none;" id="product-details-information-container">
@@ -281,7 +287,7 @@
                  </div>
                  <div class="product-info-container">
                     <div class="product-description" id="productdetailscategoryname">
-                        <p>Shop/Aatar</p>
+                        <p>Shop / Aatar</p>
                      </div>
                     <h2 class="product-tittle" id="product-tittle">bakhur taiba</h2>
 
@@ -1132,7 +1138,7 @@ function activebtn2(){
     var productInformation = document.querySelector('.product-information').innerHTML;
 
     document.getElementById('mainImage').innerHTML = '<img src="' + mainImageSrc + '" alt="product image" class="mainImage" id="main-Image">';
-    document.getElementById('product-category-name').innerHTML = productCategoryName + '<p id="productDataName">' + tittleElement + '</p>';
+    document.getElementById('product-category-name').innerHTML = '<div class="productDataCategory"><p>'+ productCategoryName + '</p></div>'+ '<div id="productDataName"> <p>'+ tittleElement +'</p></div>';
     document.getElementById('productTitle').innerHTML = '<h2 id="product-details-tittle">' + title + '</h2>';
     document.getElementById('productPrice').innerHTML = '<h2 id="product-details-price">' + price + '</h2>';
     document.getElementById('productRating').innerHTML = rating;
@@ -1155,8 +1161,7 @@ function activebtn2(){
         document.getElementById('selectSizeDropdown').innerHTML = "";
     }
 
-    document.getElementById('productDescription').innerHTML = '<h2>Product details</h2>' + description;
-    document.getElementById('addToCartButton').innerHTML = '<img src="image/product-details-cart.png" alt="add" id="add-cart-details" class="add-cart" onclick="addCartDetails()">';
+    document.getElementById('productDescription').innerHTML = '<h2>Product details</h2>' + description + '<div id="addToCartButton" class="product-details-add-cart"><img src="image/product-details-cart.png" alt="add" id="add-cart-details"  onclick="addCartDetails()"></div>';
     document.getElementById('product-details-information').innerHTML = productInformation;
     document.getElementById('product-details-information-container').style.display = 'block';
     document.getElementById('details-header').textContent = 'Product Information';
@@ -1219,6 +1224,7 @@ var backBtn = document.getElementById('back-btn');
 var shopTitle = document.getElementById('shopTittle');
 var shopContainer = document.getElementById('shop-content');
 var redirectionText = document.getElementById('category-redirection-text');
+var ImageZoom = document.getElementById('image-zoom')
 
 // Attach click event to each product box
 var productBoxes = document.querySelectorAll('.product-box');
@@ -1234,6 +1240,7 @@ productBoxes.forEach(function(productBox) {
         searchbar.style.display = 'none';
         pagination.style.display = 'none';
         backBtn.style.display = 'block';
+        ImageZoom.style.display = 'flex';
         shopTitle.textContent = 'Related';
         document.getElementById('section-tittle').style.marginTop = '2rem';
         redirectionText.classList.remove('category-redirection-text');
@@ -1547,7 +1554,7 @@ updateProductBoxCount();
 </script>
 
 
-<!-------------------------image zoom effect----------->
+<!-- -----------------------image zoom effect---------
 <script>
     const mainImageContainer = document.getElementById('main-img-container');
     const mainImage = document.getElementById('mainImage');
@@ -1565,7 +1572,7 @@ updateProductBoxCount();
     })
     
     
-</script>
+</script> -->
 
 
 

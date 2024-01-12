@@ -1141,19 +1141,19 @@ section {
 
 
 /* testimonials*/
-.testimonial {
-    width: 2.8in;
-    height: 4in;
-    border-radius: 7px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    margin: 10px;
-    display: inline-block;
-    vertical-align: top;
-    align-items: center;
-    margin-left: 10%;
+.testimonial-container{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    flex-wrap: wrap;
+}
+
+.testimonial{
+    width: 300px;
+    padding: 10px;
     transition: 0.5s;
-    
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 .testimonial p {
     font-size: 20px;
@@ -1165,18 +1165,34 @@ section {
 .quotesign{
     width: 20px;
     height: 20px;
-    margin-left: 120px;
+    position: relative;
+    margin-left: 45%;
 }
 .user{
     width: 100px;
     height: 100px;
     border-radius: 50%;
+   
     
 }
 .user-info{
     text-align: center;
+    position: relative;
+    bottom: 10px;
     
 }
+@media(max-width: 757px){
+    .testimonial-container{
+        gap: 10px;
+    }
+    .testimonial{
+        width: 90%;
+    }
+    .testimonial p{
+        font-size: 18px;
+    }
+}
+
 
 
 
@@ -1198,7 +1214,13 @@ section {
     border-right: 3px solid #000;
     margin-left: 20%;
     font: arial black;
+    padding-right: 10px;
     
+}
+@media(max-width: 1215px){
+    .rating-text{
+        padding-right: 20px;
+    }
 }
 .rating {
     
@@ -1222,7 +1244,8 @@ section {
 /* media qure for rating */
 @media only screen and (max-width: 606px){
    .rating-container{
-    display: block;
+    display: flex;
+    flex-direction: column;
 
     
 }
@@ -1230,7 +1253,6 @@ section {
     
     width: 300px;
     text-align: center;
-    margin-left: -25px;
     margin-top: 30px;
 
 }
@@ -1239,6 +1261,7 @@ section {
     border-bottom: 3px solid #000;
     text-align: center;
     margin-left: 10px;
+    
 }
 
 
@@ -2214,11 +2237,12 @@ section {
    
 }
 .active-color::after {
-    content: '\2713';
+    content: '\f00c'; /* Unicode value for the Font Awesome checkmark icon */
+    font-family: 'Font Awesome 5 Free'; /* Font family name */
     color: #fff; 
     font-weight: 800;
     width: 35px;
-    margin-top: 5px;
+    margin-top: 10px;
     position: absolute;
     justify-content: center;
     align-items: center;
@@ -2358,22 +2382,13 @@ section {
     align-items: center;
     text-align: center;
 }
-
-@media(max-width: 980px){
-    .product-details-container{
-        flex-direction: column;
-    }
-    .product-details-info-container{
-        margin-left: 70px;
-        gap: 0px;
-        margin-top: -100px;
-    }
-    
-}
 .product-details-gallery{
     margin-left: 50px;
    
 }
+
+
+
 
 .main-img-container{
    width: 500px;
@@ -2382,20 +2397,93 @@ section {
    z-index: 999;
    
 }
+
 .mainImage{
     position: relative;
-    width: 500px;
-    max-width: 500px;
+    width: 100%;
+    max-width: 100%;
     object-fit: cover;
     transform-origin: center;
      transition: 0.5s;
      cursor: zoom-in;
     
 }
+.image-zoom{
+    background: var(--pale);
+    width: 50px;
+    justify-content: center;
+    height: 50px;
+    border-radius: 50%;
+    align-items: center;
+    position: absolute;
+    margin-top: -70px;
+    margin-left: 15px;
+    display: none;
+}
+
 #productSmallImages{
     display: flex;
     max-width: 20px;
 }
+@media(max-width: 1050px){
+    .product-details-container{
+        gap: 30px;
+        margin-left: -30px;
+    }
+    
+
+}
+
+@media(max-width: 800px){
+    .product-details-container{
+        flex-direction: column;
+        margin-left: 10px;
+        margin-top: -10px;
+    }
+    .product-details-info-container{
+        margin-left: 30px;
+        gap: 0px;
+        
+    }
+    .product-details-gallery{
+        margin: 10px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .main-img-container{
+        width: 100%;
+        max-width: 100%;
+        margin: 10px;
+    }
+    .mainImage{
+        width: 90%;
+        max-width: 90%;
+        margin: 10px;
+        
+    }
+    #productSmallImages{
+        margin-left: 20px;
+        width: 100%;
+        max-width: 100%;
+        gap: 1.5%;
+    }
+    .small-img-col{
+        width: 21.5%;
+        max-width: 21.5%;
+    }
+    .small-img-col img{
+        width: 100%;
+        max-width: 100%;
+    }
+    
+}
+@media(max-width: 570px){
+    .product-details-container{
+        margin-left: -10px;
+    }
+}
+
+
 #product-category-name{
     color: #ccc;
 }
@@ -2408,49 +2496,23 @@ section {
 .product-details-rating{
     color:#ffd700;
 }
+.product-category-name{
+    display: flex;
+    gap: 10px;
+    margin-bottom: -30px; 
+}
+
 .product-details-add-cart{
-    position: relative;
-    margin-left: -200px;
-     margin-top: 30px;
+    margin-top: 30px;
 }
-
-@media(max-width:610px){
-    .small-img-col img{
-        max-width: 100px;
-    }
-    .main-img-container{
-        max-width: 415px;
-    }
-    .mainImage{
-        max-width: 415px;
-    }
-    .product-details-add-cart{
-        margin-left: -100px;
-    }
+#add-cart-details{
+    background: #ff523b;
+    padding: 5px 50px;
 }
-@media(max-width:520px){
+@media(max-width: 470px){
     .product-details-container{
-        margin-left: -30px;
-        gap: 0;
-    }
-    .product-details-info-container{
-        margin-left: 50px;
-        margin-top: 20px;
-    }
-    .small-img-col img{
-        max-width: 80px;
-    }
-
-    .small-img-row{
-        margin-left: -30px;
-    }
-    .main-img-container{
-        max-width: 340px;
-       
-    }
-    .mainImage{
-        max-width: 340px;
-       
+        margin-left: -20px;
+        
     }
     .product-details-tittle{
         font-size: 20px;
@@ -2458,33 +2520,27 @@ section {
     .product-details-price{
         font-size: 20px;
     }
-    .product-details-information-container{
-        padding-left: 0px;
+    #productSmallImages{
+        margin-top: -15px;
     }
 }
-@media(max-width:395px){
-    
-    .small-img-col img{
-        max-width: 70px;
-    }
-
-    .small-img-row{
-        margin-left: -30px;
-    }
-    .main-img-container{
-        max-width: 300px;
-       
+@media(max-width: 370px){
+    .product-details-container{
+        margin-left: -20px;
     }
     .mainImage{
-        max-width: 300px;
-       
+        width: 87%;
     }
-}
-@media(max-width: 460px){
-    .product-details-add-cart{
-        margin-left: -80px;
+    #productSmallImages{
+        margin-left: 20px;
+        width: 93%;
+        max-width: 100%;
+        gap: 2%;
+        margin-top: -15px;
     }
+    
 }
+
 
 
 
@@ -2787,6 +2843,24 @@ figure.slider figure .banner-text {
      background-color: #717171;
  }
 
+ .comp-arrow-container {
+    position: absolute;
+    display: none;
+    justify-content: space-between;
+    width: 100%;
+    top: 45%;
+    
+   
+}
+.comp-slider-wrapper:hover .comp-arrow-container{
+    display: flex;
+}
+.comp-arrow{
+    margin: 20px;
+    margin-top: 0;
+}
+
+
 
 #searchForm {
     display: flex;
@@ -2872,3 +2946,4 @@ figure.slider figure .banner-text {
         display: block;
     }
 }
+
