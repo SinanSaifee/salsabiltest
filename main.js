@@ -24,7 +24,7 @@ var scrollerBtn = document.getElementById('scroller-top');
 window.addEventListener('scroll', function() {
   var scrollY = window.scrollY;
  // Check if the window is scrolled down to 55px
-  if(window.innerWidth > 500){
+  if(window.innerWidth > 930){
     if (scrollY >= 150) {
       scrollerBtn.style.bottom = '13px';
   } else {
@@ -102,6 +102,7 @@ function changeMainImage(newImageSrc) {
       }
   });
   mainImg.src = newImageSrc;
+  addCartOpactity()
 }
 
 

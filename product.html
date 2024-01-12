@@ -1402,11 +1402,13 @@ function selectvariationprimary(variation) {
           product.style.display = 'block';
           redirectionText.style.display = 'block';
           filterOption.style.display = 'none';
+          updateProductBoxCount();
 
         } else {
           product.style.display = 'none';
           redirectionText.style.display = 'block';
           filterOption.style.display = 'none';
+          updateProductBoxCount();
         }
       });
     }
