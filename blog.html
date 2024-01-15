@@ -557,7 +557,8 @@ blogBoxes.forEach((blogBox) => {
 });
 
 // Handle the back button click event
-backButton.addEventListener("click", function () {
+if(backButton){
+    backButton.addEventListener("click", function () {
     // Close the blog display and show the blog boxes
     blogDisplay.style.display = "none";
     blogDisplayDescription.style.display = "none";  // Hide the description
@@ -566,6 +567,7 @@ backButton.addEventListener("click", function () {
     });
     window.scrollTo(0, 0);
 });
+}
 
 function back(){
     window.location.reload();

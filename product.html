@@ -1025,83 +1025,6 @@ function activebtn2(){
 
 
 
-<!------page galler page btn gallery shifter -->
-<script>
-    // Variables to keep track of the current page
-    let currentPage = 1;
-    const totalPages = 3; // Total number of pages
-
-    // Function to show a specific page
-    function showPage(page) {
-        // Hide all product boxes
-        const productBoxes = document.querySelectorAll(".product-box");
-        productBoxes.forEach((productBox) => {
-            productBox.style.display = "none";
-        });
-
-        // Remove the active class from all page buttons
-        const pageButtons = document.querySelectorAll(".page");
-        pageButtons.forEach((button) => {
-            button.classList.remove("active");
-        });
-
-        // Show product boxes for the selected page
-        const productsPerPage = 16; // Change this according to the number of products per page
-        const startIndex = (page - 1) * productsPerPage;
-        const endIndex = startIndex + productsPerPage;
-
-        for (let i = startIndex; i < endIndex; i++) {
-            if (productBoxes[i]) {
-                productBoxes[i].style.display = "block";
-            }
-        }
-        document.getElementById(`page${page}`).classList.add("active");
-        // Update the current page variable
-        currentPage = page;
-        window.scrollTo(0, 0);
-        updatePageNumbers(); // Save the current page number
-        updateProductBoxCount();
-        showNoProducts();
-       
-    }
-
-    // Function to go to the next page
-    function nextPage() {
-        if (currentPage < totalPages) {
-            showPage(currentPage + 1);
-        }
-    }
-
-    // Initially, show the first page and load the saved page
-    let savedPage = localStorage.getItem("currentPage");
-    if (savedPage) {
-        savedPage = parseInt(savedPage);
-        if (savedPage >= 1 && savedPage <= totalPages) {
-            showPage(savedPage);
-        } else {
-            showPage(1); // Default to the first page
-        }
-    } else {
-        showPage(1); // Default to the first page
-    }
-
-    function saveCurrentPage() {
-        localStorage.setItem("currentPage", currentPage.toString());
-    }
-
-    function updatePageNumbers() {
-        // ... (Your existing code to update page numbers)
-        saveCurrentPage(); // Save the current page number
-    }
-
-
-
-
-
-
-
-    
-</script>
 
 
 
@@ -1435,7 +1358,14 @@ function selectvariationprimary(variation) {
     // Wait for the document to fully load
     document.addEventListener('DOMContentLoaded', function () {
         var product = document.getElementById(productName);
-        product.click();
+        if(productName){
+            if(product){
+            product.click();
+        }
+        else{
+            window.location.href = '404.html'
+        }
+        }
     });
 </script>
 
@@ -1537,6 +1467,7 @@ updateProductBoxCount();
    
 </script>
 
+
 <!----------------------------------show no related products------------->
 
 <script>
@@ -1551,6 +1482,84 @@ updateProductBoxCount();
             noProductMsg.style.display = 'none'
         }
     }
+</script>
+
+<!------page galler page btn gallery shifter -->
+<script>
+    // Variables to keep track of the current page
+    let currentPage = 1;
+    const totalPages = 3; // Total number of pages
+
+    // Function to show a specific page
+    function showPage(page) {
+        // Hide all product boxes
+        const productBoxes = document.querySelectorAll(".product-box");
+        productBoxes.forEach((productBox) => {
+            productBox.style.display = "none";
+        });
+
+        // Remove the active class from all page buttons
+        const pageButtons = document.querySelectorAll(".page");
+        pageButtons.forEach((button) => {
+            button.classList.remove("active");
+        });
+
+        // Show product boxes for the selected page
+        const productsPerPage = 16; // Change this according to the number of products per page
+        const startIndex = (page - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+
+        for (let i = startIndex; i < endIndex; i++) {
+            if (productBoxes[i]) {
+                productBoxes[i].style.display = "block";
+            }
+        }
+        document.getElementById(`page${page}`).classList.add("active");
+        // Update the current page variable
+        currentPage = page;
+        window.scrollTo(0, 0);
+        updatePageNumbers(); // Save the current page number
+        updateProductBoxCount();
+        showNoProducts();
+       
+    }
+
+    // Function to go to the next page
+    function nextPage() {
+        if (currentPage < totalPages) {
+            showPage(currentPage + 1);
+        }
+    }
+
+    // Initially, show the first page and load the saved page
+    let savedPage = localStorage.getItem("currentPage");
+    if (savedPage) {
+        savedPage = parseInt(savedPage);
+        if (savedPage >= 1 && savedPage <= totalPages) {
+            showPage(savedPage);
+        } else {
+            showPage(1); // Default to the first page
+        }
+    } else {
+        showPage(1); // Default to the first page
+    }
+
+    function saveCurrentPage() {
+        localStorage.setItem("currentPage", currentPage.toString());
+    }
+
+    function updatePageNumbers() {
+        // ... (Your existing code to update page numbers)
+        saveCurrentPage(); // Save the current page number
+    }
+
+
+
+
+
+
+
+    
 </script>
 
 

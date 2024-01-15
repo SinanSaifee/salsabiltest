@@ -39,9 +39,11 @@ window.addEventListener('scroll', function() {
   }
   }
 });
-scrollerBtn.addEventListener('click', function() {
-  window.scrollTo(0, 0);
-});
+if(scrollerBtn){
+  scrollerBtn.addEventListener('click', function() {
+    window.scrollTo(0, 0);
+  });
+}
 
 
 //sticky header script
@@ -115,9 +117,11 @@ function changeMainImage(newImageSrc) {
 // showing item added msg
 var addCartbtn = document.getElementById('add-cart');
 
-  addCartbtn.addEventListener('click', function() {
+  if(addCartbtn){
+    addCartbtn.addEventListener('click', function() {
       showitemadded()
   });
+  }
 
   
 
