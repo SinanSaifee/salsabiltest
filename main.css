@@ -2947,3 +2947,67 @@ figure.slider figure .banner-text {
     }
 }
 
+.outstock-box {
+    position: relative;
+}
+
+
+
+.outstock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+}
+@media(max-width: 1000px){
+    .outstock-overlay{
+        height: 200px;
+    }
+}
+@media(max-width: 910px){
+    .outstock-overlay{
+        height: 300px;
+    }
+}
+
+@media(max-width: 875px){
+    .outstock-overlay{
+        height: 250px;
+    }
+}
+@media(max-width: 735px){
+    .outstock-overlay{
+        height: 230px;
+    }
+}
+@media(max-width: 570px){
+    .outstock-overlay{
+        height: 190px;
+    }
+}
+@media(max-width: 460px){
+    .outstock-overlay{
+        height: 150px;
+        font-size: 17px;
+    }
+}
+@media(max-width: 360px){
+    .outstock-overlay{
+        height: 120px;
+        font-size: 15px;
+    }
+}
+@media(max-width: 300px){
+    .outstock-overlay{
+        height: 110px;
+    }
+}
+
+
