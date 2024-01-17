@@ -40,10 +40,10 @@
     </div>
 
     <!-----------------------------------------------------------image zoom------------------------->
-<div class="zoomed-image" id="zoomed-image">
-    <div class="close-icon-image"></div>
-    <div class="zoomed-img" id="zoomed-img"></div>
-</div>
+    <div id="overlayImageZoom">
+        <div id="ZoomContent">
+        </div>
+      </div>
    
     
     
@@ -1099,6 +1099,7 @@ function activebtn2(){
     document.getElementById('addToCartButton').innerHTML = '<img src="image/product-details-cart.png" alt="add" id="add-cart-details"  onclick="addCartDetails()">';
     document.getElementById('product-details-information').innerHTML = productInformation;
     document.getElementById('product-details-information-container').style.display = 'block';
+    document.getElementById('image-zoom').style.display = 'flex';
     document.getElementById('details-header').textContent = 'Product Information';
 
     productBox.style.display = 'none';
@@ -1622,6 +1623,19 @@ updateProductBoxCount();
 });
 
 </script>
+
+<script>
+    function closeOverlay(){
+        document.getElementById("overlayImageZoom").style.display = 'none'
+
+    }
+    function zoomImage(){
+         var mainZoomImgSrc =  document.getElementById('dtlImg').src 
+         document.getElementById('overlayImageZoom').style.display = 'flex';
+         document.getElementById('ZoomContent').innerHTML = '<button class="x-button" onclick="closeOverlay()">✖</button>' +`<img src="${mainZoomImgSrc}" alt
+         >`
+    }
+  </script>
 
 
 
