@@ -94,7 +94,7 @@ function showitemadded(){
 
 // product gallery js
 function changeMainImage(newImageSrc) {
-  var mainImg = document.getElementById('main-Image');
+  var mainImg = document.getElementById('dtlImg');
   event.target.style.opacity = 0.7;
 
   var allImages = document.querySelectorAll('img:not(#main-img)');

@@ -146,6 +146,7 @@
 
 
 <!----------------------------------------------product details content------------------>
+
 <div class="product-details-container">
     <div class="product-details-gallery">
         <div class="main-img-container" id="main-img-container">
@@ -162,6 +163,7 @@
 <div id="selectSizeDropdown"></div>
 <div id="productColorContent"></div>
 <div id="productDescription"></div>
+<div id="addToCartButton" class="product-details-add-cart"></div>
 </div>
 </div>
 <div class="product-details-information-container" style="display: none;" id="product-details-information-container">
@@ -169,6 +171,7 @@
     <div class="product-details-information" id="product-details-information">
     </div>
 </div>
+
 
 
 
@@ -1068,7 +1071,7 @@ function activebtn2(){
     var tittleElement = document.querySelector('#tittleElement').textContent;
     var productInformation = document.querySelector('.product-information').innerHTML;
 
-    document.getElementById('mainImage').innerHTML = '<img src="' + mainImageSrc + '" alt="product image" class="mainImage" id="main-Image">';
+    document.getElementById('mainImage').innerHTML = '<img src="' + mainImageSrc + '" alt="product image" class="mainImage" id="dtlImg">';
     document.getElementById('product-category-name').innerHTML = '<div class="productDataCategory"><p>'+ productCategoryName + '</p></div>'+ '<div id="productDataName"> <p>'+ tittleElement +'</p></div>';
     document.getElementById('productTitle').innerHTML = '<h2 id="product-details-tittle">' + title + '</h2>';
     document.getElementById('productPrice').innerHTML = '<h2 id="product-details-price">' + price + '</h2>';
@@ -1092,7 +1095,8 @@ function activebtn2(){
         document.getElementById('selectSizeDropdown').innerHTML = "";
     }
 
-    document.getElementById('productDescription').innerHTML = '<h2>Product details</h2>' + description + '<div id="addToCartButton" class="product-details-add-cart"><img src="image/product-details-cart.png" alt="add" id="add-cart-details"  onclick="addCartDetails()"></div>';
+    document.getElementById('productDescription').innerHTML = '<h2>Product details</h2>' + description;
+    document.getElementById('addToCartButton').innerHTML = '<img src="image/product-details-cart.png" alt="add" id="add-cart-details"  onclick="addCartDetails()">';
     document.getElementById('product-details-information').innerHTML = productInformation;
     document.getElementById('product-details-information-container').style.display = 'block';
     document.getElementById('details-header').textContent = 'Product Information';
@@ -1133,11 +1137,9 @@ function addCartOpactity(){
         }
     }
   
-    
-
-    var productDataName = document.getElementById('productDataName').textContent;
-    var addCartButton = document.getElementById(productDataName + '-add-cart');
+    var addCartButton = document.querySelector('.add-cart');
     document.querySelector('.product-tittle').textContent = document.getElementById('product-details-tittle').textContent;
+    document.querySelector('.product-img').src = document.querySelector('#dtlImg').src;
     document.querySelector('.price').textContent = document.getElementById('product-details-price').textContent;
 
     if (addCartButton) {
@@ -1155,7 +1157,6 @@ var backBtn = document.getElementById('back-btn');
 var shopTitle = document.getElementById('shopTittle');
 var shopContainer = document.getElementById('shop-content');
 var redirectionText = document.getElementById('category-redirection-text');
-var ImageZoom = document.getElementById('image-zoom')
 
 // Attach click event to each product box
 var productBoxes = document.querySelectorAll('.product-box');
@@ -1166,18 +1167,11 @@ productBoxes.forEach(function(productBox) {
         if (event.target.closest('.add-cart')) {
             return;
         }
-        // Check if the productBox has the class "outstock-box"
-        if (productBox.classList.contains('outstock-box')) {
-        // Product is out of stock
-        alert("This product is currently out of stock. You will be notified later when the product is in stock. Please sign in to our newsletter for notifications.");
-        return;
-        }else
         showProductDetails(productBox);
         window.scrollTo(0, 0);
         searchbar.style.display = 'none';
         pagination.style.display = 'none';
         backBtn.style.display = 'block';
-        ImageZoom.style.display = 'flex';
         shopTitle.textContent = 'Related';
         document.getElementById('section-tittle').style.marginTop = '2rem';
         redirectionText.classList.remove('category-redirection-text');
@@ -1207,6 +1201,7 @@ productBoxes.forEach(function(productBox) {
         showNoProducts();
     });
 });
+
 
 </script>
 <!----------------------script for product details slection---------------------->
