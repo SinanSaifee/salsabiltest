@@ -1104,7 +1104,7 @@ function activebtn2(){
     }
 
     document.getElementById('productDescription').innerHTML = '<h2>Product details</h2>' + description;
-    document.getElementById('addToCartButton').innerHTML = '<img src="image/product-details-cart.png" alt="add" id="add-cart-details"  onclick="addCartDetails()">';
+    document.getElementById('addToCartButton').innerHTML = '<img src="image/product-details-cart.png" alt="add" id="add-cart-details" title="Add cart" onclick="addCartDetails()"><button class="buy-btn" onclick="buyNow()">Buy Now</button>';
     document.getElementById('product-details-information').innerHTML = productInformation;
     document.getElementById('product-details-information-container').style.display = 'block';
     document.getElementById('image-zoom').style.display = 'flex';
@@ -1120,15 +1120,20 @@ function addCartOpactity(){
     var selectSizeDropdown = document.getElementById('selectSizeDropdown');
     var sizeOption = selectSizeDropdown.querySelector('.size-dropdown option:checked');
     var addCartElement = document.getElementById('add-cart-details');
+    var buybtn = document.querySelector('.buy-btn');
 
     if (sizeOption) {
         if (!sizeOption || sizeOption.value === "") {
             addCartElement.style.opacity = '0.5';
             addCartElement.style.cursor = 'not-allowed';
+            buybtn.style.opacity = '0.5';
+            buybtn.style.cursor = 'not-allowed';
         }
         else{
             addCartElement.style.opacity = '1';
             addCartElement.style.cursor = 'pointer';
+            buybtn.style.opacity = '1';
+            buybtn.style.cursor = 'pointer';
         }
     }
   
@@ -1157,6 +1162,18 @@ function addCartOpactity(){
     }
 }
 
+function buyNow(){
+    addCartDetails();
+    var sizeOption = selectSizeDropdown.querySelector('.size-dropdown option:checked');
+
+    if (sizeOption) {
+        if (!sizeOption || sizeOption.value === "") {
+            return;
+        }
+    }
+    document.getElementById('checkoutbtn').click();
+}
+
 
 
     //get id of the elemt that iwll hide like serach bar or to show elment like back button
@@ -1175,6 +1192,10 @@ var color = document.getElementById('color');
 productBoxes.forEach(function(productBox) {
     productBox.addEventListener('click', function() {
         if (event.target.closest('.add-cart')) {
+            return;
+        }
+        if (productBox.classList.contains('outstock-box')){
+            alert("Sorry ! the product is currently out of stock . For regular updates about stock and other informations, subscribe to our newsletter.")
             return;
         }
         showProductDetails(productBox);
