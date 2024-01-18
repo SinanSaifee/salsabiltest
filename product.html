@@ -937,11 +937,11 @@ function activebtn2(){
 
 <!---serch bar script-->
 <script>
-    let selectedCategory = "all";
+   let selectedCategory = "all";
 
     function filterProducts() {
         var input = document.getElementById("searchInput");
-        var filter = input.value.toLowerCase();
+        var filter = input.value.toLowerCase().trim(); // Trim whitespace at the beginning and end
         var productBoxes = document.querySelectorAll(".product-box");
         var noMatchMessage = document.getElementById("noMatchMessage");
 
@@ -951,7 +951,15 @@ function activebtn2(){
             var productNameElement = productBox.querySelector(".product-tittle");
             var productName = productNameElement.textContent.toLowerCase();
 
-            if (productName.includes(filter) && (selectedCategory === "all" || productBox.getAttribute("data-category") === selectedCategory)) {
+            // Split the filter into individual words
+            var filterWords = filter.split(' ');
+
+            // Check if each word is present in the product name
+            var allWordsMatch = filterWords.every(function (word) {
+                return productName.includes(word);
+            });
+
+            if (allWordsMatch && (selectedCategory === "all" || productBox.getAttribute("data-category") === selectedCategory)) {
                 productBox.style.display = "block";
                 var markedProductName = markMatchingLetters(productName, filter);
                 productNameElement.innerHTML = markedProductName;
@@ -969,8 +977,8 @@ function activebtn2(){
             noMatchMessage.style.display = "none";
         }
         updateProductBoxCount();
-     
     }
+
     
     
 
@@ -1104,6 +1112,7 @@ function activebtn2(){
 
     productBox.style.display = 'none';
     addCartOpactity();
+    initUrl(productBox);
     
 }
 
@@ -1202,6 +1211,17 @@ productBoxes.forEach(function(productBox) {
         showNoProducts();
     });
 });
+
+function initUrl(ContentBox) {
+    var dataName = ContentBox.querySelector('#tittleElement').textContent;
+    
+    // Constructing the new URL
+    var newUrl = `?product_name=${encodeURIComponent(dataName)}`;
+
+    // Using pushState to update the URL without reloading the page
+    history.pushState(null, null, newUrl);
+}
+
 
 
 </script>

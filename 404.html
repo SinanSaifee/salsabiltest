@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     body {
-      background-color: #f8f9fa;
+      
       font-family: 'Arial', sans-serif;
       display: flex;
       align-items: center;
@@ -18,12 +18,16 @@
 
     .container {
       text-align: center;
+      background: #fff;
+      padding: 100px;
+      border-radius: 10px;
+
     }
 
     h1 {
-      font-size: 6rem;
+      font-size: 200px;
       margin-bottom: 20px;
-      color: #dc3545;
+      color: #ccc;
     }
 
     p {
@@ -37,35 +41,84 @@
       font-size: 1.2rem;
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: 575px) {
+      body{
+        background: #fff;
+      }
       h1 {
-        font-size: 4rem;
+        font-size: 150px;
+      }
+      .container{
+        padding: 0;
+      }
+    }
+    
+   
+    /* Center the search bar and button */
+    .searchHomeContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    /* Adjust the width of the search bar */
+    #searchBarHome {
+      width: 300px; /* Adjust the width as needed */
+    }
+    .h-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .h-container p{
+      position: absolute;
+      font-size: 50px;
+      color: #ff523b;
+    }
+    @media (max-width: 415px) {
+      h1 {
+        font-size: 100px;
+      }
+      .h-container p {
+        font-size: 30px;
+      }
+      p{
+        font-size: 17px ;
+      }
+      .container{
+        padding: 0;
       }
     }
 
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 5rem;
-      }
-    }
-
-    @media (max-width: 992px) {
-      h1 {
-        font-size: 5.5rem;
-      }
-    }
+   
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>404</h1>
+    <div class="h-container">
+      <h1>404</h1>
     <p>Page Not Found</p>
+    </div>
     <p>Oops! The page you are looking for might be in another castle.</p>
     <a href="main.html" class="btn btn-primary">Go Home</a>
+
+    
+      <div class="searchHomeContainer">
+        <input type="text" id="searchBarHome" class="form-control" placeholder="Search product">
+        <button onclick="search()" type="submit" class="btn btn-danger">Search</button>
+      </div>
+
+    
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    function search(){
+    var search =  document.getElementById('searchBarHome').value;
+    window.location.href = `product.html?search=${search}`
+   }
+  </script>
 </body>
 </html>
