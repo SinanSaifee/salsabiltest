@@ -43,7 +43,9 @@
         #cartTable{
             border-collapse: collapse;
             border-spacing: 0 10px;
+            
         }
+        
         
         #cartTable th {
             text-align: left;
@@ -58,6 +60,7 @@
         #cartTable thead th {
             text-align: left; /* Set text alignment to center for the title row */
         }
+        
         .tfoot-col-1{
             border: 1px solid #ccc;
             padding: 10px;
@@ -117,6 +120,7 @@
         }
         .product-summary-section{
             margin-top: 70px;
+            
         }
         
         #placeOrderBtn{
@@ -144,6 +148,12 @@
         input{
             width: 95%;
         }
+        .product-summary-section{
+            width: 100%;
+        }
+        #cartTable{
+            width: 100%;
+        }
          }
          @media (max-width: 900px) {
                   #checkoutForm {
@@ -155,9 +165,8 @@
                       overflow-x: hidden;
                       margin: 0;
         }
-        input{
-            width: 95%;
-        }
+       
+        
          }
          @media (max-width: 500px) {
                   #checkoutForm {
@@ -169,9 +178,7 @@
                       overflow-x: hidden;
                       margin: 0;
         }
-        input{
-            width: 90%;
-        }
+        
         /* .product-summary-section{
             order: 1;
         }
@@ -241,6 +248,15 @@
                 width: 80%;
             }
         }
+        .checkout-back-btn{
+            position: absolute;
+        }
+        .checkout-back-btn a{
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            font-size: 17px;
+        }
     </style>
     
 </head>
@@ -265,7 +281,7 @@
     </div>
 
     <form id="checkoutForm">
-        <p class="blog-back-btn"><a href="product.html"><span>&larr;</span>  back</a></p>
+        <p class="checkout-back-btn"><a href="product.html"><span>&larr;</span>  back</a></p>
         <div class="customer-info-section">
 
             <h1 style="font-weight: 500;  font-size: 22px;line-height: 31px; color: #242424;">BILLING DETAILS</h1>
@@ -309,18 +325,16 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td></td>
-                        <td class="tfoot-col-1">Total</td>
+                        
+                        <td class="tfoot-col-1" colspan="2">Total</td>
                         <td id="totalPrice" class="tfoot-col-2">tk.0.00</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td class="tfoot-col-1">Shipping</td>
+                        <td class="tfoot-col-1" colspan="2">Shipping</td>
                         <td id="shippingPrice" class="tfoot-col-2">tk.50.00</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td class="tfoot-col-1" style="font-size: 22px; color: #ff523b;">Grand Total</td>
+                        <td class="tfoot-col-1" style="font-size: 22px; color: #ff523b;" colspan="2">Grand Total</td>
                         <td id="grandTotal" class="tfoot-col-2" style="font-size: 22px; color: #ff523b;">tk.0.00</td>
                     </tr>
                 </tfoot>
