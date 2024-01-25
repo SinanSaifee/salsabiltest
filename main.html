@@ -103,7 +103,7 @@
 <form id="searchForm">
     <div class="searchHomeContainer">
         <input type="text" id="searchBarHome" name="searchInput" placeholder="Search for products">
-    <button onclick="search()" type="submit" id="searchBtnHome"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button type="submit" id="searchBtnHome"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
 </form>
 
@@ -599,33 +599,7 @@ function hidemenu(){
 </script>  
 
 
-<!------------------news letter-->
-<script>
-    let form = document.querySelector(".newsletter-form");
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    let data = new FormData(form);
-
-    fetch('https://script.google.com/macros/s/AKfycbyK3DcrkoDwH_IcIr8MN8HZvjJQfO107T97MBJD21QvvniBsIDsc5rPxaRUQvWKrDpU/exec', {
-        method: "POST",
-        body: data
-    })
-
-    .then((res) => {
-        thankMsg = document.getElementById("newsletter-thank-you-msg");
-        thankMsg.style.display = "block";
-        console.log('subscribed !');
-    })
-    setTimeout(function() {
-            thankMsg.style.display = "none";
-        }, 5000); 
-        form.reset()
-    
-});
-
-  </script>
 
 <!--catgory redirection-->
 <script>
@@ -847,11 +821,41 @@ form.addEventListener('submit', (e) => {
     });
 </script>
 <script>
-   function search(){
-    var search =  document.getElementById('searchBarHome').value;
-    window.location.href = `product.html?search=${search}`
-   }
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var search = document.getElementById('searchBarHome').value;
+        window.location.href = `product.html?search=${search}`;
+    });
 </script>
+
+
+<!------------------news letter-->
+<script>
+    let newsletterform = document.querySelector(".newsletter-form");
+
+newsletterform.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    let newsletterdata = new FormData(newsletterform);
+
+    fetch('https://script.google.com/macros/s/AKfycbyK3DcrkoDwH_IcIr8MN8HZvjJQfO107T97MBJD21QvvniBsIDsc5rPxaRUQvWKrDpU/exec', {
+        method: "POST",
+        body: newsletterdata,
+    })
+
+    .then((res) => {
+        thankMsg = document.getElementById("newsletter-thank-you-msg");
+        thankMsg.style.display = "block";
+        console.log('subscribed !');
+    })
+    setTimeout(function() {
+            thankMsg.style.display = "none";
+        }, 5000); 
+        newsletterform.reset()
+    
+});
+
+  </script>
 
 
 
