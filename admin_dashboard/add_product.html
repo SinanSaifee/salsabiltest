@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Add product</title>
+    <!-- Bootstrap CDN -->
+    <link rel='stylesheet' type='text/css' media='screen' href='css/adminStyle.css'>
+    <link rel="shortcut icon" type="image/x-icon" href="image/sample tittle logo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+     <style>
+        /* =============== Navigation ================ */
+    
+        * {
+    font-family: "Ubuntu", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+    
+        :root {
+    --blue: #2a2185;
+    --white: #fff;
+    --gray: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+    }
+    .navigation {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background: var(--blue);
+    border-left: 10px solid var(--blue);
+    transition: 0.5s;
+    overflow: hidden;
+    top: 0;
+    z-index: 9999;
+    }
+    .navigation.active {
+    width: 80px;
+    }
+    
+    .navigation ul {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    }
+    
+    .navigation ul li {
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    }
+    
+    /* .navigation ul li:hover,
+    .navigation ul li.hovered {
+    background-color: var(--white);
+    } */
+    
+    .navigation ul li:nth-child(1) {
+    margin-bottom: 40px;
+    pointer-events: none;
+    }
+    
+    .navigation ul li a {
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: var(--white);
+    }
+    /* .navigation ul li:hover a,
+    .navigation ul li.hovered a {
+    color: var(--blue);
+    } */
+    
+    .navigation ul li a .icon {
+    position: relative;
+    display: block;
+    min-width: 60px;
+    height: 60px;
+    line-height: 75px;
+    text-align: center;
+    }
+    .navigation ul li a .icon i {
+    font-size: 1.75rem;
+    }
+    
+    .navigation ul li a .title {
+    position: relative;
+    display: block;
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
+    }
+    
+    /* --------- curve outside ----------
+    .navigation ul li:hover a::before,
+    .navigation ul li.hovered a::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    pointer-events: none;
+    }
+    .navigation ul li:hover a::after,
+    .navigation ul li.hovered a::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    pointer-events: none;
+    } */
+    #toggleButton i{
+        color: #fff;   
+        cursor: pointer; 
+        position: fixed;  
+        top: 14px;
+        left: 25px;
+        z-index: 99999;
+    }
+    .active-page{
+    background: #fff;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    color: var(--blue);
+    }
+    .active-page a span{
+        color: var(--blue);
+    }
+    .active-page::before{
+        content: "";
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    pointer-events: none; 
+    }
+    .active-page::after{
+        content: "";
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    pointer-events: none;
+    }
+  
+ 
+    </style>
+    <style>
+        form {
+      width: 50%;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    form div {
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+    }
+    .form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    #size-selection-edit{
+        display: none;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #000;
+    }
+    #variant-selection-edit{
+        display: none;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #000;
+    }
+    #product-info-edit{
+        display: none;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #000;
+    }
+    .code-generated{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999999999999999;
+    }
+    #code-generated{
+        max-width: 90%;
+        max-height: 90%;
+        background: white;
+        overflow: scroll;
+    }
+    .close-btn{
+        position: absolute;
+        top: 0;
+        right: 0;
+        align-self: flex-end;
+        justify-self: flex-end;
+        padding: 10px 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <button id="toggleButton">
+        <i class="fas fa-bars fa-2x"></i>
+    </button>
+
+    <!-- Loading gif -->
+    <div id="loading">
+        <img src="loading copy.gif" alt="Loading" width="50" height="50">
+        <p>Signing out</p>
+    </div>
+     <!-- =============== Navigation ================ -->
+        <div class="navigation">
+            
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </span>
+                        <span class="title">ADMIN</span>
+                    </a>
+                </li>
+
+                <li  >
+                    <a href="dashboard.html">
+                        <span class="icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </span>
+                        <span class="title">Orders</span>
+                    </a>
+                </li>
+
+                <li class="active-page">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-shirt"></i>
+                        </span>
+                        <span class="title">Products</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </span>
+                        <span class="title">Analytics</span>
+                    </a>
+                </li>
+
+                <li >
+                    <a href="invoice.html">
+                        <span class="icon">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </span>
+                        <span class="title">invoice</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-gear"></i>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <li onclick="logout()">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+   
+        
+
+
+        <section class="form">
+            <form>
+                <div class="form-group">
+                  <label for="url-id">Url id</label>
+                  <input type="text" class="form-control" id="url-id" placeholder="url id (example.com/product?product_id=url id)" required>
+                </div>
+                <div class="form-group">
+                  <label for="product-category">Product category</label>
+                  <select class="form-control" id="product-category">
+                    <option value="all" id="all">Select category</option>
+                    <option value="Perfume" id="Perfume">Perfume Oil</option>
+                    <option value="Books" id="Books">Books</option>
+                    <option value="Men" id="Men">Men's Empire</option>
+                    <option value="Foods" id="Foods">Foods</option>
+                    <option value="Cap" id="Cap">Cap</option>
+                    <option value="Offer" id="Offer">Offer</option>
+                    <option value="Combo Package" id="Combo Package">Combo Package</option>
+                    <option value="Jaynamaz" id="Jaynamaz">Jaynamaz</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                    <label for="product-name">Product Details category name</label>
+                    <input type="text" class="form-control" id="product-details-category-name" placeholder="product details category name" required>
+                  </div>
+                <div class="form-group">
+                  <label for="product-name">Product name</label>
+                  <input type="text" class="form-control" id="product-name" placeholder="product name" required>
+                </div>
+                <div class="form-group">
+                  <label for="product-price">Product price</label>
+                  <input type="text" class="form-control" id="product-price" placeholder="product price" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-cut-price">Product cut price</label>
+                    <input type="text" class="form-control" id="product-cut-price" placeholder="product cut price">
+                  </div>
+                <div class="form-group">
+                  <label for="product-rating">Product rating</label>
+                  <input type="number" class="form-control" value="1" max="5" min="1" id="product-rating">
+                </div>
+                <div class="form-group">
+                  <label for="product-image">Product main image</label>
+                  <input type="text" class="form-control" id="product-image" placeholder="image url" required>
+                </div>
+                <div class="form-group">
+                  <label for="image-tag">Image tag</label>
+                  <input type="text" class="form-control" placeholder="image tag (40%, sale)" id="image-tag">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="checkbox">
+                    <label class="form-check-label" for="checkbox">Rounded tag</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="product-small-image">Product small image</label>
+                  <input type="text" class="form-control" id="product-small-image-1" placeholder="small image 1 url">
+                  <input type="text" class="form-control" id="product-small-image-2" placeholder="small image 2 url">
+                  <input type="text" class="form-control" id="product-small-image-3" placeholder="small image 3 url">
+                  <input type="text" class="form-control" id="product-small-image-4" placeholder="small image 4 url">
+                </div>
+                <div class="form-group">
+                    <label for="Size-selection">Size selection</label><br>
+                     <select  id="Size-selection" class="form-control" onchange="sizeSelection()">
+                        <option value="none" selected>None</option>
+                        <option value="mililitre">mililitre(ml)</option>
+                        <option value="tshirt-size">large-xxl</option>
+                     </select>
+                </div>
+                <div class="form-group">
+                    <div name="size-selection-edit" id="size-selection-edit" contenteditable="true"></div>
+                </div>
+                <div class="form-group">
+                    <label for="Size-selection">Variant selection</label><br>
+                     <select  id="variant-selection" class="form-control" onchange="variantSelection()">
+                        <option value="none" selected>None</option>
+                        <option value="variant-1">black,yellow,blue,red</option>
+                     </select>
+                </div>
+                <div class="form-group">
+                    <div id="variant-selection-edit" contenteditable="true"></div>
+                </div>
+                <div class="form-group">
+                    <label for="info-selection">Product info </label><br>
+                     <select  id="product-info-select" class="form-control" onchange="productInfoSelect()">
+                        <option value="none" selected>Select type</option>
+                        <option value="text">Text</option>
+                        <option value="ol-list">Ordered list</option>
+                        <option value="ul-list">Unordered list</option>
+                     </select>
+                </div>
+                <div class="form-group">
+                    <div id="product-info-edit" contenteditable="true" ></div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="generate_code()">Generate product box</button>
+              </form>
+        </section>
+
+<section class="code-generated">
+    <div class="close-btn btn-danger" onclick="closeCode()">close</div>
+    <div id="code-generated"> </div>
+</section>
+
+
+
+
+
+
+<script>
+    function generate_code(){
+        var url_id = document.getElementById('url-id').value;
+        var product_category = document.getElementById('product-category').value;
+        var product_details_category_name = document.getElementById('product-details-category-name').value;
+        var product_name = document.getElementById('product-name').value;
+        var product_price = document.getElementById('product-price').value;
+        var product_rating = document.getElementById('product-rating').value;
+        var product_image = document.getElementById('product-image').value;
+        var product_small_image_1 = document.getElementById('product-small-image-1').value;
+        var product_small_image_2 = document.getElementById('product-small-image-2').value;
+        var product_small_image_3 = document.getElementById('product-small-image-3').value;
+        var product_small_image_4 = document.getElementById('product-small-image-4').value;
+        var product_size = document.getElementById('Size-selection').value;
+        var product_variant = document.getElementById('variant-selection').value;
+        var rounded_tag = document.getElementById('checkbox');
+        var product_tag = document.getElementById('image-tag').value;
+        var product_cut_price = document.getElementById('product-cut-price').value;
+        var product_info = document.getElementById('product-info-select').value;
+        
+        
+        
+        // console.log(url_id, product_category, product_details_category_name, product_name, product_price, product_rating, product_image, product_small_image_1, product_small_image_2, product_small_image_3, product_small_image_4, product_size, product_variant, rounded_tag, product_tag);
+        var productCutPriceCode= '';
+        if(product_cut_price !== ''){
+          productCutPriceCode = `
+          <span class="cut-text">${product_cut_price}</span>
+          `
+        }
+        else{
+            productCutPriceCode = '';
+        }
+        
+
+
+
+        var starsHTML = '';
+        var fullStars = Math.floor(product_rating); // Integer part of the rating
+        var emptyStars = 5 - fullStars; // Number of empty stars
+        var halfStar = false;
+
+        // Check if there's a decimal part
+        if (product_rating % 1 !== 0) {
+            halfStar = true; // There's a half star
+        }
+
+        // Adding full stars
+        for (var i = 0; i < fullStars; i++) {
+            starsHTML += '<i class="fas fa-star"></i>';
+        }
+
+        // Adding half star if exists
+        if (halfStar) {
+            starsHTML += ' <i class="fas fa-star-half-alt"></i>';
+            emptyStars--; // Reduce one empty star as it's partially filled
+        }
+
+        // Adding empty stars
+        for (var j = 0; j < emptyStars; j++) {
+            starsHTML += ' <i class="far fa-star"></i>';
+        }
+
+        ratingContainer = starsHTML;
+        
+
+
+
+
+        var small_image_1_code = '';
+
+        if (product_small_image_1 !== '') {
+        small_image_1_code = `
+        <div class="small-img-col">
+        <img src="${product_small_image_1}" id="small-img-black" class="small-img-1" onclick="changeMainImage('${product_small_image_1}')">
+        </div>`;
+        }
+        else{
+            small_image_1_code = ''
+        }
+        var small_image_2_code = '';
+        if (product_small_image_2 !== '') {
+        small_image_2_code = `
+        <div class="small-img-col">
+        <img src="${product_small_image_2}" id="small-img-red"  onclick="changeMainImage('${product_small_image_2}')">
+        </div>`;
+        }
+        else{
+            small_image_2_code = ''
+        }
+        var small_image_3_code = '';
+        if (product_small_image_3 !== '') {
+        small_image_3_code = `
+        <div class="small-img-col">
+        <img src="${product_small_image_3}" id="small-img-blue"  onclick="changeMainImage('${product_small_image_3}')">
+        </div>`;
+        }
+        else{
+            small_image_3_code = ''
+        }
+        var small_image_4_code = '';
+        if (product_small_image_4 !== '') {
+        small_image_4_code = `
+        <div class="small-img-col">
+        <img src="${product_small_image_4}" id="small-img-yellow"  onclick="changeMainImage('${product_small_image_4}')">
+        </div>`;
+        }
+        else{
+            small_image_4_code = ''
+        }
+
+
+      var smallImageContainer = '';
+      if(small_image_1_code !== ''){
+      smallImageContainer = '<div class="small-img-row" id="small-img-row">' + small_image_1_code + small_image_2_code + small_image_3_code + small_image_4_code + '</div>';
+      }
+      else{
+        smallImageContainer = '';
+      }
+
+
+      var productTag = '';
+      if(product_tag !== ''){
+        if (rounded_tag.checked) {
+         var productTag = `
+        <div class="product-img-text-rounded">
+        <h5>${product_tag}</h5>
+        </div>`;
+      }
+        else{
+         var productTag = `
+        <div class="product-img-text">
+        <h5>${product_tag}</h5>
+        </div>`
+      }
+      }
+      else{
+        productTag = '';
+      }
+      
+      var productVariantCode = '';
+      if(product_variant !== 'none'){
+         productVariantCode = document.getElementById('variant-selection-edit').innerText;
+      }
+      else{
+        productVariantCode = '';
+      }
+
+      
+
+
+      var sizeSelectionCode = '';
+      if(product_size !== 'none'){
+        sizeSelectionCode = document.getElementById('size-selection-edit').innerText;
+      }
+      else{
+        sizeSelectionCode= '';
+      }
+      
+
+
+
+      var productInfoCode = '';
+      if(product_info !== 'none'){
+        productInfoCode = document.getElementById('product-info-edit').innerText;
+      }
+      else{
+        productInfoCode = '';
+      }
+
+
+
+      var addBtn = '';
+      if(product_variant === 'none' && product_size === 'none'){
+        addBtn = `
+        <img src="image/product-details-cart.png" alt="add" class="add-cart" >
+        `;
+      }
+      else{
+        addBtn = `
+        <button class="select-btn">Select</button>
+        `;
+      }
+    
+
+      var adc = '';
+      if(product_size === 'none' && product_variant === 'none'){
+        adc = ' adc-box';
+      }
+      else{
+        adc = '';
+      }
+
+
+document.querySelector('.code-generated').style.display = 'flex';
+document.getElementById('code-generated').innerText = `
+<div class="product-box${adc}" id="${url_id}" data-category="${product_category}" >
+<img src="${product_image}" alt="product" class="product-img" id="main-img">
+    ${productTag}
+    ${smallImageContainer}
+    <div class="product-info-container">
+    <div class="product-description" id="productdetailscategoryname">
+        <p>${product_details_category_name}</p>
+        </div>
+    <h2 class="product-tittle" id="product-tittle">${product_name}</h2>
+    <p id="tittleElement" style="display: none;">${url_id}</p>
+
+    <div class="product-box-rating">${ratingContainer}</div>
+    ${productCutPriceCode}<span class="price">${product_price}</span>
+    ${sizeSelectionCode}
+    ${productVariantCode}
+    <h1 class="product-description">Product Details</h1>
+    <p class="product-details-description product-description">Lorem ipsum dolor sit amet consectetur adipisici<br>
+    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab<br>
+        repellendus blanditiis ipsum illo libero corrupti voluptas, neq
+        ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+            
+</div>
+<div class="product-description">
+    <div class="product-information">
+        ${productInfoCode}
+    </div>
+</div>
+${addBtn}
+</div>
+      
+`
+      
+
+}
+function sizeSelection(){
+    var size = document.getElementById('Size-selection').value;
+    if(size !== 'none'){
+        document.getElementById('size-selection-edit').style.display = 'block';
+        if(size === 'mililitre'){
+document.getElementById('size-selection-edit').innerText = `
+<div class="product-description">
+<select class="size-dropdown" onchange="sizeselectMl()">
+    <option value="" data-price="">Select size</option>
+    <option value="6ml" data-price="">6 ml</option>
+    <option value="12ml" data-price="">12 ml</option>
+    <option value="28ml" data-price="">28 ml</option>
+</select>
+</div>
+            `
+        }
+        else if(size === 'tshirt-size'){
+document.getElementById('size-selection-edit').innerText = `
+<div class="product-description">
+<select class="size-dropdown" onchange="sizeselectxl()">
+    <option value="" data-price="" selected>Select size</option>
+    <option value="small" data-price="">small</option>
+    <option value="medium" data-price="">medium</option>
+    <option value="large" data-price="">Large</option>
+    <option value="xl" data-price="">XL</option>
+    <option value="xxl" data-price="">XXL</option>
+</select>
+</div>
+            `
+        }
+    }
+    else{
+        document.getElementById('size-selection-edit').style.display = 'none';
+    }
+}
+
+function variantSelection(){
+    var variant = document.getElementById('variant-selection').value;
+    if(variant !== 'none'){
+        document.getElementById('variant-selection-edit').style.display = 'block';
+        if(variant === 'variant-1'){
+document.getElementById('variant-selection-edit').innerText = `
+<div class="product-description">
+        <div class="color-content">
+        <h1>Select colour</h1>
+        <div class="color-groups">
+            <div class="color color-black active-color" onclick="selectvariationprimary('black')"></div>
+            <div class="color color-red" onclick="selectvariationprimary('red')"></div>
+            <div class="color color-blue" onclick="selectvariationprimary('blue')"></div>
+            <div class="color color-yellow" onclick="selectvariationprimary('yellow')"></div>
+        </div>
+    </div>
+    </div>
+  `
+        }
+    }
+    else{
+        document.getElementById('variant-selection-edit').style.display = 'none';
+    }
+}
+
+function productInfoSelect(){
+    var infoSelect = document.getElementById('product-info-select').value;
+    if(infoSelect !== 'none'){
+        document.getElementById('product-info-edit').style.display = 'block';
+        if(infoSelect === 'text'){
+            document.getElementById('product-info-edit').innerText = `
+            <div class="product-text-info"></div>
+            `
+        }
+        else if(infoSelect === 'ol-list'){
+            document.getElementById('product-info-edit').innerText = `
+<ol>
+                           
+<li><p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel mi vel felis volutpat aliquet eu et mi. Integer euismod nunc ut libero blandit, ac bibendum lectus euismod.</p></li>
+<li><p><strong>Price:</strong> $99.99</p></li>
+<li><p><strong>Size:</strong> Medium</p></li>
+<li><p><strong>Weight:</strong> 1.5 lbs</p></li>
+<li><p><strong>Color:</strong> Blue</p></li>
+<li><p><strong>Material:</strong> Cotton</p></li>
+<li><p><strong>Brand:</strong> ABC Brand</p></li>
+<li><p><strong>Model:</strong> XYZ123</p></li>
+<li><p><strong>Availability:</strong> In Stock</p></li>
+</ol>
+            `
+        }
+        else if(infoSelect === 'ul-list'){
+            document.getElementById('product-info-edit').innerText = `
+<ul>
+                           
+<li><p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel mi vel felis volutpat aliquet eu et mi. Integer euismod nunc ut libero blandit, ac bibendum lectus euismod.</p></li>
+<li><p><strong>Price:</strong> $99.99</p></li>
+<li><p><strong>Size:</strong> Medium</p></li>
+<li><p><strong>Weight:</strong> 1.5 lbs</p></li>
+<li><p><strong>Color:</strong> Blue</p></li>
+<li><p><strong>Material:</strong> Cotton</p></li>
+<li><p><strong>Brand:</strong> ABC Brand</p></li>
+<li><p><strong>Model:</strong> XYZ123</p></li>
+<li><p><strong>Availability:</strong> In Stock</p></li>
+</ul>
+            `
+        }
+        
+    }
+    else{
+        document.getElementById('product-info-edit').style.display = 'none'
+    }
+}
+
+function closeCode(){
+    document.querySelector('.code-generated').style.display = 'none';
+}
+</script>
+
+
+
+    
+ <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const navigation = document.querySelector('.navigation');
+        const toggleButton = document.getElementById('toggleButton');
+        // Close navigation if window width is greater than 1500px
+        if (window.innerWidth < 1500) {
+            navigation.classList.add('active');
+        }
+    
+        // Add click event listener to the toggle button
+        toggleButton.addEventListener('click', function () {
+            // Toggle the 'active' class on the navigation element
+            navigation.classList.toggle('active');
+        });
+    });
+    
+        
+          </script>
+          <script>
+            function logout() {
+                 // Ask for confirmation
+                 var confirmLogout = confirm("Are you sure you want to sign out?");
+                 
+                 if (confirmLogout) {
+                     // Show loading spinner
+                     document.getElementById('loading').style.display = 'block';
+                     
+                     // Delay for 5 seconds (5000 milliseconds)
+                     setTimeout(function() {
+                         // Remove the "loggedIn" item from local storage
+                         localStorage.removeItem('Aknviauth172vGGh');
+                         // Redirect to the login page
+                         window.location.href = 'auth.html';
+                     }, 5000);
+                 }
+             }
+         </script>
+</body>
+
+</html>

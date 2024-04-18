@@ -577,6 +577,15 @@ function displayOrderDetails(orderData, orderId) {
 
     const orderDetailsDiv = document.createElement('div');
     orderDetailsDiv.className = 'orderDetails';
+    var emailValid = orderData.email;
+    if(emailValid !== ''){
+        var emailValidRequired = `<a href="mailto:${orderData.email}?subject=Sal%20sabil%20order%20invoice&amp;body=Your%20order%20was%20successfully%20placed.%20You%20will%20receive%20your%20order%20at%20your%20shipping%20address.%20Your%20order%20details:%0A${encodeURIComponent(getProductListHTML(orderData.products))}">
+                            ${orderData.email}
+                        </a>`;
+    }
+    else{
+        var emailValidRequired = `<a href="#">(No email provided)</a>`;
+    }
     orderDetailsDiv.innerHTML = `
         <button id="closeButton" onclick="closeOrderDetails()" class="btn btn-danger">Close</button>
         <button id="generateQRButton" class="btn btn-primary"><i class="fa-solid fa-qrcode" style="margin-right: 10px;"></i>Generate QR Code</button>
@@ -602,9 +611,7 @@ function displayOrderDetails(orderData, orderId) {
                 <tr>
                     <td><strong>Email:</strong></td>
                     <td>
-                        <a href="mailto:${orderData.email}?subject=Sal%20sabil%20order%20invoice&amp;body=Your%20order%20was%20successfully%20placed.%20You%20will%20receive%20your%20order%20at%20your%20shipping%20address.%20Your%20order%20details:%0A${encodeURIComponent(getProductListHTML(orderData.products))}">
-                            ${orderData.email}
-                        </a>
+                        ${emailValidRequired}
                     </td>
                 </tr>
 

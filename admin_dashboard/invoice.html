@@ -371,9 +371,18 @@
         const invoiceDetailsJSON = localStorage.getItem('invoiceDetails');
         const invoiceDetails = JSON.parse(invoiceDetailsJSON);
 
+        //checking whether there is email or is it empty
+        var invoiceemailValidRequired = invoiceDetails.email;
+        if(invoiceemailValidRequired !== ''){
+            emailRequired =  invoiceDetails.email;
+        }
+        else{
+            emailRequired = '(No email provided)' //can be replace with '----' insted of (No email provided)
+        }
+
         // Update HTML with invoice details
         document.getElementById('customerName').innerText = invoiceDetails.name;
-        document.getElementById('customerEmail').innerText = invoiceDetails.email;
+        document.getElementById('customerEmail').innerText = emailRequired;
         document.getElementById('customerNumber').innerText = invoiceDetails.number;
         document.getElementById('shippingAddress').innerText = invoiceDetails.shippingAddress;
         document.getElementById('orderDate').innerText = invoiceDetails.timestamp;
