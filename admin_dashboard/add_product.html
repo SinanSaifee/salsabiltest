@@ -614,18 +614,11 @@
       }
     
 
-      var adc = '';
-      if(product_size === 'none' && product_variant === 'none'){
-        adc = ' adc-box';
-      }
-      else{
-        adc = '';
-      }
 
 
 document.querySelector('.code-generated').style.display = 'flex';
 document.getElementById('code-generated').innerText = `
-<div class="product-box${adc}" id="${url_id}" data-category="${product_category}" >
+<div class="product-box" id="${url_id}" data-category="${product_category}" >
 <img src="${product_image}" alt="product" class="product-img" id="main-img">
     ${productTag}
     ${smallImageContainer}
