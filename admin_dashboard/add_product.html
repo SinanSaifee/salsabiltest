@@ -206,6 +206,11 @@
         padding: 10px;
         border: 1px solid #000;
     }
+    #share-edit{
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #000;
+    }
     #product-info-edit{
         display: none;
         background-color: #fff;
@@ -405,6 +410,13 @@
                     <div id="variant-selection-edit" contenteditable="true"></div>
                 </div>
                 <div class="form-group">
+                    <label>Share</label>
+                    <div id="share-edit" contenteditable="true">
+
+                    </div>
+                    
+                  </div>
+                <div class="form-group">
                     <label for="info-selection">Product info </label><br>
                      <select  id="product-info-select" class="form-control" onchange="productInfoSelect()">
                         <option value="none" selected>Select type</option>
@@ -431,6 +443,13 @@
 
 
 <script>
+document.getElementById('share-edit').innerText = `
+<span>Share : 
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.salsabilbd.com/product/attar-al-kaba"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com/share?url=https://www.salsabilbd.com/product//attar-al-kaba"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.salsabilbd.com/product//attar-al-kaba"><i class="fab fa-linkedin"></i></a>
+</span>
+`
     function generate_code(){
         var url_id = document.getElementById('url-id').value;
         var product_category = document.getElementById('product-category').value;
@@ -614,6 +633,10 @@
       }
     
 
+ var csi = document.getElementById("product-category").selectedIndex;
+var selectedOption = document.getElementById("product-category").options[csi];
+var cssi = selectedOption.textContent;
+
 
 
 document.querySelector('.code-generated').style.display = 'flex';
@@ -634,10 +657,10 @@ document.getElementById('code-generated').innerText = `
     ${sizeSelectionCode}
     ${productVariantCode}
     <h1 class="product-description">Product Details</h1>
-    <p class="product-details-description product-description">Lorem ipsum dolor sit amet consectetur adipisici<br>
-    ng elit. Ipsa officiis, ad reprehenderit ratione eos, ab<br>
-        repellendus blanditiis ipsum illo libero corrupti voluptas, neq
-        ue suscipit deleniti in. Quibusdam deserunt omnis fugit.</p>
+    <p class="product-details-description product-description">
+        <span>Category : <a href="https://www.salsabilbd.com/product?category=${product_category}>${cssi}</a></span>
+        ${document.getElementById('share-edit').textContent}
+    </p>
             
 </div>
 <div class="product-description">
