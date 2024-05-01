@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders Analytics</title>
+  <!-- Add Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Add Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    .container {
+  max-width: 60%; /* Adjusted maximum width */
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.analytics-container {
+  flex-basis: 100%;
+  margin-bottom: 20px;
+}
+@media screen and (min-width: 1301px) {
+  .analytics-container {
+    flex-basis: calc(50% - 10px); /* Set 50% width if screen width is greater than 1300px */
+  }
+}
+
+canvas {
+  max-width: 100%; /* Ensure canvas fills its container */
+  height: auto;
+}
+
+  </style>
+    <style>
+      /* =============== Navigation ================ */
+  
+      * {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+  
+      :root {
+  --blue: #2a2185;
+  --white: #fff;
+  --gray: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+  }
+  .navigation {
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  background: var(--blue);
+  border-left: 10px solid var(--blue);
+  transition: 0.5s;
+  overflow: hidden;
+  top: 0;
+  z-index: 9999;
+  }
+  .navigation.active {
+  width: 80px;
+  }
+  
+  .navigation ul {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  }
+  
+  .navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  }
+  
+  /* .navigation ul li:hover,
+  .navigation ul li.hovered {
+  background-color: var(--white);
+  } */
+  
+  .navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+  }
+  
+  .navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+  }
+  /* .navigation ul li:hover a,
+  .navigation ul li.hovered a {
+  color: var(--blue);
+  } */
+  
+  .navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+  }
+  .navigation ul li a .icon i {
+  font-size: 1.75rem;
+  }
+  
+  .navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+  }
+  
+  /* --------- curve outside ----------
+  .navigation ul li:hover a::before,
+  .navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none;
+  }
+  .navigation ul li:hover a::after,
+  .navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+  } */
+
+  #toggleButton{
+      border: none;
+      position: fixed;  
+      top: 14px;
+      left: 25px;
+      z-index: 99999;
+      background: none;
+  }
+  #toggleButton i{
+      color: #fff;   
+      cursor: pointer; 
+  }
+  .active-page{
+  background: #fff;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  color: var(--blue);
+  }
+  .active-page a span{
+      color: var(--blue);
+  }
+  .active-page::before{
+      content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none; 
+  }
+  .active-page::after{
+      content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+  }
+
+
+
+.notification-date-container {
+  margin-top: 10px;
+}
+
+.notification-divider {
+  color: #ccc;
+  font-size: 14px;
+}
+#topCustomersContainer{
+  max-height: 100px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+#topProductsContainer{
+  max-height: 100px;
+  overflow: scroll;
+  overflow-x: hidden;
+  
+}
+.statictics-container{
+  margin-bottom: 20px;
+  display: flex;
+  
+}
+#qrCodeContainer{
+  position: absolute;
+  margin-top: -450px;
+  right: 200px;
+}
+#invoice-generator-btn{
+  background: #000;
+  color: #fff;
+  float: right;
+  padding: 10px 15px;
+  border-radius: 50%;
+}
+#invoice-generator-btn i{
+  font-size: 27px;
+}
+@media(max-width: 1020px){  
+  .navigation{
+      display: none;
+  }
+  #toggleButton i{
+      color: #222;
+  }
+  #toggleButton{
+      position: relative;
+  }
+  .order-container{
+      margin-left: 20px;
+      width: 100%;
+      max-width: 100%;
+      padding: 10px;
+      right: 20px;
+      justify-content: flex-start;
+  }
+  
+  .statictics-container{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      
+  }
+  .statictics-container .container{
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      
+  }
+  .button-container{
+      flex-direction: column;
+  }
+  
+  
+
+}
+.display-navigation{
+  display: block;
+}
+
+
+
+
+  </style>
+</head>
+<body>
+  <button id="toggleButton">
+    <i class="fas fa-bars fa-2x"></i>
+</button>
+
+<!-- Loading gif -->
+<div id="loading">
+    <img src="loading copy.gif" alt="Loading" width="50" height="50">
+    <p>Signing out</p>
+</div>
+ <!-- =============== Navigation ================ -->
+    <div class="navigation">
+        
+        <ul>
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </span>
+                    <span class="title">ADMIN</span>
+                </a>
+            </li>
+
+            <li class="active-page" >
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </span>
+                    <span class="title">Orders</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-shirt"></i>
+                    </span>
+                    <span class="title">Products</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </span>
+                    <span class="title">Analytics</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="invoice.html">
+                    <span class="icon">
+                        <i class="fa-solid fa-file-invoice"></i>
+                    </span>
+                    <span class="title">invoice</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-gear"></i>
+                    </span>
+                    <span class="title">Settings</span>
+                </a>
+            </li>
+
+            <li onclick="logout()">
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+                    <span class="title">Sign Out</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+  <div class="container">
+    <!-- First row -->
+    <div class="analytics-container">
+      <canvas id="ordersChart1"></canvas>
+    </div>
+    <div class="analytics-container">
+      <canvas id="ordersChart3"></canvas> <!-- Add canvas for Chart 3 -->
+    </div>
+    
+    <!-- Second row -->
+    <div class="analytics-container" style="flex-basis: calc(100% - 20px);">
+      <div class="scrollable">
+        <canvas id="ordersChart2"></canvas>
+      </div>
+    </div>
+    <!-- Third row -->
+    <div class="analytics-container">
+      <!-- Placeholder for the third analytics container -->
+    </div>
+  <script>
+    // Your Firebase configuration
+    var firebaseConfig = {
+            apiKey: "AIzaSyDkzYyAPXcGoNE1efAuAp5t6YVT3SYhOvg",
+            authDomain: "salsabil-order.firebaseapp.com",
+            databaseURL: "https://salsabil-order-default-rtdb.firebaseio.com",
+            projectId: "salsabil-order",
+            storageBucket: "salsabil-order.appspot.com",
+            messagingSenderId: "336133726144",
+            appId: "1:336133726144:web:be467b085f67ca97657225",
+            measurementId: "G-P0561X9RTQ"
+};
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Get a reference to the database service
+    const database = firebase.database();
+
+    // Function to fetch data from Firebase and create the chart
+    // Function to fetch data from Firebase and create the chart
+function createChart1() {
+  const ctx = document.getElementById('ordersChart1').getContext('2d');
+  const data = {}; // Object to store count of nodes for each date
+
+  const currentDate = new Date();
+  const currentWeekStart = new Date(currentDate);
+  currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay()); // Start of current week
+  const currentWeekEnd = new Date(currentWeekStart);
+  currentWeekEnd.setDate(currentWeekEnd.getDate() + 6); // End of current week
+
+  // Fetch all orders from Firebase
+  database.ref('orders').once('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      const timestamp = childSnapshot.child('timestamp').val();
+      const orderDate = new Date(timestamp);
+
+      // Check if the order is within the current week
+      if (orderDate >= currentWeekStart && orderDate <= currentWeekEnd) {
+        const date = formatDate(orderDate); // Extracting date from timestamp
+        if (!data[date]) {
+          data[date] = 0; // Initialize count for the date
+        }
+        data[date]++;
+      }
+    });
+
+    // Prepare array of dates and counts for Chart.js
+    const dates = [];
+    const counts = [];
+    for (let date = new Date(currentWeekStart); date <= currentWeekEnd; date.setDate(date.getDate() + 1)) {
+      const formattedDate = formatDate(date);
+      dates.push(formattedDate);
+      counts.push(data[formattedDate] || 0); // Push count or 0 if no data for the date
+    }
+
+    // Create Chart.js chart
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Number of Orders',
+          data: counts,
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            barPercentage: 0.6 // Reduce the width of each bar in the chart
+          },
+          y: {
+            beginAtZero: true,
+            precision: 0,
+            stepSize: 1 // Ensure only integer values are displayed
+          }
+        }
+      }
+    });
+  });
+}
+
+    // Function to format date as mm/dd/yyyy
+    function formatDate(date) {
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const year = date.getFullYear();
+      return `${month}/${day}/${year}`;
+    }
+
+
+// Function to fetch data from Firebase and create the second chart
+// Function to fetch data from Firebase and create the second chart
+function createChart2() {
+  const ctx = document.getElementById('ordersChart2').getContext('2d');
+  const data = []; // Array to store order counts for each date in current month
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); // Number of days in current month
+
+  // Fetch all orders from Firebase
+  database.ref('orders').once('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      const timestamp = childSnapshot.child('timestamp').val();
+      const orderDate = new Date(timestamp);
+
+      // Check if the order is within the current month
+      if (orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear) {
+        const day = orderDate.getDate();
+        if (!data[day]) {
+          data[day] = 1;
+        } else {
+          data[day]++;
+        }
+      }
+    });
+
+    // Convert data to array for Chart.js
+    const counts = Array.from({ length: daysInMonth }, (_, i) => data[i + 1] || 0);
+    
+    // Calculate maximum order count
+    const maxOrderCount = Math.max(...counts);
+    let yAxisMax = maxOrderCount < 10 ? 10 : Math.ceil(maxOrderCount / 10) * 10; // Round up to the nearest multiple of 10
+
+    // Ensure that y-axis maximum is at least 10
+    yAxisMax = Math.max(yAxisMax, 10);
+
+    // Create title with dynamic month and year
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const title = `Number of Orders per Month (${monthNames[currentMonth]}/${currentYear})`;
+
+    // Create Chart.js chart with dynamic title and adjusted y-axis ticks
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: Array.from({ length: daysInMonth }, (_, i) => i + 1),
+        datasets: [{
+          label: title,
+          data: counts,
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+          pointRadius: 5,
+          pointBackgroundColor: 'transparent',
+          pointBorderColor: 'rgba(255, 99, 132, 1)',
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            precision: 0,
+            suggestedMin: 0,
+            suggestedMax: yAxisMax,
+            stepSize: 1 // Ensure only integer values are displayed
+          }
+        }
+      }
+    });
+  });
+}
+
+// Function to fetch data from Firebase and create Chart 3
+// Function to fetch data from Firebase and create Chart 3
+function createChart3() {
+  const ctx = document.getElementById('ordersChart3').getContext('2d');
+  const data = {}; // Object to store count of orders for each week
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+  const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+  const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+  const firstDayOfWeek = firstDayOfMonth.getDay(); // Day of the week (0-6) of the first day of the month
+  const numDaysInMonth = lastDayOfMonth.getDate();
+  const numWeeks = Math.ceil((numDaysInMonth + firstDayOfWeek) / 7); // Calculate the number of weeks in the month
+
+  // Fetch all orders from Firebase
+  database.ref('orders').once('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      const timestamp = childSnapshot.child('timestamp').val();
+      const orderDate = new Date(timestamp);
+
+      // Check if the order is within the current month
+      if (orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear) {
+        const weekNumber = Math.floor((orderDate.getDate() + firstDayOfWeek - 1) / 7) + 1; // Calculate the week number
+        if (!data[weekNumber]) {
+          data[weekNumber] = 0; // Initialize count for the week
+        }
+        data[weekNumber]++;
+      }
+    });
+
+    // Prepare array of week numbers and counts for Chart.js
+    const weekNumbers = Array.from({ length: numWeeks }, (_, i) => i + 1);
+    const counts = weekNumbers.map(weekNumber => data[weekNumber] || 0); // Get counts for each week or 0 if no data
+
+    // Create title with dynamic month and year
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const title = `Number of Orders by Week (${monthNames[currentMonth]}/${currentYear})`;
+
+    // Create Chart.js chart
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: weekNumbers.map(weekNumber => `Week ${weekNumber}`),
+        datasets: [{
+          label: title,
+          data: counts,
+          backgroundColor: 'rgba(255, 159, 64, 0.5)',
+          borderColor: 'rgba(255, 159, 64, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            barPercentage: 0.6 // Reduce the width of each bar in the chart
+          },
+          y: {
+            beginAtZero: true,
+            precision: 0,
+            stepSize: 1 // Ensure only integer values are displayed
+          }
+        }
+      }
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const navigation = document.querySelector('.navigation');
+    const toggleButton = document.getElementById('toggleButton');
+    // Close navigation if window width is greater than 1500px
+    if (window.innerWidth < 1500) {
+        navigation.classList.add('active');
+    }
+
+    // Add click event listener to the toggle button
+    toggleButton.addEventListener('click', function () {
+        // Toggle the 'active' class on the navigation element
+        navigation.classList.toggle('active');
+        navigation.classList.toggle('display-navigation')
+    });
+});
+
+    // Call the functions to create both charts
+    createChart1();
+    createChart2();
+    createChart3();
+
+  </script>
+</body>
+</html>
