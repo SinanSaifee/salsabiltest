@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders Analytics</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Add Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Add Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+      /* =============== Navigation ================ */
+  
+      * {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+  
+      :root {
+  --blue: #2a2185;
+  --white: #fff;
+  --gray: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+  }
+  .navigation {
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  background: var(--blue);
+  border-left: 10px solid var(--blue);
+  transition: 0.5s;
+  overflow: hidden;
+  top: 0;
+  z-index: 9999;
+  }
+  .navigation.active {
+  width: 80px;
+  }
+  
+  .navigation ul {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  }
+  
+  .navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  }
+  
+  /* .navigation ul li:hover,
+  .navigation ul li.hovered {
+  background-color: var(--white);
+  } */
+  
+  .navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+  }
+  
+  .navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+  }
+  /* .navigation ul li:hover a,
+  .navigation ul li.hovered a {
+  color: var(--blue);
+  } */
+  
+  .navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+  }
+  .navigation ul li a .icon i {
+  font-size: 1.75rem;
+  }
+  
+  .navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+  }
+  
+  /* --------- curve outside ----------
+  .navigation ul li:hover a::before,
+  .navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none;
+  }
+  .navigation ul li:hover a::after,
+  .navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+  } */
+
+  #toggleButton{
+      border: none;
+      position: fixed;  
+      top: 14px;
+      left: 25px;
+      z-index: 99999;
+      background: none;
+  }
+  #toggleButton i{
+      color: #fff;   
+      cursor: pointer; 
+  }
+  .active-page{
+  background: #fff;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  color: var(--blue);
+  }
+  .active-page a span{
+      color: var(--blue);
+  }
+  .active-page::before{
+      content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none; 
+  }
+  .active-page::after{
+      content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+  }
+
+
+
+.notification-date-container {
+  margin-top: 10px;
+}
+
+.notification-divider {
+  color: #ccc;
+  font-size: 14px;
+}
+#topCustomersContainer{
+  max-height: 100px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+#topProductsContainer{
+  max-height: 100px;
+  overflow: scroll;
+  overflow-x: hidden;
+  
+}
+.statictics-container{
+  margin-bottom: 20px;
+  display: flex;
+  
+}
+#qrCodeContainer{
+  position: absolute;
+  margin-top: -450px;
+  right: 200px;
+}
+#invoice-generator-btn{
+  background: #000;
+  color: #fff;
+  float: right;
+  padding: 10px 15px;
+  border-radius: 50%;
+}
+#invoice-generator-btn i{
+  font-size: 27px;
+}
+@media(max-width: 1020px){  
+  .navigation{
+      display: none;
+  }
+  #toggleButton i{
+      color: #222;
+  }
+  #toggleButton{
+      position: relative;
+  }
+  .order-container{
+      margin-left: 20px;
+      width: 100%;
+      max-width: 100%;
+      padding: 10px;
+      right: 20px;
+      justify-content: flex-start;
+  }
+  
+  .statictics-container{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      
+  }
+  .statictics-container .container{
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      
+  }
+  .button-container{
+      flex-direction: column;
+  }
+  
+  
+
+}
+.display-navigation{
+  display: block;
+}
+#monthSelect {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+#monthSelect option {
+  padding: 8px;
+  font-size: 16px;
+}
+
+
+
+
+  </style>
+  <style>
+    /* Additional CSS for tree-like structure */
+    .tree {
+        list-style-type: none;
+    }
+
+    .tree ul {
+        margin-left: 1em;
+        position: relative;
+    }
+    .tree li {
+        margin: 0;
+        padding: 0 1em;
+        line-height: 2em;
+        color: #369;
+        position: relative;
+        list-style: none;
+    }
+    .tree ul li::before{
+      content: "";
+      width: 25px;
+      background : #ccc;
+      height: 2px;
+      position: absolute;
+      top: 15px;
+      left: -15px;
+    }
+    #viewBookmarksdata{
+      background: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+  <button id="toggleButton">
+    <i class="fas fa-bars fa-2x"></i>
+</button>
+
+<!-- Loading gif -->
+<div id="loading">
+    <img src="loading copy.gif" alt="Loading" width="50" height="50">
+    <p>Signing out</p>
+</div>
+ <!-- =============== Navigation ================ -->
+    <div class="navigation">
+        
+        <ul>
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </span>
+                    <span class="title">ADMIN</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="dashboard.html">
+                    <span class="icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </span>
+                    <span class="title">Orders</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-shirt"></i>
+                    </span>
+                    <span class="title">Products</span>
+                </a>
+            </li>
+
+            <li class="active-page" >
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </span>
+                    <span class="title">Analytics</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="invoice.html">
+                    <span class="icon">
+                        <i class="fa-solid fa-file-invoice"></i>
+                    </span>
+                    <span class="title">invoice</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-gear"></i>
+                    </span>
+                    <span class="title">Settings</span>
+                </a>
+            </li>
+
+            <li onclick="logout()">
+                <a href="#">
+                    <span class="icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+                    <span class="title">Sign Out</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="container mt-5">
+        <h2>Google Sheets Data</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Email</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="dataRows">
+            <!-- Data will be populated here dynamically -->
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Bootstrap JS and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script>
+       function fetchData() {
+    fetch('https://script.google.com/macros/s/AKfycbwVOZjfclEmzhC-OoikiXs_JpvRSduNSikqWtqMZDz0PoXMnOBfcvYUoPjJQbs3jwXv/exec')
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.getElementById('dataRows');
+        tableBody.innerHTML = ''; // Clear existing rows
+        
+        data.forEach((row, index) => {
+          const { date, time, email } = row;
+          const newRow = `
+            <tr id="row_${index}">
+              <td>${date}</td>
+              <td>${time}</td>
+              <td>${email}</td>
+              <td><button class="btn btn-danger btn-sm" onclick="deleteRow(${index})"><i class="fas fa-trash-alt"></i></button></td>
+            </tr>
+          `;
+          tableBody.innerHTML += newRow;
+        });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }
+
+  function deleteRow(rowIndex) {
+    fetch(`https://script.google.com/macros/s/AKfycbwVOZjfclEmzhC-OoikiXs_JpvRSduNSikqWtqMZDz0PoXMnOBfcvYUoPjJQbs3jwXv/exec?rowIndex=${rowIndex}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (response.ok) {
+        // Row deleted successfully, remove from page
+        const rowElement = document.getElementById(`row_${rowIndex}`);
+        if (rowElement) {
+          rowElement.remove();
+        } else {
+          console.error('Row element not found');
+        }
+      } else {
+        console.error('Failed to delete row:', response.statusText);
+      }
+    })
+    .catch(error => console.error('Error deleting row:', error));
+  }
+
+  // Fetch data on page load
+  fetchData();
+      </script>
+  
+</body>
+</html>
