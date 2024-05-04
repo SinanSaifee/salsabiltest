@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Orders Analytics</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <!-- Add Chart.js library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Add Firebase SDK -->
@@ -302,6 +303,28 @@ canvas {
 
 
   </style>
+  <style>
+    /* Additional CSS for tree-like structure */
+    .tree {
+        list-style-type: none;
+    }
+
+    .tree ul {
+        margin-left: 1em;
+        position: relative;
+    }
+    .tree li {
+        margin: 0;
+        padding: 0 1em;
+        line-height: 2em;
+        color: #369;
+        position: relative;
+        list-style: none;
+    }
+    #viewBookmarksdata{
+      background: #f2f2f2;
+    }
+</style>
 </head>
 <body>
   <button id="toggleButton">
@@ -411,6 +434,13 @@ canvas {
       <div class="scrollable">
         <canvas id="ordersChart2"></canvas>
       </div>
+      <div class="action-button-container">
+        <div class="container">
+          <button class="btn btn-primary" onclick="viewBookmarksData()">view bookmarks data</button>
+        <button class="btn btn-secondary" onclick="clearBookmarksData()">clear bookmark or ads</button>
+        </div>
+      </div>
+      <div id="viewBookmarksdata"></div>
     </div>
     <!-- Third row -->
     <div class="analytics-container">
@@ -512,17 +542,52 @@ function createChart1() {
 // Function to fetch data from Firebase and create the second chart
 // Function to fetch data from Firebase and create the second chart
 let myChart; // Global variable to store the chart instance
+let clickedDateIndices = []; // Array to store the indices of clicked dates and their titles
+
+// Initialize Firebase
+
+// Function to bookmark a date with its title
+function bookmarkDate(index, title) {
+  const currentMonth = document.getElementById('monthSelect').value;
+  const currentYear = new Date().getFullYear();
+  
+  // Store the bookmark in Firebase under the "bookmarks" directory
+  database.ref(`bookmarks/${currentYear}/${currentMonth}`).update({
+    [index]: title
+  });
+}
+
+// Function to load bookmarks from Firebase and update the chart
+function loadBookmarks(selectedMonth) {
+  const currentYear = new Date().getFullYear();
+
+  // Clear the clickedDateIndices array before loading bookmarks for the selected month
+  clickedDateIndices = [];
+
+  // Retrieve bookmarks from Firebase for the selected month
+  database.ref(`bookmarks/${currentYear}/${selectedMonth}`).once('value', function(snapshot) {
+    const bookmarks = snapshot.val();
+    if (bookmarks) {
+      Object.keys(bookmarks).forEach(index => {
+        const title = bookmarks[index];
+        clickedDateIndices.push({ index: parseInt(index), title: title });
+      });
+      // Update the chart after loading bookmarks
+      myChart.update();
+    }
+  });
+}
 
 function createChart2(selectedMonth) {
   const ctx = document.getElementById('ordersChart2').getContext('2d');
   const data = []; // Array to store order counts for each date in selected month
 
   const currentYear = new Date().getFullYear();
-  const currentMonth = selectedMonth !== undefined ? selectedMonth : new Date().getMonth(); // Get current month if selectedMonth is not provided
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); // Number of days in selected month
+  selectedMonth = selectedMonth !== undefined ? selectedMonth : new Date().getMonth(); // Get current month if selectedMonth is not provided
+  const daysInMonth = new Date(currentYear, selectedMonth + 1, 0).getDate(); // Number of days in selected month
 
   // Set the value of the month selection dropdown to the current month
-  document.getElementById('monthSelect').value = currentMonth;
+  document.getElementById('monthSelect').value = selectedMonth;
 
   // Fetch all orders from Firebase
   database.ref('orders').once('value', function(snapshot) {
@@ -531,7 +596,7 @@ function createChart2(selectedMonth) {
       const orderDate = new Date(timestamp);
 
       // Check if the order is within the selected month
-      if (orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear) {
+      if (orderDate.getMonth() === selectedMonth && orderDate.getFullYear() === currentYear) {
         const day = orderDate.getDate();
         if (!data[day]) {
           data[day] = 1;
@@ -555,7 +620,7 @@ function createChart2(selectedMonth) {
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
-    const title = `Number of Orders per Month (${monthNames[currentMonth]}/${currentYear})`;
+    const title = `Number of Orders per Month (${monthNames[selectedMonth]}/${currentYear})`;
 
     // Destroy the existing chart instance if it exists
     if (myChart) {
@@ -580,12 +645,62 @@ function createChart2(selectedMonth) {
       },
       options: {
         scales: {
+          x: {
+            grid: {
+              color: (context) => {
+                const indexObj = clickedDateIndices.find(obj => obj.index === context.index);
+                if (indexObj) {
+                  return 'blue'; // Color for bookmarked dates
+                }
+                return 'rgba(0, 0, 0, 0.1)'; // Default color for other grid lines
+              }
+            }
+          },
           y: {
             beginAtZero: true,
             precision: 0,
             suggestedMin: 0,
             suggestedMax: yAxisMax,
             stepSize: 1 // Ensure only integer values are displayed
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const indexObj = clickedDateIndices.find(obj => obj.index === context.dataIndex);
+                if (indexObj) {
+                  return `bookmark: ${indexObj.title} | number of orders (${monthNames[selectedMonth]}/${currentYear}): ${context.raw}`;
+                }
+                return `${title}: ${context.raw}`;
+              }
+            }
+          }
+        },
+        onClick: (event, elements) => {
+          if (elements.length > 0) {
+            const clickedIndex = elements[0].index;
+            const isBookmark = clickedDateIndices.some(obj => obj.index === clickedIndex);
+
+            if (isBookmark) {
+              if (confirm("Are you sure you want to delete this bookmark?")) {
+                const indexToRemove = clickedDateIndices.findIndex(obj => obj.index === clickedIndex);
+                clickedDateIndices.splice(indexToRemove, 1);
+
+                const currentMonth = document.getElementById('monthSelect').value;
+                const currentYear = new Date().getFullYear();
+                database.ref(`bookmarks/${currentYear}/${currentMonth}/${clickedIndex}`).remove();
+
+                myChart.update();
+              }
+            } else {
+              const title = prompt('Enter title or content for bookmark : ');
+              if (title) {
+                clickedDateIndices.push({ index: clickedIndex, title: title });
+                bookmarkDate(clickedIndex, title);
+                myChart.update();
+              }
+            }
           }
         }
       }
@@ -599,8 +714,68 @@ createChart2();
 // Add event listener for month selection
 document.getElementById('monthSelect').addEventListener('change', function() {
   const selectedMonth = parseInt(this.value);
+  clickedDateIndices = []; // Reset clickedDateIndices array
+  loadBookmarks(selectedMonth);
   createChart2(selectedMonth);
 });
+
+// Wait for DOMContentLoaded event to load bookmarks and update the chart
+document.addEventListener('DOMContentLoaded', function() {
+  const selectedMonth = new Date().getMonth(); // Get current month
+  loadBookmarks(selectedMonth);
+  createChart2(selectedMonth);
+});
+function clearBookmarksData(){
+  var clearBookmarksData = confirm("Are you sure you want to delete all bookmarks?");
+  if(clearBookmarksData){
+    database.ref(`bookmarks`).remove();
+  }
+  else{
+    return;
+  }
+}
+function  viewBookmarksData(){
+  var bookmarksRef = database.ref('bookmarks');
+
+            bookmarksRef.once('value').then(function(snapshot) {
+                var htmlContent = '<ul class="tree">';
+
+                snapshot.forEach(function(yearSnapshot) {
+                    var year = yearSnapshot.key;
+                    htmlContent += '<li>' + year + '<ul>';
+
+                    yearSnapshot.forEach(function(monthSnapshot) {
+                        var month = getMonthName(parseInt(monthSnapshot.key));
+                        htmlContent += '<li>' + month + '<ul>';
+
+                        monthSnapshot.forEach(function(dateSnapshot) {
+                            var date = dateSnapshot.key;
+                            var value = dateSnapshot.val(); // Assuming there's a value associated with each date
+
+                            htmlContent += '<li>Day '+ date + ': ' + JSON.stringify(value) + '</li>';
+                        });
+
+                        htmlContent += '</ul></li>';
+                    });
+
+                    htmlContent += '</ul></li>';
+                });
+
+                htmlContent += '</ul>';
+
+                document.getElementById('viewBookmarksdata').innerHTML = htmlContent;
+                window.location.href = window.location.href + `#viewBookmarksdata`
+            }).catch(function(error) {
+                console.log("Error getting bookmarks data: ", error);
+            });
+        }
+
+function getMonthName(monthIndex) {
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[monthIndex - 1]; 
+}
+
+
 
 // Function to fetch data from Firebase and create Chart 3
 // Function to fetch data from Firebase and create Chart 3
