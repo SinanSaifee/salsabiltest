@@ -37,6 +37,32 @@
     --black1: #222;
     --black2: #999;
     }
+    .notification select {
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.notification select option {
+    color: white; /* Default text color for options */
+}
+
+.notification select option[value="Pending"] {
+    background-color: red;
+}
+
+.notification select option[value="Processing"] {
+    background-color: #A9A9A9; /* Greenish gray */
+}
+
+.notification select option[value="Shipped"] {
+    background-color: yellow;
+    color: black; /* Adjust contrast */
+}
+
+.notification select option[value="Completed"] {
+    background-color: green;
+}
+
     .navigation {
     position: fixed;
     width: 300px;
@@ -468,20 +494,26 @@ database.ref('orders').on('child_added', (snapshot) => {
 function displayNotification(orderData, orderId) {
     const notificationDiv = document.createElement('div');
     notificationDiv.className = 'notification';
+    
+    const currentStatus = orderData.status || 'Pending'; // Default to Pending if no status
+
     notificationDiv.innerHTML = `
         <i class="fa-solid fa-circle-check" style="color: #7da01c;"></i>
         <p id="notify-text">${orderData.name} placed an order on ${orderData.timestamp}</p>
-        <select class="status-select" id="status-${orderId}" onchange="updateOrderStatus('${orderId}', this.value)">
-            <option value="Pending" ${orderData.status === 'Pending' || !orderData.status ? 'selected' : ''}>Pending</option>
-            <option value="Processing" ${orderData.status === 'Processing' ? 'selected' : ''}>Processing</option>
-            <option value="Shipped" ${orderData.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
-            <option value="Completed" ${orderData.status === 'Completed' ? 'selected' : ''}>Completed</option>
+        <select id="status-${orderId}" onchange="updateOrderStatus('${orderId}', this.value)" style="background-color: ${getStatusColor(currentStatus)};">
+            <option value="Pending" ${currentStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+            <option value="Processing" ${currentStatus === 'Processing' ? 'selected' : ''}>Processing</option>
+            <option value="Shipped" ${currentStatus === 'Shipped' ? 'selected' : ''}>Shipped</option>
+            <option value="Completed" ${currentStatus === 'Completed' ? 'selected' : ''}>Completed</option>
         </select>
         <button class="btn btn-link text-danger" onclick="removeNotification('${orderId}')" id="removeOrder">
             <i class="fas fa-trash"></i>
         </button>
     `;
 
+    // Set background color of the select element based on the status
+    const selectElement = notificationDiv.querySelector(`select`);
+    selectElement.style.backgroundColor = getStatusColor(currentStatus);
     notificationDiv.addEventListener('click', (event) => {
         if (event.target.closest('.fa-trash')) {
             return;
@@ -493,7 +525,20 @@ function displayNotification(orderData, orderId) {
             displayOrderDetails(orderData, orderId);
         }
     });
-
+    function getStatusColor(status) {
+    switch (status) {
+        case 'Pending':
+            return 'red';
+        case 'Processing':
+            return '#A9A9A9'; // Greenish gray
+        case 'Shipped':
+            return 'yellow';
+        case 'Completed':
+            return 'green';
+        default:
+            return 'white'; // Fallback color
+    }
+}
     document.getElementById('notificationSound').play();
 
     const notificationDate = new Date(orderData.timestamp);
@@ -859,26 +904,24 @@ function displayTopProducts(products) {
         }
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          // Add an input event listener to the search bar
-          document.getElementById('searchInput').addEventListener('input', function() {
-            // Get the search querya
-            const searchQuery = this.value.toLowerCase();
-      
-            // Iterate through each notification
-            document.querySelectorAll('.notification').forEach(function(notification) {
-              // Get the text content of the notification
-              const notificationText = notification.textContent.toLowerCase();
-      
-              // Show or hide the notification based on the search query
-              if (notificationText.includes(searchQuery)) {
-                notification.style.display = 'flex';
-              } else {
-                notification.style.display = 'none';
-              }
-            });
-          });
-        });
+        document.getElementById('searchInput').addEventListener('input', function() {
+    const searchQuery = this.value.toLowerCase();
+
+    document.querySelectorAll('.notification').forEach(function(notification) {
+        const notificationText = notification.textContent.toLowerCase();
+        
+        // Exclude select options from the search
+        const selectElement = notification.querySelector('select');
+        const selectText = selectElement.options[selectElement.selectedIndex].text.toLowerCase();
+
+        if (notificationText.includes(searchQuery) && !selectText.includes(searchQuery)) {
+            notification.style.display = 'flex';
+        } else {
+            notification.style.display = 'none';
+        }
+    });
+});
+
       </script>
 
       <script>
