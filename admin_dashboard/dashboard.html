@@ -471,27 +471,28 @@ function displayNotification(orderData, orderId) {
     notificationDiv.innerHTML = `
         <i class="fa-solid fa-circle-check" style="color: #7da01c;"></i>
         <p id="notify-text">${orderData.name} placed an order on ${orderData.timestamp}</p>
+        <select id="status-${orderId}" onchange="updateOrderStatus('${orderId}', this.value)">
+            <option value="Pending" ${orderData.status === 'Pending' || !orderData.status ? 'selected' : ''}>Pending</option>
+            <option value="Processing" ${orderData.status === 'Processing' ? 'selected' : ''}>Processing</option>
+            <option value="Shipped" ${orderData.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+            <option value="Completed" ${orderData.status === 'Completed' ? 'selected' : ''}>Completed</option>
+        </select>
         <button class="btn btn-link text-danger" onclick="removeNotification('${orderId}')" id="removeOrder">
             <i class="fas fa-trash"></i>
         </button>
     `;
-    
+
     notificationDiv.addEventListener('click', (event) => {
-        // Show order details when the notification is clicked
         if (event.target.closest('.fa-trash')) {
             return;
+        } else {
+            displayOrderDetails(orderData, orderId);
         }
-        else{
-        displayOrderDetails(orderData, orderId);}
     });
 
-    // Play the notification sound
     document.getElementById('notificationSound').play();
 
-    // Get the date of the notification
     const notificationDate = new Date(orderData.timestamp);
-    
-    // Create or find the divider for the notification date
     const dividerId = `divider-${notificationDate.toISOString().slice(0, 10)}`;
     let divider = document.getElementById(dividerId);
 
@@ -503,11 +504,22 @@ function displayNotification(orderData, orderId) {
         notificationsContainer.insertBefore(divider, notificationsContainer.firstChild);
     }
 
-    // Insert the new notification under the appropriate divider
     divider.parentNode.insertBefore(notificationDiv, divider.nextSibling);
-
     updateTotalNotificationCount();
 }
+
+// Function to update order status in the database
+function updateOrderStatus(orderId, newStatus) {
+    const orderRef = database.ref('orders').child(orderId);
+    orderRef.update({ status: newStatus })
+        .then(() => {
+            console.log(`Order ${orderId} status updated to ${newStatus}`);
+        })
+        .catch((error) => {
+            console.error('Error updating order status:', error);
+        });
+}
+
 
 // Helper function to format the date as 'Today', 'Yesterday', or 'YYYY-MM-DD'
 function formatDate(date) {
