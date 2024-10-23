@@ -500,7 +500,7 @@ function displayNotification(orderData, orderId) {
     notificationDiv.innerHTML = `
         <i class="fa-solid fa-circle-check" style="color: #7da01c;"></i>
         <p id="notify-text">${orderData.name} placed an order on ${orderData.timestamp}</p>
-        <select id="status-${orderId}" onchange="updateOrderStatus('${orderId}', this.value)" style="background-color: ${getStatusColor(currentStatus)};">
+        <select class="status-select" id="status-${orderId}" onchange="updateOrderStatus('${orderId}', this.value)" style="background-color: ${getStatusColor(currentStatus)};">
             <option value="Pending" ${currentStatus === 'Pending' ? 'selected' : ''}>Pending</option>
             <option value="Processing" ${currentStatus === 'Processing' ? 'selected' : ''}>Processing</option>
             <option value="Shipped" ${currentStatus === 'Shipped' ? 'selected' : ''}>Shipped</option>
