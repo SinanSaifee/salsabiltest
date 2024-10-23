@@ -471,7 +471,7 @@ function displayNotification(orderData, orderId) {
     notificationDiv.innerHTML = `
         <i class="fa-solid fa-circle-check" style="color: #7da01c;"></i>
         <p id="notify-text">${orderData.name} placed an order on ${orderData.timestamp}</p>
-        <select id="status-${orderId}" onchange="updateOrderStatus('${orderId}', this.value)">
+        <select class="status-select" id="status-${orderId}" onchange="updateOrderStatus('${orderId}', this.value)">
             <option value="Pending" ${orderData.status === 'Pending' || !orderData.status ? 'selected' : ''}>Pending</option>
             <option value="Processing" ${orderData.status === 'Processing' ? 'selected' : ''}>Processing</option>
             <option value="Shipped" ${orderData.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
@@ -485,7 +485,11 @@ function displayNotification(orderData, orderId) {
     notificationDiv.addEventListener('click', (event) => {
         if (event.target.closest('.fa-trash')) {
             return;
-        } else {
+        }
+        else if (event.target.closest('.status-select')) {
+            return;
+        }
+        else {
             displayOrderDetails(orderData, orderId);
         }
     });
